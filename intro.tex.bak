@@ -1,0 +1,146 @@
+\section{Introduction}
+
+%Mobile web browser is an user-facing and highly interactive
+%application. Even though the mobile applications develop rapidly in recent year,
+%as the mobile browser provide access to
+%all the content the users are looking for in one place \cite{USReport}, there is still 42\% of
+%mobile internet users prefer mobile web for search, and App web
+%preferences are balanced for shopping, news, and local
+%directory information \cite{IAB}. Despite
+%the high demand for mobile browser, the slow mobile web
+%browsing and expensive overhead result in a poor user experience,
+%73\% of mobile internet users said
+%that they've encountered a website that was too slow to load \cite{kissmetrics}
+%and web browsing is a high power consumed activity \cite{D Ambrosio},\cite{N. Thiagarajan}
+%that will increase the burden of battery life. The need for higher
+%web browsing experience directly conflicts with the desire for
+%longer battery life. So guaranteeing the satisfactory quality of
+%service for mobile web users is crucial.
+%
+%The network capability is the primary bottleneck in mobile
+%Web browsing. Engineers have attempted to mitigate this
+%bottleneck by increasing the wireless network bandwidth \cite{5G},
+%catching the viewed contents, prefetching the web data \cite{N. Balasubramanian},
+%and characterizing different radio interfaces \cite{N. Ding}. The second
+%and increasing serious problem for web browsing is the mobile
+%CPU []. The modern mobile web browser mainly combines
+%a parser, a render engine (eg. Webkit, Gecko) and a Javascript
+%interpreter (eg. V8, TraceMonkey), where the CPU sits squarely
+%on the critical path and these components always consume
+%much system resources during their working time \cite{}, \cite{}.
+%
+%A great portion of the research has focused on exploiting
+%parallelism to improve JavaScript engine\cite{} [Concurrency in Mobile Browser Engines]
+%[A Concurrent Trace-based Just-In-Time Compiler for Single-threaded JavaScript,.]
+%, and its performance has improved significantly.
+%According to our performance measurements and analysis on
+%top 500 popular webpages running on the heterogenous platform, the
+%render engine of Chrome accounts for ~35\% of its total execution
+%time, which become a heavy performance hitter component currently.
+%And some works have speed up the web browsing significantly \cite{}\cite{}
+%[Towards Parallelizing the Layout Engine of Firefox]
+%[Leo Meyerovich and Ras Bodik, Fast and Parallel Webpage Layout]
+%However, only speed up the web browsing that maybe make heavy use
+%of battery, and seldom researches focus on the CPU energy
+%efficient on mobile browsing. Thus we focused
+%our efforts to optimize the rendering energy efficient
+%, as it had the best chances of making a considerable impact on the
+%overall browser performance.
+
+Recent statistics from Smart Insights show that web browsing is a major
+activity performed by mobile users on a day to day basis~\cite{mobilestat}.
+At the same time, web browsing remains an activity of high
+energy consumption~\cite{d2016energy,thiagarajan2012killed}. %As users  expectations
+%from their mobile devices have grown, so too have the performance and power
+%requirements grown; CPU clock frequencies are up to 2 GHz, while battery
+%life on high-end phones is measured in hours.
+There is a critical need to optimise mobile web browsing for both performance and power consumption.
+
+
+Heterogeneous multi-core design, such as the ARM big.LITTLE
+architecture~\cite{arm}, is a solution to energy efficient
+mobile processing. Heterogeneous mobile platforms integrate multiple
+processor cores on the same system, where each processor is tuned for a
+certain class of workloads and optimization goals (either performance or
+energy consumption).  To unlock the potential of the heterogeneous design, software applications must adapt
+to the variety of different processors and make good use of the underlying
+hardware, knowing what type of processors to use and at what frequency the processor should operate. This is
+because the benefits of choosing the right heterogeneous core may be
+large, but mistakes can seriously hurt the user experience.
+
+%The increasingly popular heterogeneous multi-core design promises
+%a new way for energy-efficient mobile web browsing. The default
+%tasks scheduling policy do not consider the webpage load, which
+%often leads to poor energy efficiency for web browsing.
+%In this paper, we take the advantage of the big.LITTLE
+%technology which combined the high-performance Cortex-A15
+%with the efficient Cortex-A7 to achieve a high
+%performance at significantly lower average power.
+%Our preliminary experience is encouraging, we compare the performance between
+%the ideal processor setting and the Android default interactive governor
+%provides configuration for \texttt{bbc.co.uk} and \texttt{en.wikipedia.org}, and find there
+%is still plenty of room for optimization.
+
+The current mobile web browsers simply rely on the operating system to
+exploit the heterogeneous cores. However, the operating system has no
+knowledge of the individual web workload to be rendered by the browser. As a result,
+this often leads to poor energy efficiency, draining the battery faster than necessary~\cite{zhu2015event}. What we would like to have is a technique that can
+exploit the web workload characteristics to leverage the heterogeneous cores to meet the various user requirements: whether it is load time, energy
+consumption or a trade-off between them. Given the
+diversity of mobile architectures, we would like to have an automatic approach to construct optimization strategies for a given system, so that we can easily re-target our
+scheme for a new platform.
+
+This paper presents a novel approach to exploit the heterogeneous mobile
+platform for energy efficient web browsing. In particular, it focuses on
+determining the optimal processor configuration, i.e. the type of processor
+cores to use to render the webpage and at what frequencies the processor
+cores of the system should operate for a given optimization goal.
+Rather than developing a hand-crafted approach that requires expert insight
+into the relative costs of particular hardware and web contents, we develop an automatic technique that can be portable across computing environments.
+ We
+achieve this by employing machine learning to automatically build predictors
+ based on knowledge extracted from a set of representative, training web
+contents. The trained models are then used at runtime by the web browser to
+predict the optimal processor configuration for a given workload and an
+optimization target.
+
+Our technique is implemented as an extension for the Google Chromium web browser.
+It is applied to the hottest 500 webpages from \texttt{www.alexa.com} and
+evaluated for three distinct metrics: load time, energy consumption and
+energy delay product (a trade-off between load time and energy consumption).
+We compare our approach against a state-of-the-art web-aware scheduling
+mechanism~\cite{YZhu13} on a big.LITTLE mobile platform. Our approach
+shows significant performance improvement over the state-of-the-art and the
+Linux interactive governor~\cite{governor} for the three metrics.
+
+The key contribution of this paper is a novel machine learning based
+predictive model that can be used to optimize web workloads across multiple
+optimization goals. Our results show that significant energy efficiency for
+mobile web browsing can be achieved through making good use of the
+heterogeneous mobile architecture.
+
+
+%In this paper, we develop a novel scheduling approach which makes a predictions
+%at runtime which processor setting are likely to best suit for the
+%current webpage load for three different metrics(load time, energy and EDP).
+%Our approach takes advantage of the diversity for webpage structure and style rules,
+%and then make a classification based on SVM model which is built offline
+%by 400 popular web pages training. Third, the machine learning model offers a predicting
+%processor configuration to the run time scheduler. Finally, the scheduler change the frequency scaling
+%and migrate the render process to the mapped configuration.
+%Our experiments shows that the overhead of prediction and feature
+%extraction, and task scheduling and hardware configuration
+%is negligible (less than 20 ms).
+%
+%We compare our scheduling
+%approach against WS \cite{Y. Zhu}, a state-of-the-art
+%webpage-aware scheduling mechanism in big/LITTLE platform.
+%Our approach shows significant performance improvement,
+%for load time, energy and EDP.
+%On an Odroid XU3 platform, our approach achieves
+% an average speedup of 1.07x over WS, and
+%11.6\% and 12.7\% improvement respectively for
+%energy consumption and energy delay product.
+%When compared with the Android default interactive policy,
+%we achieve 45\% (up to 92\%), 63\%(up to 93\%) and 74.7\%(up to 95\%)  improvement respectively
+%for load time, energy consumption and energy delay product.

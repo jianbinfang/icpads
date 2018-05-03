@@ -1,0 +1,234 @@
+\section{Background}
+
+\subsection{Web Rendering Process}
+%\begin{figure}
+%\begin{center}
+%\includegraphics[scale=0.3]{figure/chromium.pdf}
+%\end{center}
+%\caption{High Level Architecture of Chromium}
+%\label{fig:chromium}
+%\end{figure}
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=0.48\textwidth]{figure/mobile_web_browsing.pdf}
+\end{center}
+\caption{The rendering process of Chromium browser.}
+\vspace{-2mm}
+\label{fig:chromium}
+\end{figure}
+
+Our prototype system built upon Google Chromium for Linux, an open source
+version of the Google Chrome web browser.
+To render an already downloaded webpage, the Chromium rendering engine follows a number of steps:
+parsing, style resolution, layout and paint.
+This process is illustrated in Figure~\ref{fig:chromium}.
+Firstly, the input HTML page is parsed to construct a Document Object Model (DOM) tree where
+each node of the tree represents an individual HTML tag such as \texttt{<body>} or \texttt{<p>}. CSS style rules that describe how the web contents
+should be presented will also be parsed to build the style rules. Next, the styling information and the DOM tree are
+combined to build a render tree which is then used to compute the layout of
+each visible element. Finally, the paint process takes in the render tree to
+output the pixels to the screen.
+In this work, we focus
+\emph{solely} on scheduling the rendering process on heterogeneous mobile systems.
+
+
+%For many mobile users, the mobile browser is their first choice to access
+%the internet, because the browsers provide access to all the content
+%they're looking for in one place, it is particularly convenient for people
+%who are tired of downloading many Apps for a temporary need. Further more, most
+%companies prefer to offer a mobile websites when their goals are primarily related
+%to marketing or public communications, a mobile website is almost always
+%going to make sense as a practical step in their mobile outreach strategy.
+
+%In the most recently measured period, Chrome had
+%the largest market share in mobile browser (34.17\%).
+%Figure~\ref{fig:chromium} shows a simplified high level architecture of chrome, which
+%holds multiple instances of the rendering engine - one for each tab, and each tab is
+%a separate process which is called ``render process'' or ``renderer''.
+%The renderer is responsible for rendering the requested contents that will display
+%on the screen.
+%Figure~\ref{fig:webBrowser} presents the modern
+%web browser architecture. The rendering engine will start getting the web contents from
+%the networking layer. Then parsing the HTML document and turn the tags to DOM
+%nodes in a tree called the ``content tree''. It also parses the style data,
+%both in external CSS files and in style elements. The styling information together with
+%visual instructions in the HTML will be used to create another tree -
+%the render tree. The render tree contains rectangles with visual attributes
+%like color and dimensions. The rectangles are in the right order to be
+%displayed on the screen. After the construction of the render tree it
+%goes through a ``layout'' process. This means giving each node the exact
+%coordinates where it should appear on the screen. The next stage is painting
+%- the render tree will be traversed and each node will be painted using the UI backend layer.
+
+\subsection{Motivation Example \label{sec:motivation}}
+
+\begin{figure*}[!t]
+	\centering
+	\subfloat[][Load time]{\includegraphics[width=0.23\textwidth]{figure/loadtime_wiki_bbc.pdf}}
+    \hfill
+    \subfloat[][Energy consumption]{\includegraphics[width=0.23\textwidth]{figure/energy_wikipedia_bbc.pdf}}
+    \hfill
+    \subfloat[][EDP]{\includegraphics[width=0.23\textwidth]{figure/edp_wikipedia_bbc.pdf}}
+    \hfill
+    \subfloat[][wikipedia best on bbc.co.uk]{\includegraphics[width=0.24\textwidth]{figure/wiki_best_on_bbc.pdf}}
+    \caption{Best load time (a), energy consumption (b) and energy delay product (EDP) (c) for rendering \texttt{wikipedia} and \texttt{bbc} pages compared to the Linux default policy;
+    and how the performance of using \texttt{wikipedia} best configurations compared to the best available performance of \texttt{bbc} (d).}
+    \vspace{-3mm}
+    \label{fig:motivation}
+\end{figure*}
+
+\begin{table}[!t]
+\caption{Optimal processor configurations for web rendering}
+\scriptsize
+\begin{center}
+        \begin{tabular}{lcccccc}
+        \toprule
+        \rowcolor[gray]{.92}& \multicolumn{2}{c}{Load time} &\multicolumn{2}{c}{Energy}& \multicolumn{2}{c}{EDP} \\
+        & A15 & A7 & A15 & A7 & A15 & A7\\
+        \midrule
+        \texttt{en.wikipedia.org} (GHz)&1.8&1.4&0.9&0.4&1.3&0.5\\
+        \texttt{www.bbc.co.uk} (GHz)&1.6&1.4&1.0&0.3&1.5&0.4\\
+          rendering engine &\Checkmark& &\Checkmark& &\Checkmark& \\
+        \bottomrule
+        \end{tabular}
+\end{center}
+\label{tab:bestConfig}
+\vspace{-5mm}
+\end{table}
+
+
+Consider rendering \texttt{en.wikipedia.org} and
+\texttt{www.bbc.co.uk} on an ARM big.LITTLE mobile platform with a Cortex-A15 (big)
+and a Cortex-A7 (little) processors, running with the Ubuntu 14.04 operating system. Here, we schedule the
+Chromium rendering process to run on the big or little core
+under different clock frequencies. We then record the best processor configuration found
+for each webpage. To isolate network and disk overhead, we
+have downloaded and stored the webpages in the RAM and disabled the browser's cache.
+
+Figure~\ref{fig:motivation} compares the best configuration against the Linux
+default interactive governor for three \emph{lower is better} metrics: (a)
+load time, (b) energy consumption and (c) energy delay product (EDP), calculated as energy $\times$ load time.
+Table~\ref{tab:bestConfig} lists the best configuration for each metric.
+For load time, the best configuration gives 14\% and 10\% reduction for
+\texttt{wikipedia} and \texttt{bbc} respectively over
+the Linux default policy. For energy consumption, using the right processor configuration gives
+a reduction of 58\% and 17\%  for \texttt{wikipedia} and \texttt{bbc}
+respectively. For EDP, the best configuration
+achieves a reduction of over 55\%  for both websites. Clearly, there is significant room for improvement over the
+Linux default interactive governor and the best processor configuration varies across webpages
+and metrics.
+
+Figure~\ref{fig:motivation} (d) normalizes the best available performance of
+\texttt{bbc} to the performance achieved by using the best
+configuration found for \texttt{wikipedia} for each metric. This figure shows that the best processor configuration also varies from
+one webpage to the other. Here, the optimal
+configuration for \texttt{wikipedia} fails to deliver the best available performance for \texttt{bbc}.
+In fact, there is a reduction of 11.9\%, 18.9\% and
+23.5\% on load time, energy and EDP available respectively for \texttt{bbc} when compared to using the \texttt{wikipedia-best} configuration.
+Therefore, simply applying one optimal
+configuration found for one webpage to another is likely to miss significant optimization opportunities.
+
+
+This example illustrates that the processor configuration has a significant
+impact on mobile web browsing experience, and the optimal configuration
+depends on the optimization goal and the web workload. What we need is a technique
+that automatically determines the best configuration for any unseen webpage
+according to its characteristics and the optimization goal. In the remainder of this paper, we
+describe such an approach based on machine learning.
+
+
+
+%As a motivation example, considering rendering \url{www.amazon.com} on an energy-efficient Cortex-A7 processor (little core) alone with the browser process running on a high-performance Cortex-A15 processor (big core). Figure 1 (a) shows a scatter plot of the energy metric for evaluation of webpage loading with the frequency configurations on x-axis. For example, the x-axis label b3-l4 refers to the A15 processor operate at 300 MHz and the A7 processor operate at 400 MHz. The y-axis represents the extra energy consumption in percentage relatively to the optimal energy on each frequency. The energy metric graph plots the best energy can be obtained at b3-l4. We also consider another important metric EDP (Energy and Delay Product), which unifies a measure of delay and energy as the equation (1) defines, to evaluate the performance of webpage loading as Fig. 1(b) describes, we can see that the best EDP can be achieved at b4-l12. This suggests that Amazon can benefit from different frequencies within the fixed core configuration for different metrics .
+%\begin{equation}
+%EDP[Js] = Average Power * Loading Delay
+%\end{equation}
+%
+%%\begin{figure}
+%%\centering
+%%\subfigure[Energy Metric]{
+%%\label{fig:subfig:a}
+%%\includegraphics[scale=0.16]{./figure/amazonEnergy.pdf}}
+%%\hspace{1in}
+%%\subfigure[EDP Metric]{
+%%\label{fig:subfig:b}
+%%\includegraphics[scale=0.16]{./figure/amazonEDP.pdf}}
+%%\caption{The Same Webpage Have Different Ideal Execution Configurations for Different Metrics (www.amazon.com)}
+%%\label{fig:1}
+%%\end{figure}
+%
+%%\begin{table*}
+%%\caption{XXXXX}
+%%\begin{center}
+%%\tiny
+%%\begin{tabular}{c|C{1cm}cc|C{1cm}ccc|C{1cm}cc}
+%%\hline
+%%      \textbf{Wiki}  & \textbf{Min-Energy(J)}& \textbf{Config} & \textbf{Delay(s)} &\textbf{Min-EDP(Js)} &\textbf{Config} &\textbf{Delay(s)}&  \textbf{Energy(J)}& \textbf{Min-Delay(s)}& \textbf{Config} & \textbf{Energy(J)}\tabularnewline
+%%      \hline
+%%      ${A15-A15}$    & ${0.109}$ & ${B10-L4}$  & ${0.30}$
+%%      & ${0.029}$ &${B16-L6}$ & ${0.21}$ &  ${0.138}$&
+%%      ${0.185}$ &${B19-L11}$ & ${0.186}$\tabularnewline
+%%
+%%      ${A15-A7}$ & ${0.183}$ & ${B7-L11}$  & ${0.86}$
+%%      & ${0.068}$ & ${B9-L14}$ & ${0.64}$&  ${0.2}$&
+%%      ${0.32}$ &${B16-L14}$ & ${0.276}$\tabularnewline
+%%
+%%      ${A7-A15}$  & ${0.160}$ & ${B7-L11}$  & ${0.40}$
+%%      & ${0.057}$ & ${B15-L11}$& ${0.33}$  & ${0.199}$
+%%      & ${0.25}$ &${B19-L13}$ & ${0.287}$\tabularnewline
+%%
+%%      ${A7-A7}$  & ${0.223}$ & ${B5-L8}$  & ${1.14}$
+%%      & ${0.109}$ & ${B6-L13}$ & ${1.04}$&  ${0.231}$&
+%%      ${0.43}$ &${B13-L14}$ & ${0.314}$\tabularnewline
+%%      \hline
+%%      \textbf{Amazon}   & \textbf{Min-Energy(J)}& \textbf{Config} & \textbf{Delay(s)} &\textbf{Min-EDP(Js)}&\textbf{Config} &\textbf{Delay(s)}&\textbf{Energy(J)}&\textbf{Min-Delay(s)}& \textbf{Config} & \textbf{Energy(J)}\tabularnewline
+%%      \hline
+%%      ${A15-A15}$& ${1.252}$ & ${B6-L8}$ & ${1.91}$
+%%      & ${2.392}$ & ${B6-L8}$ & ${1.91}$& ${1.252}$&
+%%      ${1.33}$ &${B17-L11}$ & ${2.475}$\tabularnewline
+%%
+%%      ${A15-A7}$ & ${1.342}$ & ${B3-L4}$  & ${2.36}$
+%%      & ${2.368}$  & ${B4-L12}$ & ${3.64}$& ${1.409}$&
+%%      ${1.39}$ &${B19-L10}$ & ${4.429}$\tabularnewline
+%%
+%%      ${A7-A15}$  & ${0.806}$ & ${B15-L11}$
+%%      & ${0.8}$  & ${0.642}$ & ${b17-l13}$& ${0.71}$& ${0.88}$&
+%%      ${0.69}$ &${B19-L11}$ & ${1.202}$\tabularnewline
+%%
+%%      ${A7-A7}$  & ${1.214}$  & ${B4-L11}$& ${2.14}$
+%%      & ${2.598}$ & ${B4-L11}$ & ${2.14}$& ${1.214}$&
+%%      ${1.79}$ &${B19-L13}$ & ${2.916}$\tabularnewline
+%%      \hline
+%%    \end{tabular}
+%%  \end{center}
+%%\end{table*}
+%
+%
+%To validate the potential benefits of webpage loading in big.LITTLE system, we operate the renderer and browser process on different core configurations and begin our analysis with two webpages that represent the general trend that we observe. Table 1 lists the optimal values of energy/EDP/performance metrics with corresponding ideal frequency in different core configuration for the \url{www.amazon.com} and \url{www.wiki.com}. The Wiki can at best be loaded on the big cores. Instead, the little cores, the webpage get the worst performing, which is 1.04x more energy consumed, 2.75x worse in EDP, and 1.32x slower compared with the ideal core and frequency configuration. While the Amazon obtains the optimal value when the browser process scheduled on the A7 processor and the renderer on the A15 processor. The worst configuration is 1.59x slower and 67\% more energy cost than the optimal configuration. In addition, we find that the EDP metric is good at balancing the energy and performance, for instance, the Wiki best EDP configuration consume 26\% more energy than the best energy configuration, while it speed up 42\% webpage loading performance. (The label A15-A7 in the first column represents the browser operates on A15 processor and the renderer on the A7 processor)
+%
+%We extend our analysis to other 60 webpages and measure their load time and power consumption. We get the optimal energy of each webpage under respective ideal core and frequency configuration. Then we apply the best energy configuration for Amazon to load other 60 webpages. For example, the best energy configuration for www.qq.com is the browser process on A7 (0.4GHz) and the renderer on A15 (1.2 Ghz) which consumed 0.55J and 1.173s. Then we use the Amazon optimal energy configuration (Table \uppercase\expandafter{\romannumeral1}) to load qq which is 1.13x more energy consumed than the optimal energy, reducing the load latency by 32\%(0.79s) only. For Wiki, the Amazon optimal configuration cost 1.28x more energy alone with 10\% performance slowdown. So the ideal execution configuration for Amazon is not suitable for other webpages. Figure 2 presents that an average of 62\% energy could be wasted when all webpages apply the optimal energy configuration for Amazon, and 20\% performance speedup as shown in Fig. 3. The performance rises as a result of the high frequency configuration on A15 processor, we could still find the performance slowdown for some websites. Similar to the energy evaluation, we also compare the EDP performance in Fig.4, an average of 34\% EDP negative impact under Amazon optimal EDP configuration. Analyzing all of 60 webpages' data, the optimal core configurations have one thing in common: the webpage rendering only happens on the A15 processor (big core). Because lots of work rely on the renderer during the webpage loading, it is responsible for building the render tree, layout, paint and such heavy tasks are resources hungry. In summary, we acknowledge that different websites benefit from different core and frequency configurations, and different optimization goals would also impact the ideal execution configuration.
+%
+%\begin{figure}
+%\begin{center}
+%\includegraphics[scale=0.3]{./figure/AmazonBaseEnergy.pdf}
+%\end{center}
+%\caption{Applying the Amazon Optimal Energy Configuration for Other 60 Websites}
+%\label{fig:2}
+%\end{figure}
+%
+%\begin{figure}
+%\begin{center}
+%\includegraphics[scale=0.3]{./figure/AmazonBasePerform.pdf}
+%\end{center}
+%\caption{The Load Time of Each Websites Using Optimal Amazon Energy Configuration}
+%\label{fig:3}
+%\end{figure}
+%
+%\begin{figure}
+%\begin{center}
+%\includegraphics[scale=0.3]{./figure/AmazonBaseEDP.pdf}
+%\end{center}
+%\caption{The Load Time of Each Websites Using Optimal Amazon Energy Configuration}
+%\label{fig:4}
+%\end{figure}
+%

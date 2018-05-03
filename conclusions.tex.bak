@@ -1,0 +1,17 @@
+\section{Conclusions}
+This paper has presented an automatic approach to optimize the mobile web
+rendering process on heterogeneous mobile platforms, providing a significant
+performance improvement over the Linux interactive governor. At the heart
+of our approach is a machine learning based model that provides an accurate
+prediction of the optimal processor configuration to use to run the web
+browser rendering process, taking into account the web workload
+characteristics and the optimization goal. Our approach is implemented as an
+extension in the Google Chromium web browser and evaluated on a
+representative ARM big.LITTLE mobile platform for three distinct metrics.
+Experiments performed on the 500 hottest websites show that our approach achieves over 80\% of the oracle performance.
+It
+achieves over 40\% improvement over the Linux default policy
+across three evaluation metrics: load time, energy consumption and the energy delay product.
+It
+consistently outperforms a state-of-the-art webpage-aware scheduling mechanism.
+In future work, we intend to explore further refinement to prediction accuracy, and also to exploit the network delay to perform optimizations.

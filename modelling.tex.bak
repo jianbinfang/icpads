@@ -1,0 +1,404 @@
+\section{Predictive Modeling}
+Our model for predicting the best processor configuration is a
+Support Vector Machine (SVM) classifier using a radial basis function kernel~\cite{vapnik1998statistical}. We
+have evaluated a number of alternative modeling techniques, including
+regression, Markov chains, K-Nearest neighbour, decision trees, and artificial neural networks. We chose
+SVM because it gives the best performance, can model both linear and
+non-linear problems and the model produced by the learning algorithm is deterministic. The input to
+our model is a set of features extracted from the DOM tree and style rules.
+The output of our model is a label of a processor
+configuration that indicates the optimal core to use to run the render engine
+and the operating frequencies of the CPU cores available on the system.
+
+Building and using such a model follows
+the well-known 3-step process for supervised machine learning~\cite{kotsiantis2007supervised}: (i) generate training data (ii) train a predictive
+model (iii) use the predictor.
+
+\subsection{Training the Predictor}
+\begin{figure}[t!]
+  \centering
+  % Requires \usepackage{graphicx}
+  \includegraphics[width=0.45\textwidth]{figure/training.pdf}\\
+  \caption{Training the predictor.}\label{fig:training}
+  \vspace{-2mm}
+\end{figure}
+
+\begin{table}[!t]
+\caption{Useful processor configurations for each metric.}
+\scriptsize
+\begin{center}
+        \begin{tabular}{cccccc}
+        \toprule
+        \rowcolor[gray]{.92} \multicolumn{2}{c}{Load time}&\multicolumn{2}{c}{Energy} &\multicolumn{2}{c}{EDP}\\
+         A15 & A7 & A15 & A7 & A15 & A7\\
+        \midrule
+         \rowcolor[gray]{.92}\textbf{1.6}&1.4&\textbf{0.8}&0.4&\textbf{1.3}&0.4\\
+        \textbf{1.7}&1.4&\textbf{0.9}&0.4&\textbf{1.4}&0.4\\
+        \rowcolor[gray]{.92}\textbf{1.8}&1.4&\textbf{1.0}&0.4&\textbf{1.5}&0.4\\
+        \textbf{1.9}&1.4&0.3&\textbf{1.1}&0.5&\textbf{1.2}\\
+        \rowcolor[gray]{.92}-&-&0.3&\textbf{1.2}&0.5&\textbf{1.3}\\
+        -&-&0.3&\textbf{1.3}&0.5&\textbf{1.4}\\
+        \bottomrule
+        \end{tabular}
+\end{center}
+\vspace{-5mm}
+\label{tab:trainingConfig}
+\end{table}
+
+\begin{table}[t!]
+\caption{Raw web features}
+\small
+\centering
+        \begin{tabular}{rll}
+        \toprule
+        \multirow{2}{*}{DOM Tree} & \#DOM nodes & depth of tree \\
+                & \#each HTML tag & \#each HTML attr. \\
+        \rowcolor[gray]{.92}  & \#rules  & \#each property \\
+        \rowcolor[gray]{.92}  \multirow{-2}{*}{Style Rules} & \#each selector pattern & \\
+        Other  & size of the webpage (Kilobytes) & \\
+        \bottomrule
+        \end{tabular}
+\label{tab:feature}
+\vspace{-4mm}
+\end{table}
+
+Figure~\ref{fig:training} depicts the process of using training webpages to
+build a SVM classifier for one of the three optimization metrics. Training
+involves finding the best processor configuration and extracting feature values for
+each training webpage, and learn a model from the training data.
+
+\paragraph*{Generate Training Data}
+%Our predictor is built \emph{offline} using a set of training webpages.
+In this work, we used over 800 webpages to train each SVM model. 
+These webpages are the landing page of the top 1000 hottest websites ranked by \texttt{www.alexa.com}~\cite{alexa}.
+These websites include a wide variety of website types,
+such as shopping, Video, Social network, Search engine,
+E-commerce, News and so forth.
+Whenever possible, we used the mobile version of the website.
+Before training, we have pre-downloaded the
+webpages from the Internet and stored the content in a RAM disk. For each
+webpage, we exhaustively execute the rendering engine under different processor
+settings and record the best performing configuration for each target optimization goal. We then label each
+best-performing configuration with a unique number. Table~\ref{tab:trainingConfig}
+lists the processor configurations found to be useful on our hardware platform.
+%To determine how many runs are needed in order to mitigate
+%the noise of task scheduling, we calculate the confidence range using a 95\%
+%confidence interval after each run and add an additional run if the
+%difference between the upper and lower confidence bounds is greater than 5\%.
+For each webpage, we also extract values of a set of selected features (described in Section~\ref{sec:web_features}).
+
+\paragraph*{Building The Model} The feature
+values together with the labelled processor configuration are supplied
+to a supervised learning algorithm~\cite{kotsiantis2007supervised}. The learning algorithm tries to find a
+correlation from the feature values to the optimal configuration and outputs
+a SVM model. Because we target three optimization metrics in this paper,
+we have constructed three SVM models: one for each optimization metric.
+Since training is only performed once at the factory, it is a
+\emph{one-off} cost. In our case the overall training process takes less than
+a week using two identical hardware platforms.
+
+
+One of the key aspects in building a successful predictor is
+finding the right features to characterise the input data.
+This is described in the next section. This is followed by sections  describing how to use the built predictor at runtime.
+
+\subsection{Web Features \label{sec:web_features}}
+
+\begin{table}[!t]
+\caption{Selected web features}
+\small
+\centering
+        \begin{tabular}{lp{6cm}}
+        \toprule
+        \#HTML tag & a, b, br, button, div, h1, h2, h3, h4, i, iframe, li, link, meta, nav, img,
+        noscript, p, script, section, span, style, table, tbody\\%25
+        \rowcolor[gray]{.92} \#HTML attr & alt, async, border, charset, class, height, content, href, media, method, onclick, placeholder, property, rel, role, style, target, type, value, background, cellspacing, width, xmlns, src\\%25
+        \#Style selector & class, descendant, element, id\\%4
+        \rowcolor[gray]{.92} \#Style rules &  background.attachment/clip/color/image, background.repeat.x/y, background.size,
+        background.border.image.repeat/slice/source/width, font.family/size/weight, color, display, float\\%14
+        Other info. & DOM tree depth,  \#DOM nodes, \#style rules,  size of the webpage (Kilobytes)\\%4
+        \bottomrule
+        \end{tabular}
+\label{tab:selected_features}
+\vspace{-2mm}
+\end{table}
+
+%We described the diversity of best processor setting for rendering web pages in energy, EDP and load time.
+%What exactly influence the mobile web browsing experience.
+%Recent works show that the root cause of ``configuration variance''
+%arises from the inherent webpage variance in the
+%DOM tree and style rules information,
+%and the web browser¡¯s energy consumption for different compositions are different.
+%So we can conclude that the elements which make
+%up the webpage are responsible for the ``configuration variance''.
+%
+%We extract 928 features that sufficiently represent all aspects of a web page and present it
+%to the SVM classifier. An overview of these features is given in table ~\ref{tab:feature}.
+%The DOM Tree data structure has a significant impact on the performance of rendering.
+%we extract HTML tags, attributes and the size of DOM tree from HTML source.
+%The CSS style rules determine how the HTML contents should be displayed.
+%Then we characterize rules, property and selector pattern separately.
+%We also take the web page size into consideration,
+%which influence the download time and energy consumption.
+%In addition, features contribute
+%least to the prediction is filtered out
+%by our training process.
+%
+%Before feeding the features to the SVM, we need to normalize all the feature vectors,
+%the values for each dimension are scaled to lie within 0 to 1.
+%Then we reduce the dimensionality
+%of complex feature sets which contributes less to the predictive model
+%in following three steps. Firstly,
+%some useless features are removed,
+%such as HTML tag \texttt{<DFN>}, \texttt{<EM>} and so on. secondly, features with
+%common values which have no impact on ``Configuration Variance''
+%are removed like \texttt{<BODY>} and \texttt{<BassicCLass>}. The last
+%step is process the redundant features. Web contents may contain
+%many attributes that are highly correlated with each other, such
+%as \texttt{<marginTop>}, \texttt{<marginRight>} layout related attributes in CSS
+%styles. The caret R package provides the find correlation
+%which will analyze a correlation matrix of attributes report on
+%attributes that can be removed, and our predictive model could
+%perform better if highly correlated features removed, we delete
+%the features which correlation coefficients $> 0.75$  in this paper.
+%In our experiment, we select 60 features. Using fewer carefully
+%selected training features is able to shrink predictor training time
+%without suffering a lost in accuracy.
+
+Our predictor is based on a number of features extracted from the HTML and
+CSS style rules. We started from 948 raw features that can be collected
+at runtime from Google Chromium. Table~\ref{tab:feature} lists the raw features
+considered in this work. These are chosen based on the intuitions of what information can affect scheduling.
+For examples, the DOM tree structures (e.g. the number of nodes, depth of
+the tree, and HTML tags) determine the complexity and layout of the
+webpage; the style rules determine how elements (e.g. tables and fonts) of
+the webpage should be rendered; and the larger size of the webpage the longer
+the rendering time will be.
+
+\paragraph*{Feature Selection}
+To build an accurate predictor using supervised learning, the training sample size typically needs to be
+at least one order of magnitude greater than the number of features. Given the size of our training
+examples (less than 500 webpages), we would like to reduce the number of
+features.  We achieve this by removing features that carry little or
+redundant information. For instances, we have removed features of HTML tags or attributes that
+have little impact on the rendering time or processor selection.
+Examples of those tags are \texttt{<def>}, \texttt{<em>} and \texttt{<body>}.
+We have also constructed a correlation coefficient matrix to quantify the
+correlation among features to remove similar features. The correlation
+coefficient takes a value between -1 and 1, the closer the coefficient is to
+$+/-1$, the stronger the correlation between the features. We
+removed a feature that has a correlation coefficient greater than 0.75 (ignore
+the sign) to any of the already chosen features.  Examplery similar features
+include the CSS styles \texttt{<marginTop>} and \texttt{<marginRight>} which
+often appear as pairs. Our feature selection process results in 73 features listed in Table~\ref{tab:selected_features}.
+
+\paragraph*{Feature Extraction}
+To extract features from the DOM tree, our extension first obtains a reference
+for each DOM element by traversing the DOM tree and then uses the Chromium
+API, \texttt{document.getElementsByID}, to collect node information. To
+gather CSS style features, it uses the \texttt{document.styleSheets} API to
+extract CSS rules including selector and declaration objects.
+
+\paragraph*{Feature Normalization}
+Before feeding the feature values to the learning algorithm, we scale
+values of each feature to the range of 0 and 1. We record the \emph{min} and \emph{max}
+values used for scaling, which are used to normalize feature values extracted from the
+new webpage during runtime deployment.
+
+\subsection{Runtime Deployment}
+
+%\begin{figure}
+%\begin{center}
+%\includegraphics[width=0.5\textwidth]{figure/predictive_model.pdf}
+%\end{center}
+%\caption{Predictive Model}
+%\label{fig:predictive}
+%\end{figure}
+%
+%The nature of our predictive model is classification.
+%We use an off-line supervised learning
+%scheme whereby we present the machine learning
+%component with pairs of features and desired mapping decisions
+%for different metrics, as figure~\ref{fig:predictive} presents.
+%These are generated from 400 webpages
+%with the different available scheduling
+%options and recording the energy, load time and EDP
+%during the web page loading, and we select the
+%best processor settings for each web page in different metrics.
+%Once the prediction model has been built using all the
+%available training data, no further learning
+%takes place.
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=0.48\textwidth]{figure/deployment.pdf}
+\end{center}
+\caption{Making predictions at runtime. Our extension extracts feature values from the input web contents. The feature values are
+then normalized and fed to the SVM model built offline to predict the optimal processor configuration.
+The prediction is then passed to a runtime schedule to map the render process to the predicted core and configure the processors of the system.
+}
+\label{fig:deployment}
+\vspace{-3mm}
+\end{figure}
+
+
+%Once we have built the model from training data, we apply it in
+%the plugin to predict the mapping of a \emph{new},
+%\emph{unseen} web contents. During the parsing stage of a newly
+%arrive web page, the plugin extract 60 normalized features.
+%Then the feature set is presented to the SVM predictor
+%and it returns a classification that indicates the mapping core
+%and frequency, this process takes less
+%than 5 ms. Finally, the configuration information
+%is sent to the low-level implementation scheduler.
+%It dynamic scheduling the render process in ideal processor setting.
+%And the overhead for transition between hardware configurations is
+%insignificant, which takes less than 25 ms.
+
+Once we have built the models as described above, we can use them to predict
+the best processor configuration for any \emph{new}, \emph{unseen} web
+contents. It communicates with a run scheduler running as an OS service to
+move the render process to the predicted core and set the processors to
+the predicted frequencies.
+
+Figure~\ref{fig:deployment} illustrates the process of runtime prediction and
+task scheduling.
+During the parsing stage, which takes less than 1\%
+of the total rendering time~\cite{meyerovich2010fast}, our extension firstly extracts and normalizes the feature values and uses a
+SVM classifier to predict the optimal processor configuration for a given
+optimization goal. The prediction is then passed to the runtime scheduler to
+perform task scheduling and hardware configuration. The overhead of extracting features, prediction
+and configuring processor frequency is small. It is less than
+20 ms which is included in our experimental results.
+
+
+As the DOM tree is constructed incrementally by the parser, it can change throughout the duration of rendering.
+To make sure our approach can adapt to the change of available information, re-prediction and rescheduling will be triggered if the DOM tree
+is significantly different from the one used for the last prediction. The difference is calculated by counting the number of DOM nodes between the previous and the current DOM trees.
+ If
+the difference is greater than 30\%, we will make a new prediction
+using feature values extracted from the current DOM tree and style rules. We
+have observed that our initial prediction often remains unchanged, so
+rescheduling and reconfiguration rarely happened in our experiments.
+
+
+\subsection{Example}
+
+\begin{table}[!t]
+\caption{None-zero feature values for \texttt{en.wikipedia.org}.}
+\scriptsize
+\begin{center}
+        \begin{tabular}{rrr}
+        \toprule
+        Feature & Real value & Normalized value\\
+        \midrule
+
+        \#DOM nodes & 754 &0.084\\
+        depth of tree & 13 &0.285\\
+        number of rules & 645 &0.063\\
+        web page sieze &2448&0.091\\
+
+        \#div & 131 & 0.026\\
+        \#h4 & 28 & 0.067\\
+        \#li & 52 & 0.031\\
+        \#link & 10 & 0.040\\
+        \#script & 3 & 0.015\\
+
+        \#href & 148 & 0.074\\
+        \#src & 36 & 0.053\\
+
+        \#background.attachment & 147 & 0.040\\
+        \#background.color & 218 & 0.058\\
+        \#background.image & 148 & 0.039\\
+
+        \#class & 995 & 0.045\\
+        \#descendant & 4454 & 0.0168\\
+        \#element & 609 & 0.134\\
+        \#id & 4 & 0.007\\
+        \bottomrule
+        \end{tabular}
+\end{center}
+\vspace{-3mm}
+\label{tab:normalized}
+\end{table}
+
+To demonstrate how our approach works consider rendering \texttt{wikipedia}
+for energy consumption. This scenario is useful
+when the mobile battery is running out while the user wants to get some information from \texttt{wikipedia}.  %For this example, we have constructed a SVM model
+%for energy using ``cross-validation" (Section~\ref{sec:evluation_method}) by
+%excluding the webpage from the training example.
+
+To determine the optimal processor configuration for energy consumption, we first extract values of the 73 features listed in
+Table~\ref{tab:selected_features} from the DOM tree and CSS style objects.
+The feature values will then be normalized as described in Section~\ref{sec:web_features}. Table~\ref{tab:normalized}
+lists some of the non-zero values for this website, before and after
+normalization. These feature values will be fed into the offline-trained SVM
+model which output a labeled processor configuration ($<$A15, 0.9,
+0.4$>$ in this case) indicating the optimal configuration is running the rendering process on
+the big core at 900 MHz and the little core should operate at the lowest possible
+frequency 400 MHz. This prediction is indeed the ideal processor
+configuration (see
+also Section~\ref {sec:motivation}). Finally, the processor configuration is
+communicated to a runtime scheduler to configure the hardware platform. For
+this example, our approach is able to reduce 58\% of the
+energy consumption when comparing to the Linux interactive governor.
+
+
+
+%To better understand the work flow of our approach,
+%we use \texttt{www.bbc.co.uk} as an example to illustrate
+%the details from feature extraction to best core mapping.
+%We select the lower energy as our optimization goal, and
+%apply the SVM model for energy in the plugin.
+%
+%During the parsing stage, the plugin
+%get reference for each DOM element
+%by traversing the DOM tree, and using the chrome provided API document.getElementsByID()
+%to extract every node related information.
+%The CSS style features are extracted by document.styleSheets()
+%that obtain StyleSheet objects, each object contains CSS rules.
+%The CSS rule objects contain selector and declaration
+%objects and other object corresponding to CSS grammar.
+%In the second step, the normalization
+%is carried out to process the above mentioned feature values.
+%Table\ref{tab:normalized}
+%presents part of collected feature values, from \texttt{bbc.co.uk}, before and after
+%the normalization processing.
+%The last step of plugin is classification,
+%the normalized values are feed into SVM energy model, and a two-tuples results
+%will be given to estimate the best core and frequency to run the render engine.
+%The ideal configuration is  $<$\emph{Cortex-A15, 1.0 Ghz}$>$
+%that has been presented in Table~\ref{tab:bestConfig}.
+%The processor setting information for rendering the \texttt{bbc.co.uk} will send to
+%the run-time scheduler,  to make a configuration transition to the
+%best configuration for rendering the \texttt{bbc.co.uk}.
+
+
+%\begin{figure}
+%\begin{center}
+%\includegraphics[width=0.5\textwidth]{figure/modelling_webpages.pdf}
+%\end{center}
+%\caption{Energy consumption for rendering the google, baidu, facebook and twitter pages compared to the Android default policy}
+%\label{fig:modellingWebpages}
+%\end{figure}
+
+%Figure~\ref{fig:modellingExample} shows how the
+%four web pages, \texttt{www.google.com}, \texttt{www.baidu.com},
+%\texttt{www.facebook.com}, \texttt{twitter.com},
+%are predicted by the energy predictor and scheduled by
+%our scheduler. Our energy predictor takes 60 feature values from
+%each web page and predicts to use the processor setting
+%for scheduling. For instance \texttt{facebook.com} is
+%classified by our predictor to Cortex-A15 processor with 1.0 Ghz.
+%\texttt{google.com} has a set of different feature
+%values, which is classified by the predictor to the Cortex-A7 processor with 0.9 Ghz.
+%Both \texttt{facebook.com} and \texttt{twitter.com} are classified to the \emph{big cluster},
+%and the other two are classified to the \emph{little cluster}.
+%Figure~\ref{fig:modellingWebpages} compares the best configuration against the Android
+%default interactive governor for \emph{energy} metrics,
+%the best configuration
+%achieves a 76\%, 53\%, 71\% and 57\% reduction for \texttt{google.com},
+%\texttt{baidu.com}, \texttt{facebook.com} and \texttt{twitter.com}
+%respectively over the default.
+
+
