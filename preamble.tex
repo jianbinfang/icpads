@@ -1,0 +1,50 @@
+\usepackage{graphicx}
+\usepackage{caption}
+
+% *** SUBFIGURE PACKAGES ***
+\usepackage{subfig}
+
+\usepackage{blindtext}
+\usepackage{adjustbox}
+\usepackage{multirow}
+\usepackage{color}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{colortbl}
+\usepackage{bbding}
+\usepackage{tikz}
+\usepackage{listings}
+\usepackage{etoolbox}
+\usepackage{subfig}
+
+\usepackage{url}
+\usepackage{setspace}
+%\usepackage{enumitem}
+\usepackage[british,english]{babel}
+
+
+%\usepackage[caption=false,font=footnotesize]{subfig}
+
+
+\newcommand{\circled}[2][]{\tikz[baseline=(char.base)]
+    {\node[shape = circle, draw, inner sep = 1pt]
+    (char) {\phantom{\ifblank{#1}{#2}{#1}}};%
+    \node at (char.center) {\makebox[0pt][c]{#2}};}}
+\robustify{\circled}
+
+
+\newcommand\FIXME[1]{\textcolor{red}{FIX:}\textcolor{red}{#1}}
+
+\makeatletter
+\def\@IEEEsectpunct{.\ \,}
+\def\paragraph{\@startsection{paragraph}{4}{\z@}{1.5ex plus 1.5ex minus 0.5ex}%
+{0ex}{\normalfont\normalsize\sffamily\bfseries}}
+
+
+\patchcmd{\@maketitle}
+  {\addvspace{0.2\baselineskip}\egroup}
+  {\addvspace{-1\baselineskip}\egroup}
+  {}
+  {}
+
+\makeatother
