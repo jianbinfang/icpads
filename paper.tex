@@ -1,71 +1,18 @@
 \documentclass[10pt, conference, letterpaper]{IEEEtran}
 
-\usepackage{graphicx}
-\usepackage{caption}
-
-% *** SUBFIGURE PACKAGES ***
-\usepackage{subfig}
-
-\usepackage{blindtext}
-\usepackage{adjustbox}
-\usepackage{multirow}
-\usepackage{color}
-\usepackage{booktabs}
-\usepackage{tabularx}
-\usepackage{colortbl}
-\usepackage{bbding}
-\usepackage{tikz}
-\usepackage{listings}
-\usepackage{etoolbox}
-\usepackage{subfig}
-
-\usepackage{url}
-\usepackage{setspace}
-%\usepackage{enumitem}
-\usepackage[british,english]{babel}
-
-
-%\usepackage[caption=false,font=footnotesize]{subfig}
-
-
-\newcommand{\circled}[2][]{\tikz[baseline=(char.base)]
-    {\node[shape = circle, draw, inner sep = 1pt]
-    (char) {\phantom{\ifblank{#1}{#2}{#1}}};%
-    \node at (char.center) {\makebox[0pt][c]{#2}};}}
-\robustify{\circled}
-
-
-\newcommand\FIXME[1]{\textcolor{red}{FIX:}\textcolor{red}{#1}}
-
-\makeatletter
-\def\@IEEEsectpunct{.\ \,}
-\def\paragraph{\@startsection{paragraph}{4}{\z@}{1.5ex plus 1.5ex minus 0.5ex}%
-{0ex}{\normalfont\normalsize\sffamily\bfseries}}
-
-
-\patchcmd{\@maketitle}
-  {\addvspace{0.2\baselineskip}\egroup}
-  {\addvspace{-1\baselineskip}\egroup}
-  {}
-  {}
-
-\makeatother
-
+\input{preamble}
 
 \begin{document}
 
-\title{Deep learning
-\vspace{-4 mm}}
+\title{Understanding Deep Learning Model Compression on Heterogeneous Mobile Platforms}
 
 
 
-\author{\IEEEauthorblockN{Qq\IEEEauthorrefmark{2}}
+\author{\IEEEauthorblockN{Qin Qing\IEEEauthorrefmark{2}, Jie Ren\IEEEauthorrefmark{3}, Ling Gao\IEEEauthorrefmark{2}, Hai Wang\IEEEauthorrefmark{2}, Zheng Wang\IEEEauthorrefmark{1}}
 \IEEEauthorblockA{
-\IEEEauthorrefmark{2}Northwest University, China, \IEEEauthorrefmark{3}Lancaster University, UK \\
-\IEEEauthorrefmark{2} jr@stumail.nwu.edu.cn, \{gl, hwang\}@nwu.edu.cn, \IEEEauthorrefmark{3}z.wang@lancaster.ac.uk
-\vspace{-3 mm}
-}
-}
+\IEEEauthorrefmark{2}Northwest University, China, \IEEEauthorrefmark{3}Shaanxi Normal University, China, \IEEEauthorrefmark{1}Lancaster University, UK \\
+\IEEEauthorrefmark{2} qq@stumail.nwu.edu.cn, \IEEEauthorrefmark{3}renjie@snnu.edu.cn,  \IEEEauthorrefmark{2}\{gl, hwang\}@nwu.edu.cn,
+\IEEEauthorrefmark{1}z.wang@lancaster.ac.uk } }
 
 \maketitle
 \begin{abstract}
@@ -78,10 +25,11 @@ workload characterisation
 \end{IEEEkeywords}
 
 \input{intro}
-\input{motivation}
-\input{workloads}
-\input{Overview}
-\input{evaluation}
+\input{background}
+%\input{overview}
+%\input{modelling}
+\input{setup}
+\input{results}
 \input{related_work}
 \input{conclusions}
 
