@@ -59,7 +59,7 @@
 
 
 
-\author{\IEEEauthorblockN{Jie Ren\IEEEauthorrefmark{2}, Ling Gao\IEEEauthorrefmark{2}\IEEEauthorrefmark{1}, Hai Wang\IEEEauthorrefmark{2}, Zheng Wang\IEEEauthorrefmark{3}}
+\author{\IEEEauthorblockN{Qq\IEEEauthorrefmark{2}}
 \IEEEauthorblockA{
 \IEEEauthorrefmark{2}Northwest University, China, \IEEEauthorrefmark{3}Lancaster University, UK \\
 \IEEEauthorrefmark{2} jr@stumail.nwu.edu.cn, \{gl, hwang\}@nwu.edu.cn, \IEEEauthorrefmark{3}z.wang@lancaster.ac.uk
@@ -79,7 +79,7 @@ workload characterisation
 
 \input{intro}
 \input{motivation}
-\input{overview}
+\input{workloads}
 \input{modelling}
 \input{setup}
 \input{results}
@@ -88,6 +88,6 @@ workload characterisation
 
 \newcommand{\BIBdecl}{\setlength{\itemsep}{0.3 em}}
 \bibliographystyle{IEEEtran}
-\bibliography{refs}
+\bibliography{IEEEabrv,refs}
 
 \end{document}

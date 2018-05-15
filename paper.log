@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9) (preloaded format=pdflatex 2017.9.10)  3 MAY 2018 22:13
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9) (preloaded format=pdflatex 2017.9.10)  15 MAY 2018 16:13
 entering extended mode
 **paper.tex
 (D:\mydata\paper\ing\icpads\paper.tex
@@ -775,9 +775,9 @@ LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <10> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 70.
  (D:\mydata\paper\ing\icpads\intro.tex)
 (D:\mydata\paper\ing\icpads\motivation.tex)
-(D:\mydata\paper\ing\icpads\overview.tex)
-(D:\mydata\paper\ing\icpads\modelling.tex)
-(D:\mydata\paper\ing\icpads\setup.tex) (D:\mydata\paper\ing\icpads\results.tex)
+(D:\mydata\paper\ing\icpads\workloads.tex)
+(D:\mydata\paper\ing\icpads\Overview.tex)
+(D:\mydata\paper\ing\icpads\evaluation.tex)
 (D:\mydata\paper\ing\icpads\related_work.tex)
 (D:\mydata\paper\ing\icpads\conclusions.tex)
 (D:\mydata\paper\ing\icpads\paper.bbl)
@@ -796,30 +796,26 @@ Before submitting the final camera ready copy, remember to:
 
 
 ]
-(D:\mydata\paper\ing\icpads\paper.aux)
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
- ) 
+(D:\mydata\paper\ing\icpads\paper.aux) ) 
 Here is how much of TeX's memory you used:
- 16718 strings out of 495354
- 317797 string characters out of 3183859
- 361203 words of memory out of 3000000
- 19515 multiletter control sequences out of 15000+200000
- 33752 words of font info for 67 fonts, out of 3000000 for 9000
+ 16713 strings out of 495354
+ 317708 string characters out of 3183859
+ 366211 words of memory out of 3000000
+ 19514 multiletter control sequences out of 15000+200000
+ 32616 words of font info for 66 fonts, out of 3000000 for 9000
  14 hyphenation exceptions out of 8191
  55i,13n,54p,1576b,355s stack positions out of 5000i,500n,10000p,200000b,50000s
-{C:/Users/JesseRen/AppData/Local/Programs/MiKTeX 2.9/fonts/enc/dvips/base/8r.
-enc}<C:/Users/JesseRen/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/ams
-fonts/cm/cmsy10.pfb><C:/Users/JesseRen/AppData/Local/Programs/MiKTeX 2.9/fonts/
-type1/public/amsfonts/cm/cmsy8.pfb><C:/Users/JesseRen/AppData/Local/Programs/Mi
-KTeX 2.9/fonts/type1/urw/times/utmb8a.pfb><C:/Users/JesseRen/AppData/Local/Prog
-rams/MiKTeX 2.9/fonts/type1/urw/times/utmbi8a.pfb><C:/Users/JesseRen/AppData/Lo
-cal/Programs/MiKTeX 2.9/fonts/type1/urw/times/utmr8a.pfb><C:/Users/JesseRen/App
-Data/Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/utmri8a.pfb>
-Output written on paper.pdf (1 page, 62142 bytes).
+{C:/Users/JesseRen/AppData/Local/Progra
+ms/MiKTeX 2.9/fonts/enc/dvips/base/8r.enc}<C:/Users/JesseRen/AppData/Local/Prog
+rams/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/JesseRen/Ap
+pData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Us
+ers/JesseRen/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/utmb8a.pfb
+><C:/Users/JesseRen/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/utm
+bi8a.pfb><C:/Users/JesseRen/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/t
+imes/utmr8a.pfb>
+Output written on paper.pdf (1 page, 56265 bytes).
 PDF statistics:
- 34 PDF objects out of 1000 (max. 8388607)
+ 30 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  13 words of extra memory for PDF output out of 10000 (max. 10000000)
 
