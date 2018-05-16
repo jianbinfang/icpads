@@ -1,0 +1,66 @@
+\documentclass[conference,compsoc]{IEEEtran}
+\input{preamble}
+\usepackage{multirow}
+
+\begin{document}
+%
+% paper title
+% Titles are generally capitalized except for words such as a, an, and, as,
+% at, but, by, for, in, nor, of, on, or, the, to and up, which are usually
+% not capitalized unless they are the first or last word of the title.
+% Linebreaks \\ can be used within to get better formatting as desired.
+% Do not put math or special symbols in the title.
+\title{Network Delay-Aware Optimization for Web Browsing \\on Heterogeneous Mobile Platforms\vspace{-4 mm}}
+
+ 
+\author{\IEEEauthorblockN{Jie Ren\IEEEauthorrefmark{2}, Xiaoming Wang\IEEEauthorrefmark{2}, Feng Tian\IEEEauthorrefmark{2},  Hai Wang\IEEEauthorrefmark{3},
+ Jie Zheng\IEEEauthorrefmark{3}, Zheng Wang\IEEEauthorrefmark{1}} \IEEEauthorblockA{
+\IEEEauthorrefmark{2} Shaanxi Normal University, China, \IEEEauthorrefmark{3}Northwest University, China, \IEEEauthorrefmark{1}Lancaster University, UK \\
+\IEEEauthorrefmark{2}\{renjie, wangxm, tianfeng\}@snnu.edu.cn, \IEEEauthorrefmark{3}\{hwang, jzheng\}@nwu.edu.cn,
+\IEEEauthorrefmark{1}z.wang@lancaster.ac.uk \vspace{-4 mm} } }
+
+% make the title area
+\maketitle
+
+% As a general rule, do not put math, special symbols or citations
+% in the abstract
+\begin{abstract}
+In this paper, we propose a machine
+learning based approach to predict which of the heterogeneous processors to use to render the web content and the operating frequencies of heterogeneous processors.
+We do so by first learning, \emph{offline}, a set of predictive models for a range of networking
+environments. We then choose a learnt model at runtime to predict the optimal processor configuration. The prediction is based on the web content, the network status and the optimization goal.
+We obtain, on average, over 21\% and 39\%
+of improvement respectively for load time and energy consumption, when compared to two competitive
+optimisers that are specifically tuned for mobile web browsing.
+\end{abstract}
+
+
+
+
+
+% For peer review papers, you can put extra information on the cover
+% page as needed:
+% \ifCLASSOPTIONpeerreview
+% \begin{center} \bfseries EDICS Category: 3-BBND \end{center}
+% \fi
+%
+% For peerreview papers, this IEEEtran command inserts a page break and
+% creates the second title. It will be ignored for other modes.
+\IEEEpeerreviewmaketitle
+
+\input{intro}
+\input{motivation}
+\input{overview}
+\input{modelling}
+\input{results}
+\input{related_work}
+\input{conclusions}
+
+\bibliographystyle{IEEEtran}
+\bibliography{IEEEabrv,refs}
+
+
+% that's all folks
+\end{document}
+
+
