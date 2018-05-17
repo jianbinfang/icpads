@@ -38,8 +38,8 @@
 
 
 
-Consider a scenario for browsing four \texttt{BBC} news pages, starting from the home page of \BBCW. Our evaluation device is an ARM big.LITTLE mobile platform with  a Cortex-A15 (big) and a Cortex-A7 (little)
-processors.
+Consider a scenario for browsing four \texttt{BBC} news pages, starting from the home page of \BBCW. Our evaluation platform has  a
+Cortex-A15 (big) and a Cortex-A7 (little) processors.
 
 \vspace{-1mm}
 \cparagraph{Networking Environments.} We consider three typical networking
@@ -66,8 +66,11 @@ frequency governors, and Figure~\ref{fig:motivation} summarizes the performance 
 \Interactive  gives the best \EDP compared to other existing governors in a Regular 4G and a WiFi environments, it fails to deliver the
 best-available performance for load time and energy consumption. Furthermore, there is significant room for improvement for the best-performing
 existing governor when compared to the \Oracle.  On average, the \Oracle outperforms the best-performing governor by 154.6\%,
-70.6\% respectively for load time and energy consumption across networking environments. 
+70.6\% respectively for load time and energy consumption across networking environments.
 More importantly, the oracle processor configuration varies across web pages, networking
 environments and evaluation metrics -- no single configuration consistently delivers the best-available performance.
 
-
+\cparagraph{Lessons Learned.} This example shows that the current mainstream CPU frequency governors are ill-suited for mobile web browsing
+and the best processor configuration depends on the network and the optimization goal. There is a need for a better scheduler that can
+adapt to the webpage workload, the networking environment and the optimization goal. In the remainder of this article, we describe such an
+approach based on machine learning.

@@ -22,15 +22,14 @@ optimum processor configuration. }
 %\emph{off-line} models of the platform's behavior, based on prior training data. The learnt models then predicts the best CPU frequency
 %decision for any \emph{unseen} webpage in a given networking environment.
 
-As illustrated in Figure~\ref{fig:predictor}, our approach consists of two components: (i) a network monitor running as an operating system
-service and (ii) a web browser extension. The network monitor measures the end to end
-delay and network bandwidths when downloading the
-webpage. The web browser extension determines the best processor configuration depending on the network environment and the web contents.
-We let the operating system to schedule other browser threads such as the input/output and the painting processes.
-At the heart of our web browser extension is a set of \emph{off-line} learned predictive models. 
-The predictor takes in a set of numerical values, or \emph{features values},
-which describes the essential characteristics of the webpage. It predicts which core to use to run the rendering process and at what
-frequency the heterogeneous processors should operate. The set of features used to describe the webpage is extracted from the web contents.
+Our approach, depicted in Figure~\ref{fig:predictor}, consists of two main components: (i) a network monitor running as an OS service and
+(ii) a web browser extension. The network monitor measures the end to end delay and network bandwidths when downloading the webpage. The
+web browser extension determines the best processor configuration depending on the network environment and the web contents. Our current
+implementation lets the OS to schedule other browser threads such as the input/output and the painting processes. At the heart of our web
+browser extension is a set of \emph{off-line} learned predictive models. The predictor takes in a set of numerical values, or
+\emph{features values}, which describes the essential characteristics of the webpage. It predicts which core to use to run the rendering
+process and at what frequency the heterogeneous processors should operate. The set of features used to describe the webpage is extracted
+from the web contents.
 
 
 
