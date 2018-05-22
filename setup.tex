@@ -1,15 +1,4 @@
 \section{Experimental Setup \label{sec:setup}}
-<<<<<<< HEAD
-NVIDIA Jetson TX2 is NVIDIA¡¯s second-generation CUDA-capable
-edge device. TX2 runs
-Linux using a quad-core ARM CPU. It is equipped with
-an NVIDIA Pascal GPU, which contains specialized
-architecture for AI applications. TX2 has 8 GB of LPDDR4
-RAM and supports PCIe2.0 and various peripherals such
-as UART, GPIOs, HDMI, USB 3.0 and 2.0, Ethernet, and
-802.11ac WLAN. NVIDIA provides the required drivers and
-CUDA toolkits for TX2 via the JetPack SDK.
-=======
 \subsection{Platform and Models}
 %Describe hardware
 \cparagraph{Hardware.} Our experimental platform is the NVIDIA Jetson TX2 embedded deep learning platform. The system has a 64~bit
@@ -59,4 +48,3 @@ library~\cite{silberman2013tensorflow}. The models are built using TensorFlow an
 only need to be loaded once in practice. To measure energy consumption, we developed a lightweight runtime to take readings from the
 on-board energy sensors at a frequency of 1,000 samples per second. We then matched the energy readings against the time stamps of model
 execution to calculate the energy consumption.
->>>>>>> 855a741c7f38a556ddbfc0133f6bd1a25d67cea3
