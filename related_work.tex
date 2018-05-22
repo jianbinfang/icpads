@@ -1,3 +1,21 @@
 \section{Related Work}
-Our work lies at the intersection of multiple research areas: web browsing optimization, task scheduling, energy optimization and predictive modeling. There is no existing work that is similar to ours, in respect to optimizing web workloads across multiple optimization objectives on heterogeneous mobile platforms.
+\DNNs have shown astounding successes in various tasks that previously seemed difficult~\cite{}. Despite the fact that many embedded
+devices require precise sensing capabilities, adoption of \DNN models on such systems has notably slow progress. This mainly due to
+\DNN-based inference being typically a computation intensive task, which inherently runs slowly on embedded devices due to limited
+resources.
 
+\FIXME{Talk about different compression techniques.}
+
+There is an extensive body of work on how to accelerate \DNN training using xx, xx, and xx. Our work aims to understand how to accelerate
+deep learning inference by choosing the right model compression technique.
+
+
+As an alternative to on-device inferencing, off-loading computation to the cloud can accelerate \DNN model inference
+\cite{teerapittayanon2017distributed}. Neurosurgeon \cite{Kang2017neurosurgeon} identifies when it is beneficial (\eg in terms of energy
+consumption and end-to-end latency) to offload a \DNN layer to be computed on the cloud. The Pervasive \CNN~\cite{7920809} generates
+multiple computation kernels for each layer of a \CNN, which are then dynamically selected according to the inputs and user constraints. A
+similar approach presented in \cite{RodriguezWZMH17} trains a model twice, once on shared data and again on personal data, in an attempt to
+prevent personal data being sent outside the personal domain. Computation off-loading is not always applicable due to privacy, latency or
+connectivity issues. The work presented by Ossia \etal partially addresses the issue of privacy-preserving when offloading \DNN inference
+to the cloud ~\cite{ossia2017hybrid}. Our work is complementary to prior work on computation off-loading by offering insights to choose the
+optimal compression technique to best optimize local inference.
