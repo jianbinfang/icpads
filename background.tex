@@ -12,20 +12,7 @@ Resnet: Microsoft Researcher Kaiming He and others proposed Resnet and won the c
 MobileNet: MobileNet was proposed by Horward et al. in 2017. Its architecture consists of a standard convolution layer acting on the input image, a deep separable convolutional stack, and a final average pool and fully connected layer. Mobilenet uses a deeply separable convolution to build a lightweight, deep neural network that can integrate standard volumes into a deep convolution and a dot convolution (1 × 1 convolution kernel). Depth convolution applies each convolution kernel to each channel, and 1 × 1 convolution is used to combine the output of channel convolutions. This decomposition can effectively reduce the computation and reduce the model size. MobileNet has a clear advantage in terms of computational volume and model size.
 
 \subsection{Motivation}
-The ImageNet\FIXME{\cite{}} competitions has led to great improvement 
-in the accuracy of image classification,
-which has improved from \FIXME{\cite{}} to \FIXME{\cite{}},
-by increasing the depth and width of the neural networks
-such as \FIXME{model} contains contains \FIXME{number} layers and
-\FIXME{number} million of parameters.
-However, the excellent performance of these deep networks 
-depends on the powerful computing devices, which also accompany with
-energy-extensive consumption, to deal with a huge number of operations (up to $O(10^9)$)
-for one inference, such as memory access and arithmetic. 
-It is expected that the size of the CCNs (i.e., number
-of weights) will be larger for the more difficult task
-than the simpler task and thus require
-more energy.
+
 
 
 
