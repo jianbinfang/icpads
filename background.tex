@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 \section{Background and Motivation}
 \subsection{Workloads}
 
@@ -32,12 +33,27 @@ on the contrary, the quantization causes significant slowdown with 1.45x than th
 the details will be disscused in section \FIXME{};
 As for accuracy,  the overall accuracy of pruning drops only 5\%, the quantization drops 3\%.
 So we can maintain the default value when using the above mentioned two compression techiniques.
+=======
+
+\section{Motivation}
+Compressing a deep learning model into a smaller size typically leads to a smaller model footprint, but it does not always lead to faster
+inference time and lower energy consumption. As a motivation example, considering applying \FIXME{four} commonly used model compression
+techniques to \FIXME{xx} influential deep learning models -- including \FIXME{xx} \CNNs and \FIXME{RNNs}. Our evaluation platform is a
+NVIDIA Jetson TX2 embedded deep learning platform with Tensorflow Mobile \FIXME{v.xx} (see Section~\ref{sec:platform}).
+
+Figure~\ref{} summarizes the change of the storage size, memory footprint, inference time, and energy consumption after applying each model
+compression technique.
+
+\ref{fig:motivation}
+
+>>>>>>> 807861a1dc9987c65b37af9de20b0b63329e0e33
 \begin{figure}[!t]
 \centering
 \subfloat[][Model size]{\includegraphics[width=0.33\textwidth]{figure/motivation_size.pdf}}
 \hfill
 \subfloat[][Inference time]{\includegraphics[width=0.33\textwidth]{figure/motivation_time.pdf}}
 \hfill
+<<<<<<< HEAD
 \subfloat[][Accuracy]{\includegraphics[width=0.33\textwidth]{figure/motivation_accuracy.pdf}}
 \caption{The achieved model size (a) inference time (b) and accuracy (c) before and after the compression by quantization and pruning.
 There is significant room for improvement.} 
@@ -59,3 +75,11 @@ paper, we describe such an approach based on the above mentioned techiques.
 
 
 
+=======
+\subfloat[][Inference time]{\includegraphics[width=0.4\textwidth]{figure/motivation_time.pdf}}
+\caption{The achieved model size (a) and inference time (b) before and after the compression by quantization and pruning.
+There is significant room for improvement.}
+\label{fig:motivation}
+\end{figure}
+>>>>>>> origin/master
+>>>>>>> 807861a1dc9987c65b37af9de20b0b63329e0e33
