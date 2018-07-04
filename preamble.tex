@@ -21,6 +21,7 @@
 \usepackage{setspace}
 %\usepackage{enumitem}
 \usepackage[british,english]{babel}
+\usepackage{wrapfig}
 
 
 %\usepackage[caption=false,font=footnotesize]{subfig}
@@ -44,6 +45,35 @@
 \patchcmd{\@maketitle}
   {\addvspace{0.2\baselineskip}\egroup}
   {\addvspace{-1\baselineskip}\egroup}
-  
+
 
 \makeatother
+
+\newcommand{\cparagraph}[1]{\vspace{1mm}\noindent \textbf{#1}}
+
+
+
+\newcommand{\topone} {{top-1}\xspace}
+\newcommand{\topfive} {{top-5}\xspace}
+\newcommand{\DNN} {\texttt{DNN}\xspace}
+\newcommand{\DNNs} {\texttt{DNNs}\xspace}
+\newcommand{\CNN} {\texttt{CNN}\xspace}
+\newcommand{\RNN} {\texttt{RNN}\xspace}
+\newcommand{\RNNs} {\texttt{RNNs}\xspace}
+\newcommand{\CNNs} {\texttt{CNNs}\xspace}
+\newcommand{\NN} {\texttt{KNN}\xspace}
+\newcommand{\nNN} {\texttt{NN}\xspace}
+\newcommand{\SVM} {\texttt{SVM}\xspace}
+\newcommand{\DT} {\texttt{DT}\xspace}
+
+
+\newcommand*{\aka}{{aka}\@\xspace}
+\newcommand*{\cf}{\textit{cf.}\@\xspace}
+\newcommand*{\eg}{\textit{e.g.}\@\xspace}
+\newcommand*{\ie}{\textit{i.e.}\@\xspace}
+
+\newcommand*{\etal}{%
+    \@ifnextchar{.}%
+        {et al}%
+        {et al.\@\xspace}%
+}
