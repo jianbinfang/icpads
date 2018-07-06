@@ -24,7 +24,7 @@ The compression technique to use depends on the optimization target.}
 \subsection{Motivation}
 Choosing the right compression technique is non-trivial. As a motivation example, consider applying two widely used model compression
 techniques, \pruning~\cite{manessi2017automated} and \dquantization~\cite{}, to two influential \CNN models, \texttt{VGG\_16} 	and
-\texttt{Resnet\_50}. Our evaluation platform is a NVIDIA Jetson TX2 embedded deep learning platform (see Section~\ref{}).
+\texttt{Resnet\_50}. Our evaluation platform is a NVIDIA Jetson TX2 embedded deep learning platform (see Section~\ref{sec:platform}).
 
 \cparagraph{Setup.} We apply the compression technique to the pre-trained model (which has been trained on the ImageNet ILSVRC 2012
 training dataset~\cite{}). We then test the original and the compressed models on ILVRSC 2012 validation set which contains 50k images.
