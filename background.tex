@@ -1,10 +1,10 @@
 
 \section{Background and Motivation}
 \subsection{Background}
-In this work, we consider xx commonly used model compression techniques, described as follows.
+In this work, we consider two commonly used model compression techniques, described as follows.
 
 \cparagraph{Pruning.}
-
+The idea of pruning is that some parameters in the network are redundant and can be removed, resulting in a smaller and faster network. The pruning is a three stage iterative process: Prune / Train / Repeat. Firstly, evaluating the importance of each neuron and ranks the neurons according to how much they contribute, and removing the least importance one; after the pruning, the accuracy will drop, so the pruned network need to be retrained to regain accuracy; the pruned network could be damaged if too many parameters are pruned at once, so we pruned a few neurons and repeat the this process.\\
 \cparagraph{Data quantization.}
 
 \cparagraph{xx.}
