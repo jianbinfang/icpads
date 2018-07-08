@@ -3,11 +3,14 @@
 \subsection{Background}
 In this work, we consider two commonly used model compression techniques, described as follows.
 
-\cparagraph{Pruning.}
-The idea of pruning is that some parameters in the network are redundant and can be removed, resulting in a smaller and faster network. The pruning is a three stage iterative process: Prune / Train / Repeat. Firstly, evaluating the importance of each neuron and ranks the neurons according to how much they contribute, and removing the least importance one; after the pruning, the accuracy will drop, so the pruned network need to be retrained to regain accuracy; the pruned network could be damaged if too many parameters are pruned at once, so we pruned a few neurons and repeat the this process.\\
-\cparagraph{Data quantization.}
+\cparagraph{Pruning.} This technique removes less important parameters from a trained network. Pruning ranks the neurons in the network
+according how much the neuron contribute, it then removes the low ranking neurons to reduce the model size. Care must be taken to not
+remove too many neurons to significantly damage the accuracy of the network.
 
-\cparagraph{xx.}
+\cparagraph{Data quantization.} This technique reduces the number of bits used to store the weights of a network, e.g., using 8-bit to
+represent a 32-bit floating point number. In this work, we apply data quantization to convert a pre-trained floating point model into a
+fixed point model without re-training. We choose to use an 8-bit representation as it is the most common fixed point data quantization
+approach~\FIXME{\cite{}}.
 
 \begin{figure*}[!t]
 \centering
@@ -28,7 +31,7 @@ techniques, \pruning~\cite{manessi2017automated} and \dquantization~\cite{han201
 
 \cparagraph{Setup.} We apply the compression technique to the pre-trained model (which has been trained on the ImageNet ILSVRC 2012
 training dataset~\cite{imagenet2012}). We then test the original and the compressed models on ILVRSC 2012 validation set which contains 50k images.
-We use pruning and quantization to compress two typical models \texttt{VGG\_16} and \texttt{Resnet 50}, 
+We use pruning and quantization to compress two typical models \texttt{VGG\_16} and \texttt{Resnet 50},
 and the loss of accuracy for pruning and quantization are less than 5\%,and 3\% respectively.
 We use the GPU for
 inferencing.
