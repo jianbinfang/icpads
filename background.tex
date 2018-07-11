@@ -14,12 +14,15 @@ approach~\FIXME{\cite{}}.
 
 \begin{figure*}[!t]
 \centering
-\subfloat[][Model size]{\includegraphics[width=0.28\textwidth]{figure/motivation_size.pdf}}
+\subfloat[][Model size]{\includegraphics[width=0.23\textwidth]{figure/motivation_size.pdf}}
 \hfill
-\subfloat[][Inference time]{\includegraphics[width=0.28\textwidth]{figure/motivation_time.pdf}}
+\subfloat[][Inference time]{\includegraphics[width=0.23\textwidth]{figure/motivation_time.pdf}}
 \hfill
-\subfloat[][Accuracy]{\includegraphics[width=0.28\textwidth]{figure/motivation_accuracy.pdf}}
-\caption{The achieved model size (a) inference time (b) and accuracy (c) before and after the compression by \quantization and \pruning.
+\subfloat[][Energy consunption]{\includegraphics[width=0.23\textwidth]{figure/motivation_energy.pdf}}
+\hfill
+\subfloat[][Accuracy]{\includegraphics[width=0.23\textwidth]{figure/motivation_accuracy.pdf}}
+\hfill
+\caption{The achieved model size (a) inference time (b) energy consumption (c) and accuracy (d) before and after the compression by \quantization and \pruning.
 The compression technique to use depends on the optimization target.}
 \label{fig:motivation}
 \end{figure*}
@@ -37,11 +40,18 @@ We use the GPU for
 inferencing.
 
 \cparagraph{Motivation Results.} Figure~\ref{fig:motivation} compares the model size, inference time and accuracy after applying model
-compression. By removing some of the pathways of the network, \pruning is able to reduces the inference time by 28\%. However, it offers
+compression. By removing some of the pathways of the network, \pruning is able to reduces the inference time and
+energy consumption by 28\% and 22.5\%, respectively. However, it offers
 little saving in storage size because network weights still deaminate the model size. By contrast, by using a few number of bits to
 represent the weights, \quantization significantly reduces the model storage size by 75\%. However, the reduction in the model size does
-not translate to faster inference time; on the contrary, the inference time increases by 1.45x. This is because the sparsity in network
-weights brought by \quantization leads to irregular computation which causes poor GPU performance~\cite{}. Applying both compression
+not translate to faster inference time and fewer energy consumption; 
+on the contrary, the inference time and energy increase by 1.41x and 1.19x respectively. 
+This is because the quantized graph adds a subgraph which containing the conversion function, 
+and converts 8 bits to 32 bits as the input of the output layer to ensure the accuracy of the output layer.
+Although the instantaneous power is reduced, the more energy is caused by the increased inference time.
+%This is because the sparsity in network
+%weights brought by \quantization leads to irregular computation which causes poor GPU performance~\cite{}. 
+Applying both compression
 techniques has modest impact on the prediction accuracy, on average, less than 5\%. This suggests that both techniques can be profitable.
 
 \cparagraph{Lessons Learned.} This example shows that the compression technique to use depends on what to be optimized for. If storage

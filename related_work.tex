@@ -1,5 +1,5 @@
 \section{Related Work}
-\DNNs have shown astounding successes in various tasks that previously seemed difficult~\cite{}. Despite the fact that many embedded
+\DNNs have shown astounding successes in various tasks that previously seemed difficult~\cite{cho2014learning}. Despite the fact that many embedded
 devices require precise sensing capabilities, adoption of \DNN models on such systems has notably slow progress. This mainly due to
 \DNN-based inference being typically a computation intensive task, which inherently runs slowly on embedded devices due to limited
 resources.
@@ -12,10 +12,10 @@ deep learning inference by choosing the right model compression technique.
 
 As an alternative to on-device inferencing, off-loading computation to the cloud can accelerate \DNN model inference
 \cite{teerapittayanon2017distributed}. Neurosurgeon \cite{Kang2017neurosurgeon} identifies when it is beneficial (\eg in terms of energy
-consumption and end-to-end latency) to offload a \DNN layer to be computed on the cloud. The Pervasive \CNN~\cite{7920809} generates
+consumption and end-to-end latency) to offload a \DNN layer to be computed on the cloud. The Pervasive \CNN~\cite{song2017towards} generates
 multiple computation kernels for each layer of a \CNN, which are then dynamically selected according to the inputs and user constraints. A
-similar approach presented in \cite{RodriguezWZMH17} trains a model twice, once on shared data and again on personal data, in an attempt to
+similar approach presented in \cite{servia2017personal} trains a model twice, once on shared data and again on personal data, in an attempt to
 prevent personal data being sent outside the personal domain. Computation off-loading is not always applicable due to privacy, latency or
 connectivity issues. The work presented by Ossia \etal partially addresses the issue of privacy-preserving when offloading \DNN inference
-to the cloud ~\cite{ossia2017hybrid}. Our work is complementary to prior work on computation off-loading by offering insights to choose the
+to the cloud ~\cite{osia2017hybrid}. Our work is complementary to prior work on computation off-loading by offering insights to choose the
 optimal compression technique to best optimize local inference.
