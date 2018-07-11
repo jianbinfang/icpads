@@ -46,11 +46,11 @@ little saving in storage size because network weights still deaminate the model 
 represent the weights, \quantization significantly reduces the model storage size by 75\%. However, the reduction in the model size does
 not translate to faster inference time and fewer energy consumption; 
 on the contrary, the inference time and energy increase by 1.41x and 1.19x respectively. 
-This is because the quantized graph adds a subgraph which containing the conversion function, 
-and converts 8 bits to 32 bits as the input of the output layer to ensure the accuracy of the output layer.
-Although the instantaneous power is reduced, the more energy is caused by the increased inference time.
-%This is because the sparsity in network
-%weights brought by \quantization leads to irregular computation which causes poor GPU performance~\cite{}. 
+%This is because the quantized graph adds a subgraph which containing the conversion function, 
+%and converts 8 bits to 32 bits as the input of the output layer to ensure the accuracy of the output layer.
+%Although the instantaneous power is reduced, the more energy is caused by the increased inference time.
+This is because the sparsity in network
+weights brought by \quantization leads to irregular computation which causes poor GPU performance~\cite{}. 
 Applying both compression
 techniques has modest impact on the prediction accuracy, on average, less than 5\%. This suggests that both techniques can be profitable.
 
