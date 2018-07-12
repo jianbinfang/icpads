@@ -8,12 +8,14 @@ resources.
 There has been a significant amount of work on reducing the storage and computation work by model compression.
 For parameter sharing, Song et al.~\cite{han2015deep} proposed a method which quantizes the weights to enforce weight sharing and apply Huffman coding to compress model size. 
 This method reduced the storage required by AlexNet by 35x and the size of VGG\_16 by 49x. In~\cite{Gong2014Compressing}, 
-the authors tackled model storage issue by investigating information theoretical vector quantization methods for compressing the parameters of CNNs.
-
+the authors tackled model storage issue by investigating information theoretical vector quantization methods for compressing the parameters of CNNs.}
+\FIXME{
 With respect to pruning weights, ~\cite{Li2016Pruning} presented an acceleration method for CNNs, in which the authors pruned filters from CNNs that are identified as having a small effect on the output accuracy. By removing whole filters in the network together with their connecting feature maps, the computation costs are reduced significantly. Meantime, a LASSO regression based channel selection and least square reconstruction were presented by~\cite{he2017channel}, this method was applied to accelerate very deep convolutional neural networks and obtained promising results.
-
+}
+\FIXME{
 Besides parameter sharing and pruning, the Low-rank factorization and Knowledge Distillation are also widely adopted in model compression. Denton et al.~\cite{denton2014exploiting}exploited the linear structure present within the convolutional filters to derive approximations that significantly reduce the required computation. ~\cite{lebedev2014speeding} proposed a simple two-step approach for speeding up convolution layers within large convolutional neural networks based on tensor decomposition and discriminative fine-tuning. A simple methodology to include a noise-based regularizer while training the student from the teacher was proposed in ~\cite{Sau2016Deep}, which provides a healthy improvement in the performance of the student network. Also, the same idea was proposed by ~\cite{Hinton2015Distilling}, which improved the acoustic model of a heavily used commercial system by distilling the knowledge in an ensemble of models into a single mode.
 }
+
 
 There has been a significant amount of work on reducing the storage and computation work by model compression. These techniques include
 pruning~\cite{}, quantization~\cite{}, knowledge distillation~\cite{}, huffman coding~\cite{}, low rank and sparse decomposition~\cite{},
@@ -49,4 +51,3 @@ optimal compression technique to best optimize local inference.
 %connectivity issues. The work presented by Ossia \etal partially addresses the issue of privacy-preserving when offloading \DNN inference
 %to the cloud ~\cite{osia2017hybrid}. Our work is complementary to prior work on computation off-loading by offering insights to choose the
 %optimal compression technique to best optimize local inference.
->>>>>>> 09ee08e91332d4af9f2af6c907a486ecf4d7eccb
