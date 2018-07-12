@@ -4,20 +4,24 @@ devices require precise sensing capabilities, adoption of \DNN models on such sy
 \DNN-based inference being typically a computation intensive task, which inherently runs slowly on embedded devices due to limited
 resources.
 
-\FIXME{Talk about different compression techniques.}
-There has been a significant amount of work on reducing the storage and computation work by model compression.
+There has been a significant amount of work on reducing the storage and computation work by model compression. These techniques include
+pruning~\cite{}, quantization~\cite{}, knowledge distillation~\cite{}, huffman coding~\cite{}, low rank and sparse decomposition~\cite{},
+etc. This paper develops a quantitative approach to understand the cost and benefits of deep learning compression techniques. We target
+pruning and data quantization because these are widely used techniques and can be directly applied to a pre-trained model.
 
 
-There is an extensive body of work on how to accelerate \DNN training using xx, xx, and xx. Our work aims to understand how to accelerate
-deep learning inference by choosing the right model compression technique.
+In addition to model compression, other works exploit computation-offloading~\cite{teerapittayanon2017distributed,Kang2017neurosurgeon},
+specialised hardware design~\cite{chen2017eyeriss,Han:2016:EEI:3001136.3001163}, and dynamic model
+selection~\cite{Taylor:2018:ADL:3211332.3211336}. Our work aims to understand how to accelerate deep learning inference by choosing the
+right model compression technique. Thus, these approaches are orthogonal to our work.
 
 
-As an alternative to on-device inferencing, off-loading computation to the cloud can accelerate \DNN model inference
-\cite{teerapittayanon2017distributed}. Neurosurgeon \cite{Kang2017neurosurgeon} identifies when it is beneficial (\eg in terms of energy
-consumption and end-to-end latency) to offload a \DNN layer to be computed on the cloud. The Pervasive \CNN~\cite{song2017towards} generates
-multiple computation kernels for each layer of a \CNN, which are then dynamically selected according to the inputs and user constraints. A
-similar approach presented in \cite{servia2017personal} trains a model twice, once on shared data and again on personal data, in an attempt to
-prevent personal data being sent outside the personal domain. Computation off-loading is not always applicable due to privacy, latency or
-connectivity issues. The work presented by Ossia \etal partially addresses the issue of privacy-preserving when offloading \DNN inference
-to the cloud ~\cite{osia2017hybrid}. Our work is complementary to prior work on computation off-loading by offering insights to choose the
-optimal compression technique to best optimize local inference.
+%As an alternative to on-device inferencing, off-loading computation to the cloud can accelerate \DNN model inference
+%\cite{teerapittayanon2017distributed}. Neurosurgeon \cite{Kang2017neurosurgeon} identifies when it is beneficial (\eg in terms of energy
+%consumption and end-to-end latency) to offload a \DNN layer to be computed on the cloud. The Pervasive \CNN~\cite{song2017towards} generates
+%multiple computation kernels for each layer of a \CNN, which are then dynamically selected according to the inputs and user constraints. A
+%similar approach presented in \cite{servia2017personal} trains a model twice, once on shared data and again on personal data, in an attempt to
+%prevent personal data being sent outside the personal domain. Computation off-loading is not always applicable due to privacy, latency or
+%connectivity issues. The work presented by Ossia \etal partially addresses the issue of privacy-preserving when offloading \DNN inference
+%to the cloud ~\cite{osia2017hybrid}. Our work is complementary to prior work on computation off-loading by offering insights to choose the
+%optimal compression technique to best optimize local inference.
