@@ -233,4 +233,8 @@ paper.aux
 >>>>>>> 9b63d428e6746c7f137d2dcf317b07e7594cf6cb
 RJCAL/ieeetran-final_sub/IEEEtran/bare_conf_compsoc.pdf
 paper.pdf
+<<<<<<< HEAD
 *.docx
+=======
+*.cfg
+>>>>>>> fbf429aa20fceed85e1ce2a226e634c0efe6f08a
