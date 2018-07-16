@@ -26,24 +26,33 @@ Our experiments try to answer the following questions:
 \hfill
 \subfloat[][Accuracy]{\includegraphics[width=0.3\textwidth]{figure/quan_acc.pdf}}
 \hfill
-\subfloat[][Power consumption]{\includegraphics[width=0.4 	\textwidth]{figure/quan_power.pdf}}
+\subfloat[][Power consumption]{\includegraphics[width=0.3\textwidth]{figure/quan_power.pdf}}
 \hfill
-\subfloat[][Energy consumption]{\includegraphics[width=0.4\textwidth]{figure/quan_energy.pdf}}
+\subfloat[][Energy consumption]{\includegraphics[width=0.3\textwidth]{figure/quan_energy.pdf}}
 \hfill
 
-\caption{The achieved model size (a) inference time (b) energy consumption (c) and accuracy (d) before and after the compression by \quantization and \pruning.
-The compression technique to use depends on the optimization target.\FIXME{do something later}}
+\caption{The achieved model size (a) inference time (b) accuracy (c) power consumption (d) 
+energy consumption (e) and F1 score (e) before and after the compression by \quantization.
+The compression technique to use depends on the optimization target.\FIXME{f1 score later}}
 \label{fig:analy_quan}
 \end{figure*}
 
 
 \begin{figure*}[!t]
 \centering
-\subfloat[][Model size]{\includegraphics[width=0.4\textwidth]{figure/prun_acc.pdf}}
+\subfloat[][Model size]{\includegraphics[width=0.3\textwidth]{figure/prun_size.pdf}}
+\hfill
+\subfloat[][Inference time]{\includegraphics[width=0.3\textwidth]{figure/prun_time.pdf}}
+\hfill
+\subfloat[][Accuracy]{\includegraphics[width=0.3\textwidth]{figure/prun_acc.pdf}}
+\hfill
+\subfloat[][Power consumption]{\includegraphics[width=0.3\textwidth]{figure/prun_power.pdf}}
+\hfill
+\subfloat[][Energy consumption]{\includegraphics[width=0.3\textwidth]{figure/prun_energy.pdf}}
 \hfill
 
-
-\caption{The achieved model size (a) inference time (b) energy consumption (c) and accuracy (d) before and after the compression by \quantization and \pruning.
-The compression technique to use depends on the optimization target.}
+\caption{The achieved model size (a) inference time (b) accuracy/BLEU (c) power consumption (d) 
+energy consumption (e) and F1 score (e) before and after the compression by \pruning.
+The compression technique to use depends on the optimization target.\FIXME{f1 score later}}
 \label{fig:motivation}
 \end{figure*}
