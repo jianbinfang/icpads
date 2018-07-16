@@ -17,3 +17,27 @@ Our experiments try to answer the following questions:
 
 
 \subsection{Analysis}
+
+\begin{figure*}[!t]
+\centering
+\subfloat[][Model size]{\includegraphics[width=0.4\textwidth]{figure/quan_acc.pdf}}
+\hfill
+\subfloat[][Inference time]{\includegraphics[width=0.4\textwidth]{figure/quan_energy.pdf}}
+\hfill
+
+\caption{The achieved model size (a) inference time (b) energy consumption (c) and accuracy (d) before and after the compression by \quantization and \pruning.
+The compression technique to use depends on the optimization target.}
+\label{fig:analy_quan}
+\end{figure*}
+
+
+\begin{figure*}[!t]
+\centering
+\subfloat[][Model size]{\includegraphics[width=0.4\textwidth]{figure/prun_acc.pdf}}
+\hfill
+
+
+\caption{The achieved model size (a) inference time (b) energy consumption (c) and accuracy (d) before and after the compression by \quantization and \pruning.
+The compression technique to use depends on the optimization target.}
+\label{fig:motivation}
+\end{figure*}
