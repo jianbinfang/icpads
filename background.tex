@@ -1,17 +1,3 @@
-
-\section{Background and Motivation}
-\subsection{Background}
-In this work, we consider two commonly used model compression techniques, described as follows.
-
-\cparagraph{Pruning.} This technique removes less important parameters from a trained network. Pruning ranks the neurons in the network
-according how much the neuron contribute, it then removes the low ranking neurons to reduce the model size. Care must be taken to not
-remove too many neurons to significantly damage the accuracy of the network.
-
-\cparagraph{Data quantization.} This technique reduces the number of bits used to store the weights of a network, e.g., using 8-bit to
-represent a 32-bit floating point number. In this work, we apply data quantization to convert a pre-trained floating point model into a
-fixed point model without re-training. We choose to use an 8-bit representation as it is the most common fixed point data quantization
-approach~\FIXME{\cite{}}.
-
 \begin{figure*}[!t]
 \centering
 \subfloat[][Model size]{\includegraphics[width=0.23\textwidth]{figure/motivation_size.pdf}}
@@ -26,6 +12,21 @@ approach~\FIXME{\cite{}}.
 The compression technique to use depends on the optimization target.}
 \label{fig:motivation}
 \end{figure*}
+
+\section{Background and Motivation}
+\subsection{Background}
+In this work, we consider two commonly used model compression techniques, described as follows.
+
+\cparagraph{Pruning.} This technique removes less important parameters from a trained network. Pruning ranks the neurons in the network
+according how much the neuron contribute, it then removes the low ranking neurons to reduce the model size. Care must be taken to not
+remove too many neurons to significantly damage the accuracy of the network.
+
+\cparagraph{Data quantization.} This technique reduces the number of bits used to store the weights of a network, e.g., using 8-bit to
+represent a 32-bit floating point number. In this work, we apply data quantization to convert a pre-trained floating point model into a
+fixed point model without re-training. We choose to use an 8-bit representation as it is the most common fixed point data quantization
+approach~\FIXME{\cite{}}.
+
+
 
 \subsection{Motivation}
 Choosing the right compression technique is non-trivial. As a motivation example, consider applying two widely used model compression
