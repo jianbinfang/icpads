@@ -10,12 +10,12 @@ including CPU, memory, and power, even for simple tasks~\cite{CanzianiPC16}. Wit
  the hoped-for advances on embedded sensing will not arrive.
 
 
-Numerous approaches have been proposed to accelerate deep inference on embedded devices. These include designing specialize hardware to
+Numerous approaches have been proposed to accelerate deep inference on embedded devices. These include designing purposed-built hardware to
 reduce the computation or memory latency~\cite{}, compressing a pre-trained model to reduce its storage and memory footprint as well as
 computational requirements~\cite{}, and offloading some, or all, computation to a cloud
 server~\cite{Kang2017neurosurgeon,teerapittayanon2017distributed}. Compared to specialized hardware, software-based model compression
-techniques have the advantage of being readily deployable on commercial-off-the-self hardware; compared to computation offloading, model
-compression enables on-device inference which in turn allows faster response time and has less privacy concerns. These advantages make
+techniques have the advantage of being readily deployable on commercial-off-the-self hardware; and compared to computation offloading,
+model compression enables on-device inference which in turn allows faster response time and has less privacy concerns. Such advantages make
 model compressions attractive on existing hardware platforms where computation offloading is not feasible.
 
 
@@ -26,14 +26,13 @@ translate into faster inference time. Because a model compression technique is n
 and how to apply it.
 
 In this paper, we aim to understand deep learning model compression techniques for embedded inference. This knowledge allows not only the
-better deployment of computation-intensive models, but also designing more efficient architectures for models and hardware for on mobile
-and IoT devices.
+better deployment of computation-intensive models, but also designing more efficient architectures for models and hardware for mobile and
+IoT devices.
 
-In this work, we develop a quantitative approach  to characterize two mainstream model compression techniques, pruning~\cite{} and data
-quantization~\cite{}. We apply the techniques to the image classification domain, an area where deep learning has made impressive
-breakthroughs and a rich set of pre-trained models are available. We evaluate the compression results on the NVIDIA Jetson TX2 embedded
-deep learning platform and consider a wide range of influential DNN models using the 50K images from the ImageNet ILSVRC 2012 validation
-dataset~\cite{}.
+To that end, we develop a quantitative approach  to characterize two mainstream model compression techniques, pruning~\cite{} and data
+quantization~\cite{}. We apply the techniques to the image classification domain, an area where deep learning has made great breakthroughs
+and a rich set of pre-trained models are available. We evaluate the compression results on the NVIDIA Jetson TX2 embedded deep learning
+platform and consider a wide range of influential DNN models using the 50K images from the ImageNet ILSVRC 2012 validation dataset~\cite{}.
 
 We show that while there is significant gain for choosing the right compression technique and parameters, mistakes can seriously hurt the
 performance. We quantify how different model compression techniques and parameters affect the inference time, energy consumption, model
