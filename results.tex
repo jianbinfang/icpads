@@ -17,6 +17,25 @@ Our experiments try to answer the following questions:
 
 
 \subsection{Analysis}
+The bar-plot in Figure~\cite{fig:analy_quan} and Figure~\cite{fig:analy_prun}
+shows the difference before and after using two compress techiniques respectively.
+
+
+\cparagraph{Model size.}
+Figure ~\cite{fig:analy_quan} a
+compares the ten model size before and after using the \quantization.
+As we can see from this figure, the Inception\_v1 model is
+compressed from 26.1 MB to 6.8MB, which 
+owns the largest compression radio, with 27.1\%.
+On average, the \quantization reduces the model size by 74.5\%, 
+as the relative sparse index is encoded with 8 bits, resulting in 
+xxx compression in total.
+
+
+
+
+\cparagraph{Energy consumption.}
+Energy consumption is dominated by memory access
 
 \begin{figure*}[!t]
 \centering
