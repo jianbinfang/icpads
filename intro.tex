@@ -1,4 +1,4 @@
-\section{Introduction}
+section{Introduction}
 In recent years, deep learning has emerged as a powerful tool for solving problems that were considered to be difficult in the past. It has
 demonstrated impressive results on tasks like object recognition~\cite{donahue14,he2016deep}, facial
 recognition~\cite{parkhi2015deep,sun2014deep}, speech processing~\cite{pmlrv48amodei16}, and machine translation~\cite{bahdanau2014neural}.
@@ -25,14 +25,15 @@ requirements or less energy consumption. Furthermore, as we will show in this pa
 translate into faster inference time. Because a model compression technique is not always beneficial, it is important to understand when
 and how to apply it.
 
-In this paper, we aim to understand deep learning model compression techniques for embedded inference. This knowledge allows not only the
-better deployment of computation-intensive models, but also designing more efficient architectures for models and hardware for mobile and
-IoT devices.
+In this paper, we aim to understand deep learning model compression techniques for embedded inference. This knowledge not only informs the
+better deployment of computation-intensive models, but also enables destining more efficient architectures for models and hardware for
+mobile and IoT devices.
 
 To that end, we develop a quantitative approach  to characterize two mainstream model compression techniques, pruning~\cite{} and data
 quantization~\cite{}. We apply the techniques to the image classification domain, an area where deep learning has made great breakthroughs
 and a rich set of pre-trained models are available. We evaluate the compression results on the NVIDIA Jetson TX2 embedded deep learning
 platform and consider a wide range of influential DNN models using the 50K images from the ImageNet ILSVRC 2012 validation dataset~\cite{}.
+
 
 We show that while there is significant gain for choosing the right compression technique and parameters, mistakes can seriously hurt the
 performance. We quantify how different model compression techniques and parameters affect the inference time, energy consumption, model
