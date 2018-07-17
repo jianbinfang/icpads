@@ -1,4 +1,4 @@
-section{Introduction}
+\section{Introduction}
 In recent years, deep learning has emerged as a powerful tool for solving problems that were considered to be difficult in the past. It has
 demonstrated impressive results on tasks like object recognition~\cite{donahue14,he2016deep}, facial
 recognition~\cite{parkhi2015deep,sun2014deep}, speech processing~\cite{pmlrv48amodei16}, and machine translation~\cite{bahdanau2014neural}.
@@ -11,15 +11,15 @@ including CPU, memory, and power, even for simple tasks~\cite{CanzianiPC16}. Wit
 
 
 Numerous approaches have been proposed to accelerate deep inference on embedded devices. These include designing specialize hardware to
-reduce the computation or memory latency~\cite{}, compressing a pre-trained model to reduce its storage and memory footprint as well as
-computational requirements~\cite{}, and offloading some, or all, computation to a cloud
+reduce the computation or memory latency~\cite{georgiev2017low}, compressing a pre-trained model to reduce its storage and memory footprint as well as
+computational requirements~\cite{han2016eie}, and offloading some, or all, computation to a cloud
 server~\cite{Kang2017neurosurgeon,teerapittayanon2017distributed}. Compared to specialized hardware, software-based model compression
 techniques have the advantage of being readily deployable on commercial-off-the-self hardware; compared to computation offloading, model
 compression enables on-device inference which in turn allows faster response time and has less privacy concerns. These advantages make
 model compressions attractive on existing hardware platforms where computation offloading is not feasible.
 
 
-However, model compression is not a free lunch as it comes at the cost of loss in prediction accuracy~\cite{}. This means that one must
+However, model compression is not a free lunch as it comes at the cost of loss in prediction accuracy~\cite{cheng2017survey}. This means that one must
 carefully choose the model compression technique and its parameters to effectively trade precision for computation and resource
 requirements or less energy consumption. Furthermore, as we will show in this paper, the reduction in the model size does not necessarily
 translate into faster inference time. Because a model compression technique is not always beneficial, it is important to understand when

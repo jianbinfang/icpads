@@ -61,18 +61,33 @@ shows the difference before and after using two compress techiniques respectivel
 
 
 \cparagraph{Model size.}
-Figure ~\ref{fig:analy_quan} a
-compares the ten model size before and after using the \quantization.
+Figure~\ref{fig:analy_quan}a
+compares the ten models' size before and after using the \quantization.
 As we can see from this figure, the Inception\_v1 model is
 compressed from 26.1 MB to 6.8MB, which 
 owns the largest compression radio, with 27.1\%.
 On average, the \quantization reduces the model size by 74.5\%, 
 as the relative sparse index is encoded with 8 bits, resulting in 
-xxx compression in total.
+xxx compression in total. Figure~\ref{fig:analy_prun}a presents 
+the model sizes of two typical \CNN models (VGG and Resnet) and one \RNN model (NMT) 
+before and after using the \pruning.
+The \pruning reduces 8\% and 18\% of original model size for VGG\_16 and Resnet\_50 respectively,
+and the \pruning performs the best on NMT, only occupies 40\% storage of original model.
 
+
+\cparagraph{Inference time.}
+
+
+
+
+
+\cparagraph{Accuracy.}
 
 
 
 \cparagraph{Energy consumption.}
+
 Energy consumption is dominated by memory access
 
+
+\cparagraph{Presion, Recall, F1 Score.}
