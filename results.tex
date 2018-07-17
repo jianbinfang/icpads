@@ -11,7 +11,7 @@
 \subfloat[][Energy consumption]{\includegraphics[width=0.3\textwidth]{figure/quan_energy.pdf}}
 \hfill
 
-\caption{The achieved model size (a) inference time (b) accuracy (c) power consumption (d) 
+\caption{The achieved model size (a) inference time (b) accuracy (c) power consumption (d)
 energy consumption (e) and F1 score (e) before and after the compression by \quantization.
 The compression technique to use depends on the optimization target.\FIXME{f1 score later}}
 \label{fig:analy_quan}
@@ -31,7 +31,7 @@ The compression technique to use depends on the optimization target.\FIXME{f1 sc
 \subfloat[][Energy consumption]{\includegraphics[width=0.3\textwidth]{figure/prun_energy.pdf}}
 \hfill
 
-\caption{The achieved model size (a) inference time (b) accuracy/BLEU (c) power consumption (d) 
+\caption{The achieved model size (a) inference time (b) accuracy/BLEU (c) power consumption (d)
 energy consumption (e) and F1 score (e) before and after the compression by \pruning.
 The compression technique to use depends on the optimization target.\FIXME{f1 score later}}
 \label{fig:analy_prun}
@@ -49,45 +49,29 @@ Our experiments try to answer the following questions:
 \item bla3
 \end{itemize}
 
+\subsection{Impact on the Model Storage Size}
+Reducing the model storage size is crucial for embedded and IoT systems which often have a limited storage space. A smaller model size also
+translates to smaller runtime memory footprint of less RAM space consumption. Figure~\ref{} illustrates how the different compression
+techniques and parameters affect the resulting model size.
+
+Quantization can significantly reduce the model storage size, leading to an average reduction of xx\% (xx MB) and up to xx\% (xx MB). This
+compression technique is particularly effective for xx and xx models, because it can xx. From Figure xx (b), we see that the fewer bits
+used to represent a weight, the more reduction in the model size we will gain. This is not a surprising as the data width strongly
+correlates to the storage size of the model.
 
 
-
-\subsection{Compare to Oracle}
-
-
-\subsection{Analysis}
-The bar-plot in Figure~\ref{fig:analy_quan} and Figure~\ref{fig:analy_prun}
-shows the difference before and after using two compress techiniques respectively.
+Pruning can also reduce the model size, although the gain is smaller than \quantization -- on average xx\% or xx MB (up to xx\% or xx MB).
 
 
-\cparagraph{Model size.}
-Figure~\ref{fig:analy_quan}a
-compares the ten models' size before and after using the \quantization.
-As we can see from this figure, the Inception\_v1 model is
-compressed from 26.1 MB to 6.8MB, which 
-owns the largest compression radio, with 27.1\%.
-On average, the \quantization reduces the model size by 74.5\%, 
-as the relative sparse index is encoded with 8 bits, resulting in 
-xxx compression in total. Figure~\ref{fig:analy_prun}a presents 
-the model sizes of two typical \CNN models (VGG and Resnet) and one \RNN model (NMT) 
-before and after using the \pruning.
-The \pruning reduces 8\% and 18\% of original model size for VGG\_16 and Resnet\_50 respectively,
-and the \pruning performs the best on NMT, only occupies 40\% storage of original model.
+\subsection{Impact on Accuracy Metrics}
+When compressing a model, we still want to largely maintain the performance of a compressed model. Therefore, it is importance to
+effectively trade precision for storage space. Results in Figure~\ref{} compare how the prediction accuracy metrics are affected by model
+compression.
+
+We see that the sweat spot of \quantization depends on the neural network structure. Although an 8-bit representation leads to a minor
+decrease in the prediction accuracy, a further reduction of a 6-bit representation is only profitable for xx networks.
+
+\subsection{Impact on Inference Time}
 
 
-\cparagraph{Inference time.}
-
-
-
-
-
-\cparagraph{Accuracy.}
-
-
-
-\cparagraph{Energy consumption.}
-
-Energy consumption is dominated by memory access
-
-
-\cparagraph{Presion, Recall, F1 Score.}
+\subsection{Impact on the Energy Consumption}
