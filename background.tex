@@ -29,29 +29,25 @@ approach~\FIXME{\cite{}}.
 
 
 \subsection{Motivation}
-Choosing the right compression technique is non-trivial. As a motivation example, consider applying two widely used model compression
-techniques, \pruning~\cite{manessi2017automated} and \dquantization~\cite{han2015deep}, to two influential \CNN models, \texttt{VGG\_16} 	and
-\texttt{Resnet\_50}. Our evaluation platform is a NVIDIA Jetson TX2 embedded deep learning platform (see Section~\ref{sec:platform}).
+Choosing the right compression technique is non-trivial. As a motivation example, consider applying \pruning and \dquantization, to two
+influential convolutional neural networks (\CNN), \texttt{VGG\_16} 	and \texttt{Resnet\_50}, for image classification. Our evaluation
+platform is a NVIDIA Jetson TX2 embedded deep learning platform (see Section~\ref{sec:platform}).
 
 \cparagraph{Setup.} We apply the compression technique to the pre-trained model (which has been trained on the ImageNet ILSVRC 2012
-training dataset~\cite{imagenet2012}). We then test the original and the compressed models on ILVRSC 2012 validation set which contains 50k images.
-We use pruning and quantization to compress two typical models \texttt{VGG\_16} and \texttt{Resnet 50},
-and the loss of accuracy for pruning and quantization are less than 5\%,and 3\% respectively.
-We use the GPU for
-inferencing.
+training dataset~\cite{imagenet2012}). We then test the original and the compressed models on ILVRSC 2012 validation set which contains 50k
+images. We use the GPU for inferencing.
 
-\cparagraph{Motivation Results.} Figure~\ref{fig:motivation} compares the model size, inference time and accuracy after applying model
-compression. By removing some of the pathways of the network, \pruning is able to reduces the inference time and
-energy consumption by 28\% and 22.5\%, respectively. However, it offers
-little saving in storage size because network weights still deaminate the model size. By contrast, by using a few number of bits to
-represent the weights, \quantization significantly reduces the model storage size by 75\%. However, the reduction in the model size does
-not translate to faster inference time and fewer energy consumption; 
-on the contrary, the inference time and energy increase by 1.41x and 1.19x respectively. 
-%This is because the quantized graph adds a subgraph which containing the conversion function, 
+\cparagraph{Motivation Results.} Figure~\ref{fig:motivation} compares the model size, inference time, energy consumption and accuracy after
+applying compression. By removing some of the pathways of the network, \pruning is able to reduces the inference time and energy
+consumption by 28\% and 22.5\%, respectively. However, it offers little saving in storage size because network weights still deaminate the
+model size. By contrast, by using a few number of bits to represent the weights, \quantization significantly reduces the model storage size
+by 75\%. However, the reduction in the model size does not translate to faster inference time and fewer energy consumption; on the
+contrary, the inference time and energy increase by 1.41x and 1.19x respectively.
+%This is because the quantized graph adds a subgraph which containing the conversion function,
 %and converts 8 bits to 32 bits as the input of the output layer to ensure the accuracy of the output layer.
 %Although the instantaneous power is reduced, the more energy is caused by the increased inference time.
 This is because the sparsity in network
-weights brought by \quantization leads to irregular computation which causes poor GPU performance~\cite{}. 
+weights brought by \quantization leads to irregular computation which causes poor GPU performance~\cite{}.
 Applying both compression
 techniques has modest impact on the prediction accuracy, on average, less than 5\%. This suggests that both techniques can be profitable.
 
