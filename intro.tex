@@ -19,26 +19,27 @@ model compression enables on-device inference which in turn allows faster respon
 model compressions attractive on existing hardware platforms where computation offloading is not feasible.
 
 
-However, model compression is not a free lunch as it comes at the cost of loss in prediction accuracy~\cite{cheng2017survey}. This means that one must
-carefully choose the model compression technique and its parameters to effectively trade precision for computation and resource
-requirements or less energy consumption. Furthermore, as we will show in this paper, the reduction in the model size does not necessarily
-translate into faster inference time. Because a model compression technique is not always beneficial, it is important to understand when
-and how to apply it.
+However, model compression is not a free lunch as it comes at the cost of loss in prediction accuracy\FIXME{~\cite{cheng2017survey}}. This
+means that one must carefully choose the model compression technique and its parameters to effectively trade precision for computation and
+resource requirements or less energy consumption. Furthermore, as we will show in this paper, the reduction in the model size does not
+necessarily translate into faster inference time. Because a model compression technique is not always beneficial, it is important to
+understand when and how to apply it.
 
 In this paper, we aim to understand deep learning model compression techniques for embedded inference. This knowledge not only informs the
 better deployment of computation-intensive models, but also enables destining more efficient architectures for models and hardware for
 mobile and IoT devices.
 
 To that end, we develop a quantitative approach  to characterize two mainstream model compression techniques,
-pruning~\cite{cheng2017survey} and data quantization~\cite{Gong2014Compressing}. We apply the techniques to the image classification
-domain, an area where deep learning has made great breakthroughs and a rich set of pre-trained models are available. We evaluate the
-compression results on the NVIDIA Jetson TX2 embedded deep learning platform and consider a wide range of influential DNN models using the
-50K images from the ImageNet ILSVRC 2012 validation dataset~\cite{imagenet2012}.
+pruning\FIXME{~\cite{cheng2017survey}} and data quantization~\cite{Gong2014Compressing}. We apply the techniques to the image
+classification and the natural language processing (NLP) domains, two areas where deep learning has made great breakthroughs and a rich set
+of pre-trained models are available. We evaluate the compression results on the NVIDIA Jetson TX2 embedded deep learning platform and
+consider a wide range of influential deep models using the 50K images from the ImageNet ILSVRC 2012 validation dataset~\cite{imagenet2012}
+for image classification and a corpus of \FIXME{one million} text samples\FIXME{~\cite{}} for NLP.
 
 
 We show that while there is significant gain for choosing the right compression technique and parameters, mistakes can seriously hurt the
-performance. We quantify how different model compression techniques and parameters affect the inference time, energy consumption, model
-storage requirement and the prediction accuracy. As a result, our work provides insights on when and how to apply deep learning model
+performance. We then quantify how different model compression techniques and parameters affect the inference time, energy consumption,
+model storage requirement and the prediction accuracy. As a result, our work provides insights on when and how to apply deep learning model
 compression techniques on embedded devices.
 
 The main contributions of this paper are two folds:
