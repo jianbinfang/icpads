@@ -46,10 +46,9 @@ contrary, the inference time and energy increase by 1.41x and 1.19x respectively
 %This is because the quantized graph adds a subgraph which containing the conversion function,
 %and converts 8 bits to 32 bits as the input of the output layer to ensure the accuracy of the output layer.
 %Although the instantaneous power is reduced, the more energy is caused by the increased inference time.
-This is because the sparsity in network
-weights brought by \quantization leads to irregular computation which causes poor GPU performance~\cite{}.
-Applying both compression
-techniques has modest impact on the prediction accuracy, on average, less than 5\%. This suggests that both techniques can be profitable.
+This is because the sparsity in network weights brought by \quantization leads to irregular computation which causes poor GPU
+performance~\cite{DBLP:journals/corr/abs-1802-10280}. Applying both compression techniques has modest impact on the prediction accuracy, on
+average, less than 5\%. This suggests that both techniques can be profitable.
 
 \cparagraph{Lessons Learned.} This example shows that the compression technique to use depends on what to be optimized for. If storage
 space (e.g., RAM and disk) is a limiting factor, \quantization could be used, but a more powerful processor unit is required to achieve
