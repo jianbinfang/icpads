@@ -10,7 +10,7 @@
 \hfill
 \subfloat[][Energy consumption]{\includegraphics[width=0.3\textwidth]{figure/quan_energy.pdf}}
 \hfill
-\subfloat[][Energy consumption]{\includegraphics[width=0.28\textwidth]{figure/quan_prf.pdf}}
+\subfloat[][precision, recall and F1 score]{\includegraphics[width=0.28\textwidth]{figure/quan_prf.pdf}}
 \hfill
 
 \caption{The achieved model size (a) inference time (b) accuracy (c) power consumption (d)
@@ -30,13 +30,14 @@ The compression technique to use depends on the optimization target.}
 \hfill
 \subfloat[][Power consumption]{\includegraphics[width=0.3\textwidth]{figure/prun_power.pdf}}
 \hfill
-\subfloat[][Energy consumption]{\includegraphics[width=0.24\textwidth]{figure/prun_energy.pdf}}
-
+\subfloat[][Energy consumption]{\includegraphics[width=0.3\textwidth]{figure/prun_energy.pdf}}
+\hfill
+\subfloat[][precision, recall and F1 score]{\includegraphics[width=0.3\textwidth]{figure/prun_prf.pdf}}
 \hfill
 
 \caption{The achieved model size (a) inference time (b) accuracy/BLEU (c) power consumption (d)
-energy consumption (e) and F1 score (e) before and after the compression by \pruning.
-The compression technique to use depends on the optimization target.\FIXME{f1 score later}}
+energy consumption (e) and precision, recall and F1 score (e) before and after the compression by \pruning.
+The compression technique to use depends on the optimization target.}
 \label{fig:analy_prun}
 \end{figure*}
 
