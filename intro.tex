@@ -19,7 +19,7 @@ model compression enables local, on-device inference which in turn allows faster
 advantages make model compressions attractive on resource-constrained IoT devices where computation offloading is infeasible.
 
 
-However, model compression is not a free lunch as it comes at the cost of loss in prediction accuracy\FIXME{~\cite{cheng2017survey}}. This
+However, model compression is not a free lunch as it comes at the cost of loss in prediction accuracy~\cite{Cheng2017A}. This
 means that one must carefully choose the model compression technique and its parameters to effectively trade precision for computation and
 resource requirements or less energy consumption. Furthermore, as we will show in this paper, the reduction in the model size does not
 necessarily translate into faster inference time. Because there is no guarantee for a compression technique to be beneficial, we need to
@@ -30,11 +30,11 @@ deployment of computation-intensive models, but also enables destining more effi
 IoT devices.
 
 To that end, we develop a quantitative approach  to characterize two mainstream model compression techniques,
-pruning\FIXME{~\cite{cheng2017survey}} and data quantization~\cite{Gong2014Compressing}. We apply the techniques to the image
+pruning~\cite{Cheng2017A} and data quantization~\cite{Gong2014Compressing}. We apply the techniques to the image
 classification and the natural language processing (NLP) domains, two areas where deep learning has made great breakthroughs and a rich set
 of pre-trained models are available. We evaluate the compression results on the NVIDIA Jetson TX2 embedded deep learning platform and
 consider a wide range of influential deep learning models. We use the 50K images from the ImageNet ILSVRC 2012 validation
-dataset~\cite{imagenet2012} for image classification and a corpus of ten thousand text samples\FIXME{~\cite{}} for NLP.
+dataset~\cite{imagenet2012} for image classification and a corpus of ten thousand text samples~\cite{acl2016} for NLP.
 
 
 We show that while there is significant gain for choosing the right compression technique and parameters, mistakes can seriously hurt the
