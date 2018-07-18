@@ -246,3 +246,6 @@ paper.pdf
 *.opj
 *.opj
 ref/lctes18 (1).pdf
+figure/accuracy_pruning1.opj
+figure/accuracy_quantization1.opj
+figure/accuracy_pruning1.opj
