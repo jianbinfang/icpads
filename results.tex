@@ -4,7 +4,7 @@
 \hfill
 \subfloat[][Inference time]{\includegraphics[width=0.33\textwidth]{figure/quan_time2.pdf}}
 \hfill
-\subfloat[][Accuracy]{\includegraphics[width=0.32\textwidth]{figure/quan_acc.pdf}}
+\subfloat[][Accuracy]{\includegraphics[width=0.32\textwidth]{figure/quan_acc3.pdf}}
 \hfill
 \subfloat[][Power consumption]{\includegraphics[width=0.33\textwidth]{figure/quan_power2.pdf}}
 \hfill
@@ -75,6 +75,16 @@ We see that the sweat spot of \quantization depends on the neural network struct
 decrease in the prediction accuracy, a further reduction of a 6-bit representation is only profitable for xx networks.
 
 \subsection{Impact on Inference Time}
+Figure~\ref{fig:analy_quan} b compares the reduced inference time
+among three compression radios: 16-bit, 8-bit and 6-bit. 
+Using an 6-bit data quantization is the fastest for inferencing,
+being xx and xx faster than 16-bit and 8-bit, respectively, 
+but is the least accurate (see Figure~\ref{fig:analy_quan} c). 
+Figure~\ref{fig:analy_prun} b presents the reduced inference time by \pruning.
+\pruning reduced the inference time by pruning the redundent paramenters in the models,
+we can see from the bar chart that
+Vgg\_16 and NMT are reduced most time, both of them with an reduction of 38\%, and 
+Resnet\_50 reduced 20\% inference time. Overall, the average inference time is reduced by 31\%.
 
 
 \subsection{Impact on the Energy Consumption}
