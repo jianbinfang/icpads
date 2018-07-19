@@ -59,7 +59,7 @@ illustrate how the different compression techniques and parameters affect the re
 As can be seen from Figure~\ref{fig:analy_quan} a, using an 8-bit data quantization can significantly reduce the model storage size,
 leading to an average reduction of 74.5\%. From Figure~\ref{fig:analy_prun} a, we see that by removing some of the pathways of the neural
 network, \pruning can also reduce the model size, although the gain is smaller than \quantization. On average, \pruning reduces the model
-size by 27.2\% (\FIXME{xx MB}). An interesting observation is that, \pruning is particularly effective for obtaining a compact model for
+size by 27.2\% (49.26 MB). An interesting observation is that, \pruning is particularly effective for obtaining a compact model for
 NMT, an \RNN, with a reduction of 60\% on the model size. This is because there are typically many repetitive pathways in an \RNN due to
 the natural of the network architecture. As we will discuss later, \pruning only leads to a minor degradation in the prediction accuracy
 for NMT. This suggests that \pruning can be an effective model compression technique for \RNNs.
@@ -79,7 +79,7 @@ the graph of quantized model. This conversion function are used to convert the 8
 occupies from 30\% to 50\%.
 The two major overhead counteract the speedup by using the less-bit to represent the original 32-bit float data. 
 Even so, using an 6-bit data quantization is the fastest for inferencing,
-being xx and xx faster than 16-bit and 8-bit, respectively, 
+being 1.05x and 1.03x faster than 16-bit and 8-bit, respectively, 
 but is the least accurate (see Figure~\ref{fig:analy_quan} c). 
 Further more, the inference time of Inception increases most, following by Resnet and Vgg,
 which indicates that different model structures have different impact on inference time.
@@ -116,7 +116,8 @@ We observe that the \pruning does not have negative impact on NMT, only loses 0.
 
 
 \subsection{Impact on the Power and Energy Consumption}
-
+The energy consumption is another important factor for compression.
+As we can see from Figure~\ref{fig:analy_prun}
 
 \subsection{Memory footprint}
 
