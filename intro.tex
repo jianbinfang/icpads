@@ -5,14 +5,14 @@ recognition~\cite{parkhi2015deep,sun2014deep}, speech processing~\cite{pmlrv48am
 While many of these tasks are also important on mobiles and the Internet of Things (IoT), existing solutions are often
 computation-intensive and require a large amount of resources for the model to operate. As a result, performing deep
 inference\footnote{Inference in this paper refers to apply a pre-trained model on an input to obtain the corresponding output. This is
-different from statistical inference.} on embedded devices can lead to long runtimes and the consumption of abundant amounts of resources,
+different from statistical inference.} on embedded devices can lead to long runtime and the consumption of abundant amounts of resources,
 including CPU, memory, and power, even for simple tasks~\cite{CanzianiPC16}. Without a solution,
  the hoped-for advances on embedded sensing will not arrive.
 
 
-Approaches have been proposed to accelerate deep inference on embedded devices. These include designing purpose-built hardware to reduce
-the computation or memory latency~\cite{georgiev2017low}, compressing a pre-trained model to reduce its storage and memory footprint as
-well as computational requirements~\cite{han2016eie}, and offloading some, or all, computation to a cloud
+Numerous approaches have been proposed to accelerate deep inference on embedded devices. These include designing purpose-built hardware to
+reduce the computation or memory latency~\cite{georgiev2017low}, compressing a pre-trained model to reduce its storage and memory footprint
+as well as computational requirements~\cite{han2016eie}, and offloading some, or all, computation to a cloud
 server~\cite{Kang2017neurosurgeon,teerapittayanon2017distributed}. Compared to specialized hardware, software-based model compression
 techniques have the advantage of being readily deployable on commercial-off-the-self hardware; and compared to computation offloading,
 model compression enables local, on-device inference which in turn allows faster response time and is less privacy intrusive. Such

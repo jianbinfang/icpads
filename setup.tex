@@ -12,7 +12,10 @@ CUDA (v8.0.64).
 
 
 \cparagraph{Deep Learning Models.} We consider \FIXME{14} pre-trained \CNN models for image recognition from the TensorFlow-Slim
-library~\cite{silberman2013tensorflow}. The models are built using TensorFlow and trained on the ImageNet ILSVRC 2012 training set.
+library~\cite{silberman2013tensorflow} and a recurrent neural network (\RNN) model for machine translation. \FIXME{Table~\ref{} lists the
+models considered in this work.}
+
+ %The models are built using TensorFlow and trained on the ImageNet ILSVRC 2012 training set.
 
 
 \subsection{Evaluation Methodology \label{sec:method}}
@@ -41,10 +44,10 @@ library~\cite{silberman2013tensorflow}. The models are built using TensorFlow an
 \item \emph{\textbf{F1 score} (higher is better)}.  The weighted average of Precision and Recall, calculated as $2\times\frac{Recall
     \times Precision} {Recall + Precision}$. It is useful when the test datasets have an uneven distribution of object classes.
 
-\item \emph{\textbf{BLEU} (higher is better)}. BLEU (bilingual evaluation understudy) is an algorithm for evaluating the quality of text
-    which has been machine-translated from one natural language to another. Quality is considered to be the correspondence between a
+\item \emph{\textbf{BLEU} (higher is better)}. The bilingual evaluation understudy (BLEU) is an algorithm for evaluating the quality of
+    text which has been machine-translated from one natural language to another. Quality is considered to be the correspondence between a
     machine's output and that of a human: ``\emph{the closer a machine translation is to a professional human translation, the better it
-    is}". We report the BLUE performance on NMT, a machine translation model. 
+    is}". We report the BLUE performance on \texttt{NMT}, a machine translation model.
 
 
 \end{itemize}

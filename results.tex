@@ -69,7 +69,7 @@ effective model compression technique for \RNNs.
 
 
 
-\subsection{Impact on Inference Time}
+\subsection{Impact on Inference Time\label{sec:time}}
  Figure~\ref{fig:analy_quan}b compares the inference time when using different bit
 widths to represent a 32-bit floating number for neural network weights. Intuitively, a smaller model should run faster. However, data
 quantization does not reduce the inference time but instead it prolongs it. Data quantization can speedup the computation (i.e., matrix
@@ -190,7 +190,7 @@ consumption, and \pruning is less effective compared to \dquantization for reduc
 
 
 
-\subsection{Compare to Oracle.} 
+\subsection{Compare to a Fixed Compression Setting}
 
 \begin{figure}[!t]
 \centering
@@ -200,20 +200,19 @@ consumption, and \pruning is less effective compared to \dquantization for reduc
 \subfloat[][\pruning]{\includegraphics[width=0.35\textwidth]{figure/prun_oracle.pdf}}
 \hfill
 
-\caption{Our compressed models' performance w.r.t. performance of an oracle performance for \quantization (a) and \pruning (b).}
-\label{fig:oracle}
+\caption{Compare to \FIXME{xx} for \quantization (a) and \pruning (b).} \label{fig:oracle}
 \end{figure}
 
-In Figure~\ref{fig:oracle}, we compare our compressed models to ideal compressed models. 
-We set the 8-bit data quantization as the ideal quantized weight, as it offers an affordable 
-accuracy after quantization. Note that, the accuarcy almost achieves the ideal value, on the contary,
-the inference time and enery consumption perform worst, only account less than 10\%. Bot of 
-the inference time and memory usage occupy more than 20\%.
-Figure~\ref{fig:oracle} b presents the how close our pruned models to the theoretically 
-perfect models. As we can see from this figure, most of evaluation metrics above 80\%,
-and the energy consunsumption also achieves 58\%.
+\FIXME{ZW: I have no idea of what's talking about here. Why a 8-bit data quantization setting is the oracle??? Please also use a spell
+checker. }
 
-\subsection{Pruning + Quantization.} 
+In Figure~\ref{fig:oracle}, we compare our compressed models to ideal compressed models. We set the 8-bit data quantization as the ideal
+quantized weight, as it offers an affordable accuracy after quantization. Note that, the accuracy almost achieves the ideal value, on the
+contary, the inference time and energy consumption perform worst, only account less than 10\%. Bot of the inference time and memory usage
+occupy more than 20\%. Figure~\ref{fig:oracle} b presents the how close our pruned models to the theoretically perfect models. As we can
+see from this figure, most of evaluation metrics above 80\%, and the energy nonconsumption also achieves 58\%.
+
+\subsection{Combining Pruning and Quantization}
 
 \begin{figure*}[!t]
 \centering
@@ -221,12 +220,25 @@ and the energy consunsumption also achieves 58\%.
 \hfill
 \subfloat[][Inference time]{\includegraphics[width=0.24\textwidth]{figure/q_p_time.pdf}}
 \hfill
-\subfloat[][Energy consunption]{\includegraphics[width=0.23\textwidth]{figure/q_p_energy.pdf}}
+\subfloat[][Energy consumption]{\includegraphics[width=0.23\textwidth]{figure/q_p_energy.pdf}}
 \hfill
 \subfloat[][Accuracy]{\includegraphics[width=0.24\textwidth]{figure/q_p_acc.pdf}}
 \hfill
-\caption{The achieved model size (a) inference time (b) energy consumption (c) and accuracy (d) before and after the compression by \quantization and \pruning.
-The compression technique to use depends on the optimization target.}
-\label{fig:motivation}
+\caption{The achieved model size (a) inference time (b) energy consumption (c) and accuracy (d) before and after applying \quantization and \pruning.
+}
+\label{fig:combine}
 \end{figure*}
 
+So far we have evaluated \pruning and \quantization in isolation. An natural question to ask is: ``Is it worthwhile to combine both
+techniques?". Figure~\ref{fig:combine} shows the results by first applying a 8-bit \dquantization and then \pruning to \texttt{VGG\_16} and
+\texttt{Resnet50}.
+
+
+As can be seen from Figure~\ref{fig:combine}a, combining both compression techniques can significantly reduce the model storage size -- the
+resulting models are over 70\% smaller than the original model. There is little degradation in the top-1 prediction accuracy
+(Figure~\ref{fig:combine}d) -- less than 7\%. From Figure~\ref{fig:combine}b, we see that the combination has positive impact on the
+inference time for \texttt{VGG\_16} as the runtime overhead of \dquantization (see Section~\ref{sec:time}) can be amortized by \pruning.
+The combination, however, leads to longer inference time for \texttt{Resnet50} due to the expensive \dquantization overhead. Because of the
+difference in inference time, there is less benefit in the energy reduction for \texttt{Resnet50} compared to what is obtained for
+\texttt{VGG\_16} (Figure~\ref{fig:combine}c). This experiment shows that combining \pruning and \quantization can be beneficial, but it
+depends on the neural network architecture and what to optimize for.
