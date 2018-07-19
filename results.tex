@@ -94,8 +94,19 @@ When compressing a model, we still want to largely maintain the performance of a
 effectively trade precision for storage space. Results in Figure~\ref{fig:analy_quan}c compare how the prediction accuracy metrics are affected by model
 compression.
 
-We see that the sweat spot of \quantization depends on the neural network structure. Although an 8-bit representation leads to a minor
-decrease in the prediction accuracy, a further reduction of a 6-bit representation is only profitable for xx networks.
+We see that the sweat spot of \quantization depends on the neural network structure. 
+An 16-bit representation keeps the most information of original model and offers the least reduciton in accuracy,
+with an average of 1.36\%, following by 8-bit with an reduction of 3.57\%.
+While, the result shows that an 6-bit representation is hardly to keep the accuracy which loses more than 10\% accuracy.
+
+For \pruning, the Figure~\ref{fig:analy_prun} c compares the reduction in top-1 and top-5 accuracy for Vgg\_16 and Resnet\_50, 
+we also shows the BLEU value for NMT.
+\pruning reduces the accuracy of two models by an average of 5.7\% and 1.7\% respectively for the top-1 and top-5 scores.
+We observe that the \pruning does not have negative impact on NMT, only loses 0.8\% BLEU. 
+
+
+%Although an 8-bit representation leads to a minor
+%decrease in the prediction accuracy, a further reduction of a 6-bit representation is only profitable for xx networks.
 
 
 
