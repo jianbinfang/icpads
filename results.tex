@@ -213,5 +213,20 @@ Figure~\ref{fig:oracle} b presents the how close our pruned models to the theore
 perfect models. As we can see from this figure, most of evaluation metrics above 80\%,
 and the energy consunsumption also achieves 58\%.
 
+\subsection{Pruning + Quantization.} 
 
+\begin{figure*}[!t]
+\centering
+\subfloat[][Model size]{\includegraphics[width=0.24\textwidth]{figure/q_p_size.pdf}}
+\hfill
+\subfloat[][Inference time]{\includegraphics[width=0.24\textwidth]{figure/q_p_time.pdf}}
+\hfill
+\subfloat[][Energy consunption]{\includegraphics[width=0.23\textwidth]{figure/q_p_energy.pdf}}
+\hfill
+\subfloat[][Accuracy]{\includegraphics[width=0.24\textwidth]{figure/q_p_acc.pdf}}
+\hfill
+\caption{The achieved model size (a) inference time (b) energy consumption (c) and accuracy (d) before and after the compression by \quantization and \pruning.
+The compression technique to use depends on the optimization target.}
+\label{fig:motivation}
+\end{figure*}
 
