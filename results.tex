@@ -141,17 +141,12 @@ employed to support a low power system.
 
 \subsection{Precision, Recall and F1-Score}
 
-Finally, Figure~\ref{fig:analy_quan}f and 
-Figure~\ref{fig:analy_prun}f show other three evaluation metrics of these models 
-after \quantization and \pruning. We can see that, the compressed models only violate
-less than 3\% for precision, recall and F1-Score. 
-For \quantization, the 16-bit representation outperforms the other two bits width respresentations.
-Specifically, 16-bit gives the
-highest overall precision, which in turns leads to the best F1
-score. High precision can reduce false positive, which is
-important for certain domains like video surveillance
-because it can reduce the human involvement for inspecting
-false positive predictions.
+Finally, Figures~\ref{fig:analy_quan}f and \ref{fig:analy_prun}f show other three evaluation metrics of the considered deep learning models
+after applying \quantization and \pruning. We can see that, the decrease in performance after compression is  less than 3\% for precision,
+recall and F1-Score. For \quantization, the 16-bit representation outperforms the other two bits width representations. Specifically,
+16-bit gives the highest overall precision, which in turns leads to the best F1 score. High precision can reduce false positive, which is
+important for certain domains like video surveillance because it can reduce the human involvement for inspecting false positive
+predictions.
 
 
 
@@ -177,4 +172,4 @@ xx} less memory compared to a 8-bit and a 16-bit representations, respectively.
 
 In contrast to \dquantization, Figure~\ref{fig:footprint} shows that  \pruning offers little help in reducing the model memory footprint.
 On average, it leads to a 6.4\% reduction of memory footprint. This is because that the network weights still domain the memory resource
-consumption, and \pruning is less effective compared to \dquantization for reducing the overhead of network weights. 
+consumption, and \pruning is less effective compared to \dquantization for reducing the overhead of network weights.
