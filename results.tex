@@ -74,10 +74,24 @@ effective model compression technique for \RNNs.
 widths to represent a 32-bit floating number for neural network weights. Intuitively, a smaller model should run faster. However, data
 quantization does not reduce the inference time but instead it prolongs it. Data quantization can speedup the computation (i.e., matrix
 multiplications) performed on the input data by avoiding expensive floating point arithmetics and enabling SIMD vectorization by using a
-compact data representation. However, we found that the overhead of the de-quantization process during inference can outweigh its benefit.
-After data quantization, a de-quantization function has to be added into the compressed model. This  function converts the quantized
-weights back to a 32-bit representation on the output layer to recover the loss in precision. As can be seen from \FIXME{Figure~\ref{}},
-this process could be expensive, contributing to 30\% to 50\% of the end to end inference time.
+compact data representation. However, we found that the overhead of the quantization process during inference can outweigh its benefit.
+Except the genernal inference operation, a data quantization and de-quantization function has to be added into the compressed model. The quantization function converts the 32-bit to quantized weights, after inference operation which
+accounts for 50.9\%, the de-quantization quantized
+weights back to a 32-bit representation on the output layer to recover the loss in precision. As can be seen from Figure~\ref{fig:breakdown}, this process could be expensive, contributing to 30\% to 50\% of the end to end inference time.
+%this process could be expensive, contributing to 30\% to 50\% of the end to end inference time.
+%After data quantization, a de-quantization function has to be added into the compressed model. This  function converts %the quantized
+%weights back to a 32-bit representation on the output layer to recover the loss in precision. As can be seen from %Figure~\ref{fig:breakdown},
+%this process could be expensive, contributing to 30\% to 50\% of the end to end inference time.
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=0.48\textwidth]{figure/breakdown2.pdf}
+\end{center}
+\caption{Breakdown of average execution time by operation type for ten models.}
+\vspace{-2mm}
+\label{fig:breakdown}
+\end{figure}
+
 
 Using fewer bits for representation can reduce the overhead of de-quantization. For example, using a 6-bit representation is 1.05x and
 1.03x faster than using a 16-bit and a 8-bit representations, respectively. However, as we will demonstrate later when discussing
@@ -177,4 +191,32 @@ xx} less memory compared to a 8-bit and a 16-bit representations, respectively.
 
 In contrast to \dquantization, Figure~\ref{fig:footprint} shows that  \pruning offers little help in reducing the model memory footprint.
 On average, it leads to a 6.4\% reduction of memory footprint. This is because that the network weights still domain the memory resource
-consumption, and \pruning is less effective compared to \dquantization for reducing the overhead of network weights. 
+consumption, and \pruning is less effective compared to \dquantization for reducing the overhead of network weights.
+
+
+\subsection{Compare to Oracle.} 
+
+\begin{figure}[!t]
+\centering
+
+\subfloat[][\quantization]{\includegraphics[width=0.35\textwidth]{figure/quan_oracle.pdf}}
+\hfill
+\subfloat[][\pruning]{\includegraphics[width=0.35\textwidth]{figure/prun_oracle.pdf}}
+\hfill
+
+\caption{Our compressed models' performance w.r.t. performance of an oracle performance for \quantization (a) and \pruning (b).}
+\label{fig:oracle}
+\end{figure}
+
+In Figure~\ref{fig:oracle}, we compare our compressed models to ideal compressed models. 
+We set the 8-bit data quantization as the ideal quantized weight, as it offers an affordable 
+accuracy after quantization. Note that, the accuarcy almost achieves the ideal value, on the contary,
+the inference time and enery consumption perform worst, only account less than 10\%. Bot of 
+the inference time and memory usage occupy more than 20\%.
+Figure~\ref{fig:oracle} b presents the how close our pruned models to the theoretically 
+perfect models. As we can see from this figure, most of evaluation metrics above 80\%,
+and the energy consunsumption also achieves 58\%.
+
+
+
+
