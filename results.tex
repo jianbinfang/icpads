@@ -81,6 +81,11 @@ The two major overhead counteract the speedup by using the less-bit to represent
 Even so, using an 6-bit data quantization is the fastest for inferencing,
 being xx and xx faster than 16-bit and 8-bit, respectively, 
 but is the least accurate (see Figure~\ref{fig:analy_quan} c). 
+Further more, the inference time of Inception increases most, following by Resnet and Vgg,
+which indicates that different model structures have different impact on inference time.
+Under same structure, the increased time comes from the increaed deepth and witdth with more parameters, 
+because the quantized model need more time to convert the less-bit representation data.
+
 
 Figure~\ref{fig:analy_prun} b presents the reduced inference time by \pruning.
 \pruning reduced the inference time by pruning the redundent paramenters in the models,
@@ -110,7 +115,7 @@ We observe that the \pruning does not have negative impact on NMT, only loses 0.
 
 
 
-\subsection{Impact on the Energy Consumption}
+\subsection{Impact on the Power and Energy Consumption}
 
 
 \subsection{Memory footprint}
