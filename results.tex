@@ -156,13 +156,12 @@ employed to support a low power system.
 \label{fig:footprint}
 \end{figure}
 
-Figure ~\ref{fig:footprint} illustrates the memory footprint by \quantization an \pruning.
-For \quantization, we compare 6-bit, 8-bit and 16-bit data quantization on memory footprint, and
-all of them use less memory than before compression, with an average reduction of 17.2\%.
-For example, the 8-bit representation reduces the memory footprint from 20.02\% to 15.97\%，
-with an average of 20.63\% (up to 40\%).
-As we can see that 6-bit data quantization outperforms 8-bit and 16-bit by an average ofxx,xx,
-respectively. Because the \quantization use less bit to compute the value, decreases the width of computation,
-thus saves memory usage.
-On the contary, Figure~\ref{fig:footprint} shows that the \pruning make few contribution on memory footprint, only reduces 6.4\% of original model,
-becuase \pruning removes the redundant parameters and the inference process still use 32-bit to compute.
+Figure~\ref{fig:footprint} compares the resulting memory footprint by applying \quantization and \pruning. Quantization reduces the runtime
+memory footprint with an averaged reduction of 17.2\% by generating a more compact model. For example, an 8-bit representation reduces the
+memory footprint from 20.02\% to 15.97\% across networks, with an averaged reduction of 20.63\% (up to 40\%). In general, the smaller the
+model storage size is, the less memory footprint the compressed model will be. As an example, a 6-bit representation uses \FIXME{xx, and
+xx} less memory compared to a 8-bit and a 16-bit representations, respectively.
+
+In contrast to \dquantization, Figure~\ref{fig:footprint} shows that  \pruning offers little help in reducing the model memory footprint.
+On average, it leads to a 6.4\% reduction of memory footprint. This is because that the network weights still domain the memory resource
+consumption, and \pruning is less effective compared to \dquantization for reducing the overhead of network weights. 
