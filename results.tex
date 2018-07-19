@@ -51,47 +51,49 @@ Our experiments try to answer the following questions:
 \item bla3
 \end{itemize}
 
-\subsection{Impact on the Model Storage Size}
+\subsection{Impact on the Model Storage Size\label{sec:ms}}
 Reducing the model storage size is crucial for embedded and IoT systems which often have a limited storage space. A smaller model size also
 translates to smaller runtime memory footprint of less RAM space consumption. Figures~\ref{fig:analy_quan} and  \ref{fig:analy_prun}
 illustrate how the different compression techniques and parameters affect the resulting model size.
 
-As can be seen from Figure~\ref{fig:analy_quan} a, using an 8-bit data quantization can significantly reduce the model storage size,
-leading to an average reduction of 74.5\%. From Figure~\ref{fig:analy_prun} a, we see that by removing some of the pathways of the neural
-network, \pruning can also reduce the model size, although the gain is smaller than \quantization. On average, \pruning reduces the model
-size by 27.2\% (49.26 MB). An interesting observation is that, \pruning is particularly effective for obtaining a compact model for
-NMT, an \RNN, with a reduction of 60\% on the model size. This is because there are typically many repetitive pathways in an \RNN due to
-the natural of the network architecture. As we will discuss later, \pruning only leads to a minor degradation in the prediction accuracy
-for NMT. This suggests that \pruning can be an effective model compression technique for \RNNs.
+As can be seen from Figure~\ref{fig:analy_quan}a, data quantization can significantly reduce the model storage size, leading to an average
+reduction of 50.2\% when using a 16-bit representation and up to 80.7\% when using a 6-bit representation. The reduction in the storage
+size is consistent across neural networks as the size of a network is dominated by its weights.
+
+From Figure~\ref{fig:analy_prun}a, we see that by removing some of the pathways of the neural network, \pruning can also reduce the model
+size, although the gain is smaller than \quantization. On average, \pruning reduces the model size by 27.2\% (49.26 MB). An interesting
+observation is that, \pruning is particularly effective for obtaining a compact model for NMT, an \RNN, with a reduction of 60\% on the
+model size. This is because there are typically many repetitive pathways in an \RNN due to the natural of the network architecture. As we
+will discuss later, \pruning only leads to a minor degradation in the prediction accuracy for NMT. This suggests that \pruning can be an
+effective model compression technique for \RNNs.
 
 
 
 \subsection{Impact on Inference Time}
-Theoretically, the compressed models take less time to make an inference, as 
-the redundent contents have been represented by using less bits or removed.
-Figure~\ref{fig:analy_quan} b compares the inference time
-among three compression radios: 16-bit, 8-bit and 6-bit, while all of them 
-increased the inference time because of two major overhead.
-Firstly, the model will perfrom data quantization by using less bit (eg. from 32-bit to 8-bit) on
-the input test float data. This process takes about 15\% of total inference time.
-Secondly, in order to guarantee the accuracy, we find that a conversion function will be added into 
-the graph of quantized model. This conversion function are used to convert the 8-bit to 32-bit in the output layer which 
-occupies from 30\% to 50\%.
-The two major overhead counteract the speedup by using the less-bit to represent the original 32-bit float data. 
-Even so, using an 6-bit data quantization is the fastest for inferencing,
-being 1.05x and 1.03x faster than 16-bit and 8-bit, respectively, 
-but is the least accurate (see Figure~\ref{fig:analy_quan} c). 
-Further more, the inference time of Inception increases most, following by Resnet and Vgg,
-which indicates that different model structures have different impact on inference time.
-Under same structure, the increased time comes from the increaed deepth and witdth with more parameters, 
-because the quantized model need more time to convert the less-bit representation data.
+ Figure~\ref{fig:analy_quan}b compares the inference time when using different bit
+widths to represent a 32-bit floating number for neural network weights. Intuitively, a smaller model should run faster. However, data
+quantization does not reduce the inference time but instead it prolongs it. Data quantization can speedup the computation (i.e., matrix
+multiplications) performed on the input data by avoiding expensive floating point arithmetics and enabling SIMD vectorization by using a
+compact data representation. However, we found that the overhead of the de-quantization process during inference can outweigh its benefit.
+After data quantization, a de-quantization function has to be added into the compressed model. This  function converts the quantized
+weights back to a 32-bit representation on the output layer to recover the loss in precision. As can be seen from \FIXME{Figure~\ref{}},
+this process could be expensive, contributing to 30\% to 50\% of the end to end inference time.
+
+Using fewer bits for representation can reduce the overhead of de-quantization. For example, using a 6-bit representation is 1.05x and
+1.03x faster than using a 16-bit and a 8-bit representations, respectively. However, as we will demonstrate later when discussing
+Figure~\ref{fig:analy_quan}c, using fewer bits has the drawback of causing larger degradation in the prediction accuracy. Hence, one must
+carefully find a balance between the storage size, inference time, and prediction accuracy when applying data quantification.
+
+We also find that the percentage of increased inference time depends on the neural network structure. Applying data quantization to
+\texttt{Inception}, the most complex network in our \CNN tested set, will double the inference time. By contrast, data quantization only
+leads to a 20\% increase in inference time for \texttt{Mobilenet}, a compact model. This observation suggests that data quantization may be
+beneficial for simple neural networks on resource-constrained devices.
 
 
-Figure~\ref{fig:analy_prun} b presents the reduced inference time by \pruning.
-\pruning reduced the inference time by pruning the redundent paramenters in the models,
-we can see from the bar chart that
-Vgg\_16 and NMT are reduced most time, both of them with an reduction of 38\%, and 
-Resnet\_50 reduced 20\% inference time. Overall, the average inference time is reduced by 31\%.
+In contrast to \quantization, Figure~\ref{fig:analy_prun}b shows that \pruning leads to faster inference time across evaluated networks. We
+can see that the inference time of \texttt{Vgg\_16} and \texttt{NMT} can benefit from this technique, with an reduction of 38\%.  Overall,
+the average inference time is reduced by 31\%. This suggests that while \pruning is less effective in reducing the model size (see
+Section~\ref{sec:ms}), it can be useful in achieving a faster inference time.
 
 
 \subsection{Impact on Accuracy Metrics}
@@ -99,15 +101,15 @@ When compressing a model, we still want to largely maintain the performance of a
 effectively trade precision for storage space. Results in Figure~\ref{fig:analy_quan}c compare how the prediction accuracy metrics are affected by model
 compression.
 
-We see that the sweat spot of \quantization depends on the neural network structure. 
+We see that the sweat spot of \quantization depends on the neural network structure.
 An 16-bit representation keeps the most information of original model and offers the least reduciton in accuracy,
 with an average of 1.36\%, following by 8-bit with an reduction of 3.57\%.
 While, the result shows that an 6-bit representation is hardly to keep the accuracy which loses more than 10\% accuracy.
 
-For \pruning, the Figure~\ref{fig:analy_prun} c compares the reduction in top-1 and top-5 accuracy for Vgg\_16 and Resnet\_50, 
+For \pruning, the Figure~\ref{fig:analy_prun} c compares the reduction in top-1 and top-5 accuracy for Vgg\_16 and Resnet\_50,
 we also shows the BLEU value for NMT.
 \pruning reduces the accuracy of two models by an average of 5.7\% and 1.7\% respectively for the top-1 and top-5 scores.
-We observe that the \pruning does not have negative impact on NMT, only loses 0.8\% BLEU. 
+We observe that the \pruning does not have negative impact on NMT, only loses 0.8\% BLEU.
 
 
 %Although an 8-bit representation leads to a minor
@@ -117,15 +119,15 @@ We observe that the \pruning does not have negative impact on NMT, only loses 0.
 
 \subsection{Impact on the Power and Energy Consumption}
 The energy consumption is another important factor for compression.
-As we can see from Figure~\ref{fig:analy_prun} d, the \quantization decreases the 
-power consumption for inferencing in 6-bit, 8-bit and 16-bit by an average of 
-4.3\%, 10.4\% and 11.6\%, respectivly. While the increased inference time 
+As we can see from Figure~\ref{fig:analy_prun} d, the \quantization decreases the
+power consumption for inferencing in 6-bit, 8-bit and 16-bit by an average of
+4.3\%, 10.4\% and 11.6\%, respectivly. While the increased inference time
 rises the total energy consumption, which cost more energy than before compression, by an
 average of 51.1\%, 42.3\% and 34.1\%, respectively (see Figure~\ref{fig:analy_prun} e).
 
 Figure~\ref{fig:analy_prun} e shows the reduced energy by \pruning. Note that
 the Vgg\_16, Resne\_50 and NMT saves more than 40\%, 15\% and 50\% energy than before compression.
-Different from \quantization, the inference time drops a lot after \pruning, and the power consumption 
+Different from \quantization, the inference time drops a lot after \pruning, and the power consumption
 reduced to 9.16\%.
 
 \subsection{Presion, Recall and F1-Score}
@@ -146,15 +148,12 @@ reduced to 9.16\%.
 \end{figure}
 
 Figure ~\ref{fig:footprint} illustrates the memory footprint by \quantization an \pruning.
-For \quantization, we compare 6-bit, 8-bit and 16-bit data quantization on memory footprint, and 
-all of them use less memory than before compression, with an average reduction of 17.2\%. 
-For example, the 8-bit representation reduces the memory footprint from 20.02\% to 15.97\%， 
-with an average of 20.63\% (up to 40\%). 
+For \quantization, we compare 6-bit, 8-bit and 16-bit data quantization on memory footprint, and
+all of them use less memory than before compression, with an average reduction of 17.2\%.
+For example, the 8-bit representation reduces the memory footprint from 20.02\% to 15.97\%，
+with an average of 20.63\% (up to 40\%).
 As we can see that 6-bit data quantization outperforms 8-bit and 16-bit by an average ofxx,xx,
 respectively. Because the \quantization use less bit to compute the value, decreases the width of computation,
 thus saves memory usage.
 On the contary, Figure~\ref{fig:footprint} shows that the \pruning make few contribution on memory footprint, only reduces 6.4\% of original model,
 becuase \pruning removes the redundant parameters and the inference process still use 32-bit to compute.
-
-
-
