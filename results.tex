@@ -2,13 +2,13 @@
 \centering
 \subfloat[][Model size]{\includegraphics[width=0.33\textwidth]{figure/quan_size.pdf}}
 \hfill
-\subfloat[][Inference time]{\includegraphics[width=0.33\textwidth]{figure/quan_time2.pdf}}
+\subfloat[][Inference time]{\includegraphics[width=0.34\textwidth]{figure/quan_time2.pdf}}
 \hfill
 \subfloat[][Accuracy]{\includegraphics[width=0.32\textwidth]{figure/quan_acc3.pdf}}
 \hfill
 \subfloat[][Power consumption]{\includegraphics[width=0.33\textwidth]{figure/quan_power2.pdf}}
 \hfill
-\subfloat[][Energy consumption]{\includegraphics[width=0.33\textwidth]{figure/quan_energy2.pdf}}
+\subfloat[][Energy consumption]{\includegraphics[width=0.34\textwidth]{figure/quan_energy2.pdf}}
 \hfill
 \subfloat[][precision, recall and F1 score]{\includegraphics[width=0.33\textwidth]{figure/quan_prf2.pdf}}
 \hfill
@@ -66,25 +66,37 @@ for NMT. This suggests that \pruning can be an effective model compression techn
 
 
 
-\subsection{Impact on Accuracy Metrics}
-When compressing a model, we still want to largely maintain the performance of a compressed model. Therefore, it is importance to
-effectively trade precision for storage space. Results in Figure~\ref{} compare how the prediction accuracy metrics are affected by model
-compression.
-
-We see that the sweat spot of \quantization depends on the neural network structure. Although an 8-bit representation leads to a minor
-decrease in the prediction accuracy, a further reduction of a 6-bit representation is only profitable for xx networks.
-
 \subsection{Impact on Inference Time}
-Figure~\ref{fig:analy_quan} b compares the reduced inference time
-among three compression radios: 16-bit, 8-bit and 6-bit. 
-Using an 6-bit data quantization is the fastest for inferencing,
+Theoretically, the compressed models take less time to make an inference, as 
+the redundent contents have been represented by using less bits or removed.
+Figure~\ref{fig:analy_quan} b compares the inference time
+among three compression radios: 16-bit, 8-bit and 6-bit, while all of them 
+increased the inference time because of two major overhead.
+Firstly, the model will perfrom data quantization by using less bit (eg. from 32-bit to 8-bit) on
+the input test float data. This process takes about 15\% of total inference time.
+Secondly, in order to guarantee the accuracy, we find that a conversion function will be added into 
+the graph of quantized model. This conversion function are used to convert the 8-bit to 32-bit in the output layer which 
+occupies from 30\% to 50\%.
+The two major overhead counteract the speedup by using the less-bit to represent the original 32-bit float data. 
+Even so, using an 6-bit data quantization is the fastest for inferencing,
 being xx and xx faster than 16-bit and 8-bit, respectively, 
 but is the least accurate (see Figure~\ref{fig:analy_quan} c). 
+
 Figure~\ref{fig:analy_prun} b presents the reduced inference time by \pruning.
 \pruning reduced the inference time by pruning the redundent paramenters in the models,
 we can see from the bar chart that
 Vgg\_16 and NMT are reduced most time, both of them with an reduction of 38\%, and 
 Resnet\_50 reduced 20\% inference time. Overall, the average inference time is reduced by 31\%.
+
+
+\subsection{Impact on Accuracy Metrics}
+When compressing a model, we still want to largely maintain the performance of a compressed model. Therefore, it is importance to
+effectively trade precision for storage space. Results in Figure~\ref{fig:analy_quan}c compare how the prediction accuracy metrics are affected by model
+compression.
+
+We see that the sweat spot of \quantization depends on the neural network structure. Although an 8-bit representation leads to a minor
+decrease in the prediction accuracy, a further reduction of a 6-bit representation is only profitable for xx networks.
+
 
 
 \subsection{Impact on the Energy Consumption}
