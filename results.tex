@@ -117,7 +117,20 @@ We observe that the \pruning does not have negative impact on NMT, only loses 0.
 
 \subsection{Impact on the Power and Energy Consumption}
 The energy consumption is another important factor for compression.
-As we can see from Figure~\ref{fig:analy_prun}
+As we can see from Figure~\ref{fig:analy_prun} d, the \quantization decreases the 
+power consumption for inferencing in 6-bit, 8-bit and 16-bit by an average of 
+4.3\%, 10.4\% and 11.6\%, respectivly. While the increased inference time 
+rises the total energy consumption, which cost more energy than before compression, by an
+average of 51.1\%, 42.3\% and 34.1\%, respectively (see Figure~\ref{fig:analy_prun} e).
+
+Figure~\ref{fig:analy_prun} e shows the reduced energy by \pruning. Note that
+the Vgg\_16, Resne\_50 and NMT saves more than 40\%, 15\% and 50\% energy than before compression.
+Different from \quantization, the inference time drops a lot after \pruning, and the power consumption 
+reduced to 9.16\%.
+
+\subsection{Presion, Recall and F1-Score}
+
+
 
 \subsection{Memory footprint}
 
