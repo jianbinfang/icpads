@@ -125,19 +125,21 @@ observer an averaged loss of 0.8\% for BLEU. When taking into consideration that
 
 
 \subsection{Impact on the Power and Energy Consumption}
-The energy consumption is another important factor for compression.
-As we can see from Figure~\ref{fig:analy_prun} d, the \quantization decreases the
-power consumption for inferencing in 6-bit, 8-bit and 16-bit by an average of
-4.3\%, 10.4\% and 11.6\%, respectivly. While the increased inference time
-rises the total energy consumption, which cost more energy than before compression, by an
-average of 51.1\%, 42.3\% and 34.1\%, respectively (see Figure~\ref{fig:analy_prun} e).
+Power and energy consumption are two limiting factors on battery-powered mobile and IoT devices. As we can see from
+Figure~\ref{fig:analy_prun}d, \quantization decreases the peak power for inferencing with an average of 4.3\%, 10.4\% and 11.6\%,
+respectively when using a 6-bit, an 8-bit and a 16-bit representations. While \quantization reduces the peak power used, the increase
+inference time leads to more energy consumption by at least 34.1\% and up to 51.1\% (see Figure~\ref{fig:analy_prun}e). This means that
+although \quantization allows one to reduces voltage supply to the computing devices, it can lead to a short battery life.
 
-Figure~\ref{fig:analy_prun} e shows the reduced energy by \pruning. Note that
-the Vgg\_16, Resne\_50 and NMT saves more than 40\%, 15\% and 50\% energy than before compression.
-Different from \quantization, the inference time drops a lot after \pruning, and the power consumption
-reduced to 9.16\%.
+Figure~\ref{fig:analy_prun}e shows the reduced energy consumption by applying \pruning. Note that it saves over 40\%, 15\% and 50\% energy
+consumption for \texttt{Vgg\_16}, \texttt{Resne\_50} and \texttt{NMT} respectively. Despite that the peak power is reduced by only 9.16\%,
+a smaller decrease compared to \quantization, the resulted faster inference time allows \pruning to significantly reduce the power
+consumption. The results suggest \pruning is useful for reducing the overall energy consumption of the system, but \quantization can be
+employed to support a low power system.
 
-\subsection{Presion, Recall and F1-Score}
+
+
+\subsection{Precision, Recall and F1-Score}
 
 
 
