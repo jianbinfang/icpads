@@ -115,7 +115,7 @@ parameter for given constraints.
 For \pruning, the Figure~\ref{fig:analy_prun}c compares the reduction in the top-1 and the top-5 accuracies for \texttt{Vgg\_16} and
 \texttt{Resnet\_50}. We also show the BLEU value for \texttt{NMT}. \pruning reduces the accuracy of the two \CNN models with by 5.7\% and
 1.7\% respectively for the top-1 and top-5 scores. We observe that the \pruning has little negative impact on \texttt{NMT} where we only
-observer an averaged loss of 0.8\% for BLEU. When taking into consideration that \pruning can significantly reduce the model size for
+observe an averaged loss of 0.8\% for BLEU. When taking into consideration that \pruning can significantly reduce the model size for
 \texttt{NMT} (Section~\ref{sec:ms}), our results suggest that \pruning is particularly effective for \RNNs.
 
 
@@ -140,6 +140,19 @@ employed to support a low power system.
 
 
 \subsection{Precision, Recall and F1-Score}
+
+Finally, Figure~\ref{fig:analy_quan}f and 
+Figure~\ref{fig:analy_prun}f show other three evaluation metrics of these models 
+after \quantization and \pruning. We can see that, the compressed models only violate
+less than 3\% for precision, recall and F1-Score. 
+For \quantization, the 16-bit representation outperforms the other two bits width respresentations.
+Specifically, 16-bit gives the
+highest overall precision, which in turns leads to the best F1
+score. High precision can reduce false positive, which is
+important for certain domains like video surveillance
+because it can reduce the human involvement for inspecting
+false positive predictions.
+
 
 
 
