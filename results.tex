@@ -97,19 +97,26 @@ Section~\ref{sec:ms}), it can be useful in achieving a faster inference time.
 
 
 \subsection{Impact on Accuracy Metrics}
-When compressing a model, we still want to largely maintain the performance of a compressed model. Therefore, it is importance to
-effectively trade precision for storage space. Results in Figure~\ref{fig:analy_quan}c compare how the prediction accuracy metrics are affected by model
-compression.
+In addition to the storage size and inference time, accuracy is crucially important for a predictive model. A small and faster model is not
+very useful if it gives wrong predictions all the time.
 
-We see that the sweat spot of \quantization depends on the neural network structure.
-An 16-bit representation keeps the most information of original model and offers the least reduciton in accuracy,
-with an average of 1.36\%, following by 8-bit with an reduction of 3.57\%.
-While, the result shows that an 6-bit representation is hardly to keep the accuracy which loses more than 10\% accuracy.
 
-For \pruning, the Figure~\ref{fig:analy_prun} c compares the reduction in top-1 and top-5 accuracy for Vgg\_16 and Resnet\_50,
-we also shows the BLEU value for NMT.
-\pruning reduces the accuracy of two models by an average of 5.7\% and 1.7\% respectively for the top-1 and top-5 scores.
-We observe that the \pruning does not have negative impact on NMT, only loses 0.8\% BLEU.
+Results in Figure~\ref{fig:analy_quan}c compare how the prediction accuracy is affected by model compression. We see that the sweat spot of
+\quantization depends on the neural network structure. An 16-bit representation keeps the most information of the original model and thus
+leads to little reduction in the prediction accuracy, on average  1.36\%.  Using an 8-bit representation would lead on average 3.57\%
+decrease in the accuracy, while using a 6-bit representation will lead to a significantly larger reduction of 10\% in  accuracy. We also
+observe that some networks are more robust to \quantization. For example, while a 6-bit representation leads to less than 10\% decrease in
+accuracy for \texttt{Resnet\_101}, it cause a 12\% drops in accuracy for \texttt{Resnet\_50}. This is because a more complex network (i.e.,
+\texttt{Resnet\_101} in this case) is more resilient to the weight errors compared to network (i.e., \texttt{Resnet\_50} in this case) with
+a smaller number of layers and neurons. Our findings suggest the need for having an adaptive scheme to choose the optimal \dquantization
+parameter for given constraints.
+
+
+For \pruning, the Figure~\ref{fig:analy_prun}c compares the reduction in the top-1 and the top-5 accuracies for \texttt{Vgg\_16} and
+\texttt{Resnet\_50}. We also show the BLEU value for \texttt{NMT}. \pruning reduces the accuracy of the two \CNN models with by 5.7\% and
+1.7\% respectively for the top-1 and top-5 scores. We observe that the \pruning has little negative impact on \texttt{NMT} where we only
+observer an averaged loss of 0.8\% for BLEU. When taking into consideration that \pruning can significantly reduce the model size for
+\texttt{NMT} (Section~\ref{sec:ms}), our results suggest that \pruning is particularly effective for \RNNs.
 
 
 %Although an 8-bit representation leads to a minor
