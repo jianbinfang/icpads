@@ -12,19 +12,31 @@
 \hfill
 \subfloat[][precision, recall and F1 score]{\includegraphics[width=0.33\textwidth]{figure/quan_prf2.pdf}}
 \hfill
-
 \caption{The achieved model size (a) inference time (b) accuracy (c) power consumption (d)
 energy consumption (e) and precision, recall and F1 score (e) before and after the compression by \quantization.
 The compression technique to use depends on the optimization target.}
 \label{fig:analy_quan}
 \end{figure*}
 
+\begin{figure*}[!t]
+\centering
+\subfloat[][Vgg\_16]{\includegraphics[width=0.3\textwidth]{figure/prun_vgg.pdf}}
+\hfill
+\subfloat[][Resnet\_50]{\includegraphics[width=0.3\textwidth]{figure/prun_resnet.pdf}}
+\hfill
+\subfloat[][NMT]{\includegraphics[width=0.3\textwidth]{figure/prun_NMT.pdf}}
+\hfill
+\caption{The change of inference time, accuracy/BLEU, power consumption, energy consumption and memory footprint
+for Vgg\_16 (a), Resnet\_50 (b) and \texttt{NMT} (c) when using different pruning thresholds.
+The x-axis shows how much loss in the prediction accuracy can be tolerated. }
+\label{fig:threshold}
+\end{figure*}
 
 \begin{figure*}[!t]
 \centering
 \subfloat[][Model size]{\includegraphics[width=0.33\textwidth]{figure/prun_size.pdf}}
 \hfill
-\subfloat[][Inference time]{\includegraphics[width=0.3\textwidth]{figure/prun_time1.pdf}}
+\subfloat[][Inference time]{\includegraphics[width=0.3\textwidth]{figure/prun_time.pdf}}
 \hfill
 \subfloat[][Accuracy]{\includegraphics[width=0.3\textwidth]{figure/top1_5_prun.pdf}}
 \hfill
@@ -34,10 +46,12 @@ The compression technique to use depends on the optimization target.}
 \hfill
 \subfloat[][precision, recall and F1 score]{\includegraphics[width=0.3\textwidth]{figure/prun_prf.pdf}}
 \hfill
-
-\caption{The change of the model size (a), inference time (b), accuracy/BLEU (c), power (d), energy consumption (e), and accuracy (e)
-before and after applying \pruning.} \label{fig:analy_prun}
+\caption{The change of the model size (a), inference time (b), accuracy/BLEU (c), power (d), energy consumption (e), and accuracy (e)before and after applying \pruning.} \label{fig:analy_prun}
 \end{figure*}
+
+
+
+
 
 \section{Experimental Results}
 
@@ -55,7 +69,7 @@ Our experiments try to answer the following questions:
 
 \subsection{Impact on the Model Storage Size\label{sec:ms}}
 Reducing the model storage size is crucial for embedded and IoT systems which often have a limited storage space. A smaller model size also
-translates to smaller runtime memory footprint of less RAM space usage. Figures~\ref{fig:analy_quan} and  \ref{fig:analy_prun} illustrate
+translates to smaller runtime memory footprint of less RAM space usage. Figures~\ref{fig:analy_quan},\ref{fig:threshold} and \ref{fig:threshold} illustrate
 how the different compression techniques and parameters affect the resulting model size.
 
 As can be seen from Figure~\ref{fig:analy_quan}a, data quantization can significantly reduce the model storage size, leading to an average
@@ -68,6 +82,18 @@ model size by 27.2\% (49.26 MB). An interesting observation is that, \pruning is
 \texttt{NMT}, an \RNN, with a reduction of 60\% on the model storage size. This is because there are many repetitive neurons (or cells) in
 an \RNN due to the natural of the network architecture. As we will discuss later, \pruning only causes a minor degradation in the
 prediction accuracy for \texttt{NMT}. This suggests that \pruning can be an effective compression technique for \RNNs.
+
+In Figure~\ref{fig:threshold}, we compare the resulting performance after using different pruning thresholds from 5\% to 75\% on three \CNN
+models. Increasing the accepted percentage of errors does gives \pruning more opportunity to remove more neurons to improve the inference
+time and other metrics. The improvement reaches a plateau at 15\% of errors for \CNNs, but for \texttt{NMT}, a \RNN model, the reduction of
+inference time increases as we give more room for errors. This diagram reinforces our findings that \pruning is more effective on \RNNs
+than \CNNs.
+
+ %In this paper, we consider the 5\% reductions in the top-1 accuracy is the pruning threshold, and Figure~\ref{fig:threshold}
+%present the results when the accuracy around the thresholds.
+
+
+
 
 
 
@@ -189,15 +215,14 @@ On average, it leads to a 6.4\% reduction of memory footprint. This is because t
 consumption, and \pruning is less effective compared to \dquantization for reducing the overhead of network weights.
 
 
-
 \subsection{Compare to a Single Compression Setting\label{sec:single}}
 
 \begin{figure}[!t]
 \centering
 
-\subfloat[][\quantization]{\includegraphics[width=0.35\textwidth]{figure/quan_oracle.pdf}}
+\subfloat[][\quantization]{\includegraphics[width=0.2\textwidth]{figure/quan_oracle.pdf}}
 \hfill
-\subfloat[][\pruning]{\includegraphics[width=0.35\textwidth]{figure/prun_oracle.pdf}}
+\subfloat[][\pruning]{\includegraphics[width=0.2\textwidth]{figure/prun_oracle.pdf}}
 \hfill
 
 \caption{Compare to \FIXME{xx} for \quantization (a) and \pruning (b).} \label{fig:oracle}
