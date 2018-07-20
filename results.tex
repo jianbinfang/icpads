@@ -24,7 +24,7 @@ The compression technique to use depends on the optimization target.}
 \centering
 \subfloat[][Model size]{\includegraphics[width=0.33\textwidth]{figure/prun_size.pdf}}
 \hfill
-\subfloat[][Inference time]{\includegraphics[width=0.3\textwidth]{figure/prun_time.pdf}}
+\subfloat[][Inference time]{\includegraphics[width=0.3\textwidth]{figure/prun_time1.pdf}}
 \hfill
 \subfloat[][Accuracy]{\includegraphics[width=0.3\textwidth]{figure/top1_5_prun.pdf}}
 \hfill
@@ -238,7 +238,7 @@ techniques?". Figure~\ref{fig:combine} shows the results by first applying a 8-b
 
 
 As can be seen from Figure~\ref{fig:combine}a, combining both compression techniques can significantly reduce the model storage size -- the
-resulting models are over 70\% smaller than the original model. There is little degradation in the top-1 prediction accuracy
+resulting models are 76\% smaller than the original model. There is little degradation in the top-1 prediction accuracy
 (Figure~\ref{fig:combine}d) -- less than 7\%. From Figure~\ref{fig:combine}b, we see that the combination has positive impact on the
 inference time for \texttt{VGG\_16} as the runtime overhead of \dquantization (see Section~\ref{sec:time}) can be amortized by \pruning.
 The combination, however, leads to longer inference time for \texttt{Resnet50} due to the expensive \dquantization overhead. Because of the
