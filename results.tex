@@ -85,10 +85,9 @@ weights back to a 32-bit representation on the output layer to recover the loss 
 
 \begin{figure}
 \begin{center}
-\includegraphics[width=0.48\textwidth]{figure/breakdown2.pdf}
+\includegraphics[width=0.48\textwidth]{figure/breakdown4.pdf}
 \end{center}
 \caption{Breakdown of the average execution time per operation type.}
-\FIXME{Quantize $->$ quantization}
 \vspace{-2mm}
 \label{fig:breakdown}
 \end{figure}
@@ -207,11 +206,14 @@ consumption, and \pruning is less effective compared to \dquantization for reduc
 \FIXME{ZW: I have no idea of what's talking about here. Why a 8-bit data quantization setting is the oracle??? Please also use a spell
 checker. }
 
-In Figure~\ref{fig:oracle}, we compare our compressed models to ideal compressed models. We set the 8-bit data quantization as the ideal
-quantized weight, as it offers an affordable accuracy after quantization. Note that, the accuracy almost achieves the ideal value, on the
-contary, the inference time and energy consumption perform worst, only account less than 10\%. Bot of the inference time and memory usage
+In Figure~\ref{fig:oracle}, we compare our compressed models to ideal compressed models.
+For \quantization, we use the 8-bit data quantization as the ideal
+quantized weight, 
+as it offers an affordable accuracy after quantization. 
+We can see that,  the accuracy almost achieves the ideal value, on the
+contary, the inference time and energy consumption perform worst, only account less than 10\%. Both of the inference time and memory usage
 occupy more than 20\%. Figure~\ref{fig:oracle} b presents the how close our pruned models to the theoretically perfect models. As we can
-see from this figure, most of evaluation metrics above 80\%, and the energy nonconsumption also achieves 58\%.
+see from this figure, most of evaluation metrics above 80\%, and the energy consumption also achieves 58\%.
 
 \subsection{Combining Pruning and Quantization}
 
