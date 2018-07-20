@@ -28,11 +28,11 @@ Our experiments try to answer the following questions:
 The first task of our experiments is to understand the computational characteristics for the deep learning models considered in this work.
 Figure~\ref{fig:breakdown11} quantifies how different type of neural network operations contribute to the inference time across models. The
 numbers are averaged across the test samples for each model -- 50K for image classifiers and 10K for \texttt{NMT}. To aid clarity, we group
-the operations into seven categories, listed from A to G on the left-handed table. Each cell of the color table represents the percentage
-that a specific type of operation contributes to the model inference time. As can be seen from the figure, a handful of operations are
-collectively responsible for over 90\% of the model execution time. However, the types of operations that dominate the inference time vary
-across networks. Unsurprisingly, \CNNs are indeed dominated by convolution, while fully-connected networks and \RNNs depend heavily on
-matrix multiplications.
+the operations into seven classes, listed from A to G in the table on the right-hand side. Each cell of the color table represents the
+percentage that a specific type of operation contributes to the model inference time. As can be seen from the figure, a handful of
+operations are collectively responsible for over 90\% of the model execution time. However, the types of operations that dominate the
+inference time vary across networks. Unsurprisingly, \CNNs are indeed dominated by convolution, while fully-connected networks and \RNNs
+depend heavily on matrix multiplications.
 
 \begin{figure*}[!t]
 \centering
