@@ -3,13 +3,13 @@ We have shown that choosing the correct model compression setting can accelerate
 requirements. The right decision depends on the constraints on resources, time and precision. We now summarize what have learned from our
 experiments and the potential future research directions.
 
-Our evaluation reveals that \dquantization is particularly effective in reducing the model storage size and runtime memory footprint. This
-makes it attractive for resource-constrained devices where the storage space is a limiting factor. However, \quantization leads to longer
-inference time due to the overhead of the de-quantization process. Therefore, future research is needed to look at how to reduce the
-overhead of de-quantization or eliminating de-quantization by finding alternative ways for precision recovery. We also observe that an
-8-bit integer quantization seems to be a good trade-off between the model storage size and the precision. This strategy also enables SIMD
-vectorization on CPUs and GPUs as multiple 8-bit scalar values can be packed into one vector register. Using less than 8 bits is beneficial
-on traditional CPUs and GPUs, but could be useful on FGPAs or specialized hardware with purpose-built register. How to optimize and apply
+Our evaluation reveals that \dquantization is particularly effective in reducing the model storage size and runtime memory footprint. As
+such, it is attractive for devices where the storage space is a limiting factor. However, \quantization leads to longer inference time due
+to the overhead of the de-quantization process. Therefore, future research is needed to look at how to reduce the overhead of
+de-quantization or eliminating de-quantization by finding alternative ways for precision recovery. We also observe that an 8-bit integer
+quantization seems to be a good trade-off between the model storage size and the precision. This strategy also enables SIMD vectorization
+on CPUs and GPUs as multiple 8-bit scalar values can be packed into one vector register. Using less than 8 bits is beneficial on
+traditional CPUs and GPUs, but could be useful on FGPAs or specialized hardware with purpose-built register. How to optimize and apply
 \dquantization to a specific domain and neural network architecture is a potential interesting research direction.
 
 We show that \pruning allows us to precisely control the loss in the prediction precision. This is useful for applications like security

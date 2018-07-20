@@ -64,10 +64,10 @@ size is consistent across neural networks as the size of a network is dominated 
 
 From Figure~\ref{fig:analy_prun}a, we see that by removing some of the pathways of the neural network, \pruning can also reduce the model
 size, although the gain is smaller than \quantization. On average, \pruning reduces the model size by 27.2\% (49.26 MB). An interesting
-observation is that, \pruning is particularly effective for obtaining a compact model for NMT, an \RNN, with a reduction of 60\% on the
-model size. This is because there are typically many repetitive pathways in an \RNN due to the natural of the network architecture. As we
-will discuss later, \pruning only leads to a minor degradation in the prediction accuracy for NMT. This suggests that \pruning can be an
-effective model compression technique for \RNNs.
+observation is that, \pruning is particularly effective for obtaining a compact model for \texttt{NMT}, an \RNN, with a reduction of 60\%
+on the model size. This is because there are typically many repetitive pathways in an \RNN due to the natural of the network architecture.
+As we will discuss later, \pruning only leads to a minor degradation in the prediction accuracy for NMT. This suggests that \pruning can be
+an effective model compression technique for \RNNs.
 
 
 
