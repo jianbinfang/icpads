@@ -24,6 +24,7 @@
 energy consumption (e) and precision, recall and F1-score (e) before and after the compression by \quantization.
 The compression technique to use depends on the optimization target.}
 \label{fig:analy_quan}
+\vspace{-3mm}
 \end{figure*}
 
 \begin{figure*}[!t]
@@ -55,6 +56,7 @@ The x-axis shows the percentage of pruning in model size. }
 \subfloat[][precision, recall and F1 score]{\includegraphics[width=0.3\textwidth]{figure/prun_prf.pdf}}
 \hfill
 \caption{The change of the model size (a), inference time (b), accuracy/BLEU (c), power (d), energy consumption (e), and accuracy (e)before and after applying \pruning.} \label{fig:analy_prun}
+\vspace{-4mm}
 \end{figure*}
 
 
@@ -132,7 +134,7 @@ than \CNNs. For the rest discussions of this paper, we use a 5\% \pruning thresh
 Figure~\ref{fig:footprint} compares the runtime memory footprint consumed by a compressed model. Quantization reduces the model memory
 footprint by 17.2\% on average. For example, an 8-bit representation gives a memory footprint saving from 20.02\% to 15.97\% across
 networks, with an averaged reduction of 20.63\% (up to 40\%). In general, the smaller the model storage size is, the less memory footprint
-the compressed model will be. As an example, a 6-bit representation uses \FIXME{xx, and xx} less memory compared to an 8-bit and a 16-bit
+the compressed model will be. As an example, a 6-bit representation uses 2.6\% and 13.6\% less memory compared to an 8-bit and a 16-bit
 counterparts, respectively.
 
 Figure~\ref{fig:footprint} suggests that  \pruning offers little help in reducing the model memory footprint. On average, it gives a 6.4\%
@@ -159,10 +161,10 @@ to end inference time.
 
 \begin{figure}
 \begin{center}
-\includegraphics[width=0.48\textwidth]{figure/breakdown4.pdf}
+\includegraphics[width=0.4\textwidth]{figure/breakdown4.pdf}
 \end{center}
 \caption{Breakdown of the average execution time per operation type, averaging across the quantized models.}
-\vspace{-2mm}
+\vspace{-3mm}
 \label{fig:breakdown}
 \end{figure}
 
@@ -265,6 +267,7 @@ positive predictions.
 \hfill
 \caption{The achieved model size (a) inference time (b) energy consumption (c) and accuracy (d) before and after applying \quantization and \pruning.
 }
+\vspace{-5mm}
 \label{fig:combine}
 \end{figure*}
 
