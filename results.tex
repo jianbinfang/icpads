@@ -190,7 +190,7 @@ with a smaller number of layers and neurons. Our findings suggest the need for h
 \dquantization parameter for given constraints.
 
 
-For \pruning, the Figure~\ref{fig:analy_prun}c compares the reduction in the top-1 and the top-5 scores for \texttt{Vgg\_16} and
+For \pruning, Figure~\ref{fig:analy_prun}c compares the reduction in the top-1 and the top-5 scores for \texttt{Vgg\_16} and
 \texttt{Resnet\_50}. We also show the BLEU value for \texttt{NMT}. Overall, \pruning reduces the accuracy of the two \CNN models with by
 5.7\% and 1.7\% respectively for the top-1 and the top-5 scores. It has little negative impact on \texttt{NMT} where we only observe an
 averaged loss of 0.8\% for BLEU. When taking into consideration that \pruning can significantly reduce the model size for \texttt{NMT}
