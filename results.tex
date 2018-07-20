@@ -27,7 +27,7 @@ The compression technique to use depends on the optimization target.}
 \subfloat[][NMT]{\includegraphics[width=0.3\textwidth]{figure/prun_NMT.pdf}}
 \hfill
 \caption{The change of inference time, accuracy/BLEU, power consumption, energy consumption and memory footprint
-for Vgg\_16 (a), Resnet\_50 (b) and NMT (c) after using different pruning threshold.
+for Vgg\_16 (a), Resnet\_50 (b) and NMT (c) after using different pruning percentage.
 The compression technique to use depends on the optimization target.} 
 \label{fig:threshold}
 \end{figure*}
@@ -77,11 +77,12 @@ reduction of 50.2\% when using a 16-bit representation and up to 80.7\% when usi
 size is consistent across neural networks as the size of a network is dominated by its weights.
 
 In Figure~\ref{fig:threshold}, we compare the performance after using different pruning percentange from 5\% to 
-75\% on three models.
+75\% on three models. In this paper, we consider the 5\% reduciton in top-1 accuracy is the pruning threshold, and
+Figure~\ref{fig:threshold} present the results when the accuracy around the thresold.
 
 
 
-From Figure~\ref{fig:threshold}a, we see that by removing some of the pathways of the neural network, \pruning can also reduce the model size, although the gain is smaller than \quantization. 
+From Figure~\ref{fig:analy_prun}a, we see that by removing some of the pathways of the neural network, \pruning can also reduce the model size, although the gain is smaller than \quantization. 
 On average, \pruning reduces the model size by 27.2\% (49.26 MB). An interesting
 observation is that, \pruning is particularly effective for obtaining a compact model for \texttt{NMT}, an \RNN, with a reduction of 60\%
 on the model size. This is because there are typically many repetitive pathways in an \RNN due to the natural of the network architecture.
