@@ -11,47 +11,49 @@ and 96~GB of storage (32~GB eMMC plus 64~GB SD card).
 CUDA (v8.0.64).
 
 
-\cparagraph{Deep Learning Models.} We consider \FIXME{14} pre-trained \CNN models for image recognition from the TensorFlow-Slim
-library~\cite{silberman2013tensorflow} and a recurrent neural network (\RNN) model for machine translation. \FIXME{Table~\ref{} lists the
-models considered in this work.}
+\cparagraph{Deep Learning Models.} We consider 11 pre-trained \CNN models for image recognition from the TensorFlow-Slim library~\cite{silberman2013tensorflow} and a recurrent neural network (\RNN) model for machine translation. Table~\ref{tab:workload} lists the
+models considered in this work.
 
 \begin{table}[t!]
 \begin{center}
 \vspace{-1mm}
-\caption{Hardware platform}
+\caption{Considered workloads and the statistical information
+ on the non-blacklist subset of the validation set of ILSVRC 2012 and WMT 2016}
 \vspace{-2mm}
 \scriptsize
 \label{tbl:config}
-\begin{tabular}{llll}
+\begin{tabular}{llllll}
 \toprule
-&\textbf{big CPU}& \textbf{LITTLE CPU} & \textbf{GPU} \\
+\textbf{Model}&\textbf{Neuronal Style}& \textbf{Top-1} & \textbf{Top-5}& \textbf{Top-5}& \textbf{Layer Depth} \\
 \midrule
-\textbf{Mobilenet} & Cortex-A15 & Cortex-A7  & Mali-T628 \\
-\textbf{Inception_v1} & 2.0 GHz & 1.4 GHz & 533 MHz \\
-\textbf{Inception_v2} & 2.0 GHz & 1.4 GHz & 533 MHz \\
-\textbf{Inception_v3} & 2.0 GHz & 1.4 GHz & 533 MHz \\
-\textbf{Inception_v4} & 2.0 GHz & 1.4 GHz & 533 MHz \\
-\textbf{Resnet_50} & 4 & 4 & 8 \\
-\textbf{Resnet_101} & 4 & 4 & 8 \\
-\textbf{Resnet_152} & 4 & 4 & 8 \\
-\textbf{VGG_16} & 4 & 4 & 8 \\
-\textbf{VGG_19} & 4 & 4 & 8 \\
-\textbf{NMT} & 4 & 4 & 8 \\
+\textbf{Mobilenet\_v1\_1.0} & Convolutional & 70.7 & 89.56 &	4.2M	&28 \\
+\textbf{Inception\_v1}     &Convolutional & 69.8  & 89.6	&7M&	22  \\
+\textbf{Inception\_v2}     &Convolutional &73.9	&91.4 & 11.3M& 	32 \\
+\textbf{Inception\_v3}     &Convolutional  & 78	&94 &	27.1M	&42 \\
+\textbf{Inception\_v4}     &Convolutional& 80.2	&95.2 & &58 \\
+\textbf{ResNet\_50}        &Convolutional & 75.2&	90.2&	25.5M &	50\\
+\textbf{ResNet\_101} &Convolutional &76.4	&92.9&	51M&	101  \\
+\textbf{ResNet\_152} &Convolutional & 76.8	&93.2&	76.5M	&152\\
+\textbf{VGG\_16} &Convolutional, Full & 71.5&	89.8	&138M	&16 \\
+\textbf{VGG\_19} &Convolutional, Full & 71.1	&89.8	&138M	&19  \\
+\textbf{NMT} &Recurrent  & 27.4(BLEU)	& -	&211M	&4 \\
 
 \bottomrule
 \end{tabular}
 \end{center}
 \vspace{-6mm}
+\label{tab:workload}
 \end{table}
 
 
 
  %The models are built using TensorFlow and trained on the ImageNet ILSVRC 2012 training set.
 
+<<<<<<< HEAD
 
 \subsection{Evaluation Methodology \label{sec:method}}
-\cparagraph{Evaluation Metrics} We consider the following metrics:
 
+\cparagraph{Performance Metrics} We consider the following metrics:
 %\vspace{-2mm}
 \begin{itemize}
 \item \emph{\textbf{Inference time} (lower is better)}. Wall clock time between a model taking in an input and producing an output,
@@ -60,23 +62,23 @@ models considered in this work.}
 \item \emph{\textbf{Energy consumption} (lower is better)}. The energy used by a model for inference.  We deduct the static power used by
     the hardware when the system is idle.
 
-\item \emph{\textbf{Accuracy} (higher is better)}. The ratio of correctly labeled images to the total number of testing images.
+\item \emph{\textbf{Accuracy} (higher is better)}. The ratio of correctly labeled images to the total number of testing instances.
 
-\item \emph{\textbf{Precision} (higher is better)}. The ratio of a correctly predicted images to the total number of images that are
-    predicted to have a specific object. This metric answers e.g., ``\emph{Of all the images that are labeled to have a cat, how many
+\item \emph{\textbf{Precision} (higher is better)}. The ratio of a correctly predicted instances to the total number of instances that
+    are predicted to have a specific label. This metric answers e.g., ``\emph{Of all the images that are labeled to have a cat, how many
     actually have a cat?}".
 
-\item \emph{\textbf{Recall} (higher is better)}. The ratio of correctly predicted images to the total number of test images that belong
-    to an object class. This metric answers e.g., ``\emph{Of all the test images that have a cat, how many are actually labeled to have a
-    cat?}".
+\item \emph{\textbf{Recall} (higher is better)}. The ratio of correctly predicted instances to the total number of test instances that
+    belong to an object class. This metric answers e.g., ``\emph{Of all the test images that have a cat, how many are actually labeled to
+    have a cat?}".
 
 \item \emph{\textbf{F1 score} (higher is better)}.  The weighted average of Precision and Recall, calculated as $2\times\frac{Recall
-    \times Precision} {Recall + Precision}$. It is useful when the test datasets have an uneven distribution of object classes.
+    \times Precision} {Recall + Precision}$. It is useful when the test dataset has an uneven distribution of classes.
 
-\item \emph{\textbf{BLEU} (higher is better)}. The bilingual evaluation understudy (BLEU) is an algorithm for evaluating the quality of
-    text which has been machine-translated from one natural language to another. Quality is considered to be the correspondence between a
-    machine's output and that of a human: ``\emph{the closer a machine translation is to a professional human translation, the better it
-    is}". We report the BLUE performance on \texttt{NMT}, a machine translation model.
+\item \emph{\textbf{BLEU} (higher is better)}. The bilingual evaluation understudy (BLEU) evaluates the quality of machine translation.
+    The quality is considered to be the correspondence between a machine's output and that of a human: ``\emph{the closer a machine
+    translation is to a professional human translation, the better it is}". We report the BLUE value on \texttt{NMT}, a machine
+    translation model.
 
 
 \end{itemize}
