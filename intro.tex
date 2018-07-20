@@ -15,15 +15,15 @@ reduce the computation or memory latency~\cite{georgiev2017low}, compressing a p
 as well as computational requirements~\cite{han2016eie}, and offloading some, or all, computation to a cloud
 server~\cite{Kang2017neurosurgeon,teerapittayanon2017distributed}. Compared to specialized hardware, model compression techniques have the
 advantage of being readily deployable on commercial-off-the-self hardware; and compared to computation offloading, compression enables
-local, on-device inference which in turn reduces the latency and is less privacy intrusive. Such advantages make model compressions
-attractive on resource-constrained IoT devices where computation offloading is infeasible.
+local, on-device inference which in turn reduces the response latency and is less privacy intrusive. Such advantages make model
+compressions attractive on resource-constrained IoT devices where computation offloading is infeasible.
 
 
 However, model compression is not a free lunch as it comes at the cost of loss in prediction accuracy~\cite{Cheng2017A}. This means that
 one must carefully choose the model compression technique and its parameters to effectively trade precision for time, energy, as well as
 computation and resource requirements. Furthermore, as we will show in this paper, the reduction in the model size does not necessarily
-translate into faster inference time. Because there is no guarantee for a compression technique to be beneficial, we need to understand
-when and how to apply it.
+translate into faster inference time. Because there is no guarantee for a compression technique to be beneficial, we need to know when and
+how to apply a compression technique.
 
 Our work aims to characterize deep learning model compression techniques for embedded inference. Knowing this not only informs the better
 deployment of computation-intensive models, but also enables designing more efficient architectures for deep learning models and embedded

@@ -7,16 +7,16 @@ In this work, we consider two commonly used model compression techniques, descri
 the network according how much the neuron contribute, it then removes the low ranking neurons to reduce the model size. Care must be taken
 to not remove too many neurons to significantly damage the accuracy of the network.
 
-\cparagraph{Data quantization.} This technique reduces the number of bits used to store the weights of a network, e.g., using 8-bit to
+\cparagraph{Data quantization.} This technique reduces the number of bits used to store the weights of a network, e.g., using 8 bits to
 represent a 32-bit floating point number. In this work, we apply data quantization to convert a pre-trained floating point model into a
 fixed point model without re-training. We use 6-bit, 8-bit and 16-bit to represent a 32-bit floating point numbers, as these are the most
-common fixed point data quantization approaches~\cite{pacq}.
+common fixed-pointed data quantization configurations~\cite{pacq}.
 
 
 
 \subsection{Motivation}
 Choosing the right compression technique is non-trivial. As a motivation example, consider applying \pruning and \dquantization, to two
-influential convolutional neural networks (\CNN), \texttt{VGG\_16} 	and \texttt{Resnet\_50}, for image classification. Our evaluation
+representative convolutional neural networks (\CNN), \texttt{VGG\_16} 	and \texttt{Resnet\_50}, for image classification. Our evaluation
 platform is a NVIDIA Jetson TX2 embedded platform (see Section~\ref{sec:platform}).
 
 \cparagraph{Setup.} We apply each of the compression techniques to the pre-trained model (which has been trained on the ImageNet ILSVRC

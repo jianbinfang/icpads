@@ -2,9 +2,37 @@
 \begin{figure*}[!t]
 \centering
 \includegraphics[width=0.7\textwidth]{figure/break11models.pdf}
-\caption{ Breakdown of execution time by operation type for every listed models in Table~\ref{tab:workload}.}
+\caption{Breakdown of execution time per operation type the models listed in Table~\ref{tab:workload}.}
  \label{fig:breakdown11}
 \end{figure*}
+
+
+
+
+
+
+
+\section{Experimental Results}
+
+
+\subsection{Roadmap}
+Our experiments try to answer the following questions:
+
+\begin{itemize}
+\item How does each compression technique performs across neural network architectures and optimization constraints?
+\item Is there a ``one-fits-for-all" compression technique? If not, what each compression technique is good at?
+\item Will it beneficial to combine multiple compression techniques?
+\end{itemize}
+
+\subsection{Model Computational Characteristics}
+The first task of our experiments is to understand the computational characteristics for the deep learning models considered in this work.
+Figure~\ref{fig:breakdown11} quantifies how different type of neural network operations contribute to the inference time across models. The
+numbers are averaged across the test samples for each model -- 50K for image classifiers and 10K for \texttt{NMT}. To aid clarity, we group
+the operations into seven categories, listed from A to G on the left-handed table. Each cell of the color table represents the percentage
+that a specific type of operation contributes to the model inference time. As can be seen from the figure, a handful of operations are
+collectively responsible for over 90\% of the model execution time. However, the types of operations that dominate the inference time vary
+across networks. Unsurprisingly, \CNNs are indeed dominated by convolution, while fully-connected networks and \RNNs depend heavily on
+matrix multiplications.
 
 \begin{figure*}[!t]
 \centering
@@ -22,10 +50,38 @@
 \hfill
 \caption{The achieved model size (a) inference time (b) accuracy (c) power consumption (d)
 energy consumption (e) and precision, recall and F1-score (e) before and after the compression by \quantization.
-The compression technique to use depends on the optimization target.}
+}
 \label{fig:analy_quan}
 \vspace{-5mm}
 \end{figure*}
+
+
+
+\subsection{Impact on the Model Storage Size\label{sec:ms}}
+Reducing the model storage size is crucial for embedded and IoT systems which often have a limited storage space. A smaller model size also
+translates to smaller runtime memory footprint of less RAM space usage. Figures~\ref{fig:analy_quan},\ref{fig:threshold} and \ref{fig:analy_prun} illustrate
+how the different compression techniques and parameters affect the resulting model size.
+
+As can be seen from Figure~\ref{fig:analy_quan}a, data quantization can significantly reduce the model storage size, leading to an average
+reduction of 50.2\% when using a 16-bit representation and up to 80.7\% when using a 6-bit representation. The reduction in the storage
+size is consistent across neural networks as the size of a network is dominated by its weights.
+
+From Figure~\ref{fig:analy_prun}a, we see that by removing some of the neurons of a network, \pruning can also reduce the model size,
+although the gain is smaller than \quantization if we want to keep the accuracy degradation within 5\%. On average, \pruning reduces the
+model size by 27.2\% (49.26 MB). An interesting observation is that, \pruning is particularly effective for obtaining a compact model for
+\texttt{NMT}, an \RNN, with a reduction of 60\% on the model storage size. This is because there are many repetitive neurons (or cells) in
+an \RNN due to the natural of the network architecture. As we will discuss later, \pruning only causes a minor degradation in the
+prediction accuracy for \texttt{NMT}. This suggests that \pruning can be an effective compression technique for \RNNs.
+
+In Figure~\ref{fig:threshold}, we compare the resulting performance after using different pruning thresholds from 5\% to 75\% on two \CNN and a \RNN
+models. Increasing the pruning percentage of model size does gives \pruning more opportunity to remove more neurons to improve the inference
+time and other metrics. The improvement reaches a plateau at 15\% of reduction for \CNNs, but for \texttt{NMT}, a \RNN model, the reduction of
+inference time increases as we remove more neurons. This diagram reinforces our findings that \pruning is more effective on \RNNs
+than \CNNs. For the rest discussions of this paper, we use a 5\% \pruning threshold.
+
+
+ %In this paper, we consider the 5\% reductions in the top-1 accuracy is the pruning threshold, and Figure~\ref{fig:threshold}
+%present the results when the accuracy around the thresholds.
 
 \begin{figure*}[!t]
 \centering
@@ -59,67 +115,7 @@ The x-axis shows the percentage of pruning in model size. }
 \vspace{-4mm}
 \end{figure*}
 
-
-
-
-
-\section{Experimental Results}
-
-
-\subsection{Roadmap}
-Our experiments try to answer the following questions:
-
-\begin{itemize}
-\item How does each compression technique performs across neural network architectures and optimization constraints
-    (Sections~\ref{sec:ms} - G)?
-\item Is there a ``one-fits-for-all" universal compression technique? (Sections~\ref{sec:single})? If not, what each compression
-    technique is good at?
-\item Will it beneficial to combine multiple compression techniques (Section~\ref{sec:combin})?
-\end{itemize}
-
-\subsection{Operation type profiling}
-The general intuition about a handful of operation types dominating the overall computational time is true. While it is
-an exaggeration to say that a workload can be reduced to a single operation, the distribution is quite skewed, as shown in
-Figure~\ref{fig:breakdown11}. Each point on each curve represents the cumulative
-contribution to execution time from a single operation type.
-It is clear that a handful of heavy operation types (usually
-5 to 15) are collectively responsible for upwards of 90% of
-the programs’ duration. It is important to note, however, that
-these types are not the same for every model.
-Unsurprisingly, convolutional neural networks are indeed
-dominated by convolution, and fully-connected networks depend
-heavily on matrix multiplication.
-
-
-\subsection{Impact on the Model Storage Size\label{sec:ms}}
-Reducing the model storage size is crucial for embedded and IoT systems which often have a limited storage space. A smaller model size also
-translates to smaller runtime memory footprint of less RAM space usage. Figures~\ref{fig:analy_quan},\ref{fig:threshold} and \ref{fig:analy_prun} illustrate
-how the different compression techniques and parameters affect the resulting model size.
-
-As can be seen from Figure~\ref{fig:analy_quan}a, data quantization can significantly reduce the model storage size, leading to an average
-reduction of 50.2\% when using a 16-bit representation and up to 80.7\% when using a 6-bit representation. The reduction in the storage
-size is consistent across neural networks as the size of a network is dominated by its weights.
-
-From Figure~\ref{fig:analy_prun}a, we see that by removing some of the neurons of a network, \pruning can also reduce the model size,
-although the gain is smaller than \quantization if we want to keep the accuracy degradation within 5\%. On average, \pruning reduces the
-model size by 27.2\% (49.26 MB). An interesting observation is that, \pruning is particularly effective for obtaining a compact model for
-\texttt{NMT}, an \RNN, with a reduction of 60\% on the model storage size. This is because there are many repetitive neurons (or cells) in
-an \RNN due to the natural of the network architecture. As we will discuss later, \pruning only causes a minor degradation in the
-prediction accuracy for \texttt{NMT}. This suggests that \pruning can be an effective compression technique for \RNNs.
-
-In Figure~\ref{fig:threshold}, we compare the resulting performance after using different pruning thresholds from 5\% to 75\% on two \CNN and a \RNN
-models. Increasing the pruning percentage of model size does gives \pruning more opportunity to remove more neurons to improve the inference
-time and other metrics. The improvement reaches a plateau at 15\% of reduction for \CNNs, but for \texttt{NMT}, a \RNN model, the reduction of
-inference time increases as we remove more neurons. This diagram reinforces our findings that \pruning is more effective on \RNNs
-than \CNNs. For the rest discussions of this paper, we use a 5\% \pruning threshold.
-
-
- %In this paper, we consider the 5\% reductions in the top-1 accuracy is the pruning threshold, and Figure~\ref{fig:threshold}
-%present the results when the accuracy around the thresholds.
-
-
-
-\subsection{Memory footprint}
+\subsection{Memory Footprint}
 
 \begin{figure}[!t]
 \centering
@@ -134,9 +130,9 @@ than \CNNs. For the rest discussions of this paper, we use a 5\% \pruning thresh
 
 Figure~\ref{fig:footprint} compares the runtime memory footprint consumed by a compressed model. Quantization reduces the model memory
 footprint by 17.2\% on average. For example, an 8-bit representation gives a memory footprint saving from 20.02\% to 15.97\% across
-networks, with an averaged reduction of 20.63\% (up to 40\%). In general, the smaller the model storage size is, the less memory footprint
-the compressed model will be. As an example, a 6-bit representation uses 2.6\% and 13.6\% less memory compared to an 8-bit and a 16-bit
-counterparts, respectively.
+networks, with an averaged reduction of 20.63\% (up to 40\%). In general, the smaller the model is, the less memory footprint it will
+consume. As an example, a 6-bit representation uses 2.6\% and 13.6\% less memory compared to an 8-bit and a 16-bit counterparts,
+respectively.
 
 Figure~\ref{fig:footprint} suggests that  \pruning offers little help in reducing the model memory footprint. On average, it gives a 6.4\%
 reduction of runtime memory footprint. This is because that the network weights still domain the memory resource consumption, and \pruning
@@ -195,14 +191,14 @@ leads to more energy consumption (which is a product of inference time $\times$ 
 a short battery life.
 
 Figure~\ref{fig:analy_prun}e quantifies the reduced energy consumption by applying \pruning. Note that it saves over 40\%, 15\% and 50\%
-energy consumption for \texttt{Vgg\_16}, \texttt{Resne\_50} and \texttt{NMT} respectively. Despite that only minor decreased in the peak
-power compared to \quantization (9.16\% vs 34.1\% to 51.1\%), the resulting faster inference time allows \pruning to significantly reduce
-the energy consumption. The results suggest \pruning is useful for reducing the overall energy consumption of the system, but \quantization
-can be employed to support a low power system.
+energy consumption for \texttt{Vgg\_16}, \texttt{Resne\_50} and \texttt{NMT} respectively. Despite that only minor decreases in the peak
+power compared to \quantization (9.16\% vs 34.1\% to 51.1\%), its faster inference time allows \pruning to reduce the energy consumption.
+The results indicate \pruning is useful for reducing the overall energy consumption of the system, but \quantization can be employed to
+support a low power system.
 
 \subsection{Impact on The Prediction Accuracy}
-The accuracy is crucially important for any predictive model. A small and faster model is not useful if it gives wrong predictions all the
-time.
+Accuracy is obviously important for any predictive model because a small and faster model is not useful if it gives wrong predictions all
+the time.
 
 
 Results in Figure~\ref{fig:analy_quan}c compare how the prediction accuracy is affected by model compression. We see that the sweat spot of
@@ -245,12 +241,12 @@ positive predictions.
 
 %\caption{Compare to ideal 8-bit representation for \quantization (a) and \pruning (b).} \label{fig:oracle}
 %\end{figure}
-%For \quantization, we use the 8-bit representation as the ideal compressed model which 
+%For \quantization, we use the 8-bit representation as the ideal compressed model which
 %offers an affordable accuracy after quantization.
 %Figure~\ref{fig:oracle}  compares our compressed models to the ideal 8-bit data quantization conditions.
 %We can see that,  the accuracy of our 8-bit representation almost achieves the ideal value, on the
-% less than 10\%. 
-%Figure~\ref{fig:oracle} b presents the how close our pruned models to the theoretically perfect models. 
+% less than 10\%.
+%Figure~\ref{fig:oracle} b presents the how close our pruned models to the theoretically perfect models.
 %As we can
 %see from this figure, our pruned models achieve above 80\% , and the energy consumption also achieves 58\%.
 
