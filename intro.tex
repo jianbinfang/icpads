@@ -40,7 +40,24 @@ thousands text samples~\cite{acl2016} for NLP.
 We show that while there is significant gain for choosing the right compression technique and parameters, mistakes can seriously hurt the
 performance. We then quantify how different model compression techniques and parameters affect the inference time, energy consumption,
 model storage requirement and the prediction accuracy. As a result, our work provides insights on when and how to apply deep learning model
-compression techniques on embedded devices.
+compression techniques on embedded devices, as well as guidelines on how to design schemes to adapt deep learning model optimisations for
+various constraints.
+
+\begin{figure*}[!t]
+\centering
+\subfloat[][Model size]{\includegraphics[width=0.24\textwidth]{figure/motivation_size1.pdf}}
+\hfill
+\subfloat[][Inference time]{\includegraphics[width=0.24\textwidth]{figure/motivation_time1.pdf}}
+\hfill
+\subfloat[][Energy consunption]{\includegraphics[width=0.23\textwidth]{figure/motivation_energy1.pdf}}
+\hfill
+\subfloat[][Accuracy]{\includegraphics[width=0.24\textwidth]{figure/motivation_accuracy1.pdf}}
+\hfill
+\caption{The achieved model size (a) inference time (b) energy consumption (c) and accuracy (d) before and after the compression by \quantization and \pruning.
+The compression technique to use depends on the optimization target.}
+\label{fig:motivation}
+\end{figure*}
+
 
 The main contributions of this paper are two folds:
 

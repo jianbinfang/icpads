@@ -46,9 +46,11 @@ before and after applying \pruning.} \label{fig:analy_prun}
 Our experiments try to answer the following questions:
 
 \begin{itemize}
-\item bla
-\item bla2
-\item bla3
+\item How does each compression technique performs across neural network architectures and optimization constraints
+    (Sections~\ref{sec:ms} - G)?
+\item Is there a ``one-fits-for-all" universal compression technique? (Sections~\ref{sec:single})? If not, what each compression
+    technique is good at?
+\item Will it beneficial to combine multiple compression techniques (Section~\ref{sec:combin})?
 \end{itemize}
 
 \subsection{Impact on the Model Storage Size\label{sec:ms}}
@@ -155,12 +157,11 @@ employed to support a low power system.
 
 \subsection{Precision, Recall and F1-Score}
 
-Finally, Figures~\ref{fig:analy_quan}f and \ref{fig:analy_prun}f show other three evaluation metrics of the considered deep learning models
-after applying \quantization and \pruning. We can see that, the decrease in performance after compression is  less than 3\% for precision,
-recall and F1-Score. For \quantization, the 16-bit representation outperforms the other two bits width representations. Specifically,
-16-bit gives the highest overall precision, which in turns leads to the best F1 score. High precision can reduce false positive, which is
-important for certain domains like video surveillance because it can reduce the human involvement for inspecting false positive
-predictions.
+Figures~\ref{fig:analy_quan}f and \ref{fig:analy_prun}f show other three evaluation metrics of the considered deep learning models after
+applying \quantization and \pruning. We can see that, the decrease in performance after compression is  less than 3\% for precision, recall
+and F1-Score. For \quantization, the 16-bit representation outperforms the other two bits width representations. Specifically, 16-bit gives
+the highest overall precision, which in turns leads to the best F1 score. High precision can reduce false positive, which is important for
+certain domains like video surveillance because it can reduce the human involvement for inspecting false positive predictions.
 
 
 
@@ -190,7 +191,7 @@ consumption, and \pruning is less effective compared to \dquantization for reduc
 
 
 
-\subsection{Compare to a Fixed Compression Setting}
+\subsection{Compare to a Single Compression Setting\label{sec:single}}
 
 \begin{figure}[!t]
 \centering
@@ -208,14 +209,14 @@ checker. }
 
 In Figure~\ref{fig:oracle}, we compare our compressed models to ideal compressed models.
 For \quantization, we use the 8-bit data quantization as the ideal
-quantized weight, 
-as it offers an affordable accuracy after quantization. 
+quantized weight,
+as it offers an affordable accuracy after quantization.
 We can see that,  the accuracy almost achieves the ideal value, on the
 contary, the inference time and energy consumption perform worst, only account less than 10\%. Both of the inference time and memory usage
 occupy more than 20\%. Figure~\ref{fig:oracle} b presents the how close our pruned models to the theoretically perfect models. As we can
 see from this figure, most of evaluation metrics above 80\%, and the energy consumption also achieves 58\%.
 
-\subsection{Combining Pruning and Quantization}
+\subsection{Combining Pruning and Quantization\label{sec:combin}}
 
 \begin{figure*}[!t]
 \centering
