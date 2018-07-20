@@ -83,11 +83,11 @@ model size by 27.2\% (49.26 MB). An interesting observation is that, \pruning is
 an \RNN due to the natural of the network architecture. As we will discuss later, \pruning only causes a minor degradation in the
 prediction accuracy for \texttt{NMT}. This suggests that \pruning can be an effective compression technique for \RNNs.
 
-In Figure~\ref{fig:threshold}, we compare the resulting performance after using different pruning thresholds from 5\% to 75\% on three \CNN
-models. Increasing the accepted percentage of errors does gives \pruning more opportunity to remove more neurons to improve the inference
-time and other metrics. The improvement reaches a plateau at 15\% of errors for \CNNs, but for \texttt{NMT}, a \RNN model, the reduction of
-inference time increases as we give more room for errors. This diagram reinforces our findings that \pruning is more effective on \RNNs
-than \CNNs. For the rest discussions of this paper, we use a 5\% \pruning threshold.
+In Figure~\ref{fig:threshold}, we compare the resulting performance by applying \pruning with different precision thresholds on three
+models. Tolerating a higher degree of errors gives \pruning more opportunity to remove more neurons to improve the inference time and other
+metrics. The improvement reaches a plateau at 15\% of errors for \CNNs, but for \texttt{NMT}, a \RNN model, the reduction of inference time
+increases as we give more room for errors. This diagram reinforces our findings that \pruning is more effective on \RNNs than \CNNs. For
+the rest discussions of this paper, we use a 5\% \pruning threshold.
 
  %In this paper, we consider the 5\% reductions in the top-1 accuracy is the pruning threshold, and Figure~\ref{fig:threshold}
 %present the results when the accuracy around the thresholds.
