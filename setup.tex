@@ -52,11 +52,12 @@ models considered in this work.}
 
 \end{itemize}
 
-\cparagraph{Performance Report.}   For image recognition, the accuracy of a model is evaluated using the top-1 and the top-5 scores defined
-by the ImageNet Challenge. Specifically, for the top-1 score, we check if the top output label matches the ground truth label of the
-primary object; and for the top-5 score, we check if the ground truth label of the primary object is in the top 5 of the output labels for
-each given model. By default, we use the top-1 accuracy. For NLP, we use the aforementioned BLEU metric. Furthermore, to collect inference
-time and energy consumption, we run each model on each input repeatedly until the 95\% confidence bound per model per input is smaller than
-5\%. In the experiments, we exclude the loading time of the \CNN models as they only need to be loaded once in practice. To measure energy
-consumption, we developed a lightweight runtime to take readings from the on-board energy sensors at a frequency of 1,000 samples per
-second. We then matched the energy readings against the time stamps of model execution to calculate the energy consumption.
+\cparagraph{Performance Report.}   For image recognition, the accuracy of a model is evaluated using the top-1 score by default; and we
+also consider the top-5 score. We use the definitions given by the ImageNet Challenge. Specifically, for the top-1 score, we check if the
+top output label matches the ground truth label of the primary object; and for the top-5 score, we check if the ground truth label of the
+primary object is in the top 5 of the output labels for each given model. For NLP, we use the aforementioned BLEU metric. Furthermore, to
+collect inference time and energy consumption, we run each model on each input repeatedly until the 95\% confidence bound per model per
+input is smaller than 5\%. In the experiments, we exclude the loading time of the \CNN models as they only need to be loaded once in
+practice. To measure energy consumption, we developed a lightweight runtime to take readings from the on-board energy sensors at a
+frequency of 1,000 samples per second. We then matched the energy readings against the time stamps of model execution to calculate the
+energy consumption.
