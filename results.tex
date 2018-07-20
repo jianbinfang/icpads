@@ -24,7 +24,7 @@
 energy consumption (e) and precision, recall and F1-score (e) before and after the compression by \quantization.
 The compression technique to use depends on the optimization target.}
 \label{fig:analy_quan}
-\vspace{-3mm}
+\vspace{-5mm}
 \end{figure*}
 
 \begin{figure*}[!t]
@@ -123,12 +123,13 @@ than \CNNs. For the rest discussions of this paper, we use a 5\% \pruning thresh
 
 \begin{figure}[!t]
 \centering
-\subfloat[][\quantization]{\includegraphics[width=0.4\textwidth]{figure/quan_mem.pdf}}
+\subfloat[][\quantization]{\includegraphics[width=0.24\textwidth]{figure/quan_mem.pdf}}
 \hfill
-\subfloat[][\pruning]{\includegraphics[width=0.39\textwidth]{figure/prun_mem.pdf}}
+\subfloat[][\pruning]{\includegraphics[width=0.22\textwidth]{figure/prun_mem.pdf}}
 \hfill
 
 \caption{Memory footprint before and after applying \quantization(a) and \pruning (b).} \label{fig:footprint}
+\vspace{-6mm}
 \end{figure}
 
 Figure~\ref{fig:footprint} compares the runtime memory footprint consumed by a compressed model. Quantization reduces the model memory
@@ -161,10 +162,10 @@ to end inference time.
 
 \begin{figure}
 \begin{center}
-\includegraphics[width=0.4\textwidth]{figure/breakdown4.pdf}
+\includegraphics[width=0.38\textwidth]{figure/breakdown4.pdf}
 \end{center}
 \caption{Breakdown of the average execution time per operation type, averaging across the quantized models.}
-\vspace{-3mm}
+\vspace{-4mm}
 \label{fig:breakdown}
 \end{figure}
 
@@ -261,7 +262,7 @@ positive predictions.
 \hfill
 \subfloat[][Inference time]{\includegraphics[width=0.24\textwidth]{figure/q_p_time.pdf}}
 \hfill
-\subfloat[][Energy consumption]{\includegraphics[width=0.23\textwidth]{figure/q_p_energy.pdf}}
+\subfloat[][Energy consumption]{\includegraphics[width=0.24\textwidth]{figure/q_p_energy.pdf}}
 \hfill
 \subfloat[][Accuracy]{\includegraphics[width=0.24\textwidth]{figure/q_p_acc.pdf}}
 \hfill
