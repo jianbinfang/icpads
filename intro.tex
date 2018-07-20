@@ -13,10 +13,10 @@ including CPU, memory, and power, even for simple tasks~\cite{CanzianiPC16}. Wit
 Numerous approaches have been proposed to accelerate deep inference on embedded devices. These include designing purpose-built hardware to
 reduce the computation or memory latency~\cite{georgiev2017low}, compressing a pre-trained model to reduce its storage and memory footprint
 as well as computational requirements~\cite{han2016eie}, and offloading some, or all, computation to a cloud
-server~\cite{Kang2017neurosurgeon,teerapittayanon2017distributed}. Compared to specialized hardware, software-based model compression
-techniques have the advantage of being readily deployable on commercial-off-the-self hardware; and compared to computation offloading,
-model compression enables local, on-device inference which in turn allows faster response time and is less privacy intrusive. Such
-advantages make model compressions attractive on resource-constrained IoT devices where computation offloading is infeasible.
+server~\cite{Kang2017neurosurgeon,teerapittayanon2017distributed}. Compared to specialized hardware, model compression techniques have the
+advantage of being readily deployable on commercial-off-the-self hardware; and compared to computation offloading, compression enables
+local, on-device inference which in turn reduces the latency and is less privacy intrusive. Such advantages make model compressions
+attractive on resource-constrained IoT devices where computation offloading is infeasible.
 
 
 However, model compression is not a free lunch as it comes at the cost of loss in prediction accuracy~\cite{Cheng2017A}. This
@@ -40,7 +40,24 @@ thousands text samples~\cite{acl2016} for NLP.
 We show that while there is significant gain for choosing the right compression technique and parameters, mistakes can seriously hurt the
 performance. We then quantify how different model compression techniques and parameters affect the inference time, energy consumption,
 model storage requirement and the prediction accuracy. As a result, our work provides insights on when and how to apply deep learning model
-compression techniques on embedded devices.
+compression techniques on embedded devices, as well as guidelines on how to design schemes to adapt deep learning model optimisations for
+various constraints.
+
+\begin{figure*}[!t]
+\centering
+\subfloat[][Model size]{\includegraphics[width=0.24\textwidth]{figure/motivation_size1.pdf}}
+\hfill
+\subfloat[][Inference time]{\includegraphics[width=0.24\textwidth]{figure/motivation_time1.pdf}}
+\hfill
+\subfloat[][Energy consunption]{\includegraphics[width=0.23\textwidth]{figure/motivation_energy1.pdf}}
+\hfill
+\subfloat[][Accuracy]{\includegraphics[width=0.24\textwidth]{figure/motivation_accuracy1.pdf}}
+\hfill
+\caption{The achieved model size (a) inference time (b) energy consumption (c) and accuracy (d) before and after the compression by \quantization and \pruning.
+The compression technique to use depends on the optimization target.}
+\label{fig:motivation}
+\end{figure*}
+
 
 The main contributions of this paper are two folds:
 
