@@ -11,8 +11,9 @@ and 96~GB of storage (32~GB eMMC plus 64~GB SD card).
 CUDA (v8.0.64).
 
 
-\cparagraph{Deep Learning Models.} We consider 11 pre-trained \CNN models for image recognition from the TensorFlow-Slim library~\cite{silberman2013tensorflow} and a recurrent neural network (\RNN) model for machine translation. Table~\ref{tab:workload} lists the
-models considered in this work.
+\cparagraph{Deep Learning Models.} We consider 11 pre-trained \CNN models for image recognition from the TensorFlow-Slim library~\cite{silberman2013tensorflow} and a recurrent neural network (\RNN) model for machine translation. Table~\ref{tbl:workload} lists the models considered in this work.
+
+
 
 \begin{table}[t!]
 \begin{center}
@@ -21,7 +22,7 @@ models considered in this work.
  on the non-blacklist subset of the validation set of ILSVRC 2012 and WMT 2016}
 \vspace{-2mm}
 \scriptsize
-\label{tbl:config}
+\label{tbl:workload}
 \begin{tabular}{llllll}
 \toprule
 \textbf{Model}&\textbf{Neuronal Style}& \textbf{Top-1} & \textbf{Top-5}& \textbf{Top-5}& \textbf{Layer Depth} \\
@@ -37,19 +38,23 @@ models considered in this work.
 \textbf{VGG\_16} &Convolutional, Full & 71.5&	89.8	&138M	&16 \\
 \textbf{VGG\_19} &Convolutional, Full & 71.1	&89.8	&138M	&19  \\
 \textbf{NMT} &Recurrent  & 27.4(BLEU)	& -	&211M	&4 \\
-
 \bottomrule
 \end{tabular}
 \end{center}
 \vspace{-6mm}
-\label{tab:workload}
 \end{table}
 
 
+\begin{figure*}[!t]
+\centering
+\includegraphics[width=0.7\textwidth]{figure/break11models.pdf}
+\caption{ Breakdown of execution time by operation type for every listed models in Table~\ref{tbl:workload}.\\
+(D.C.2dNative: DepthwiseConv2dNative, Q.D.ManyV2: QueueDequeueManyV2, V.V2: VariableV2)}
+ \label{fig:breakdown11}
 
+\end{figure*}
  %The models are built using TensorFlow and trained on the ImageNet ILSVRC 2012 training set.
 
-<<<<<<< HEAD
 
 \subsection{Evaluation Methodology \label{sec:method}}
 
