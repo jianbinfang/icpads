@@ -1,5 +1,5 @@
 \section{Discussions}
-We have shown that choosing the correct model compression setting can accelerate inference time and lower the computation resource
+We have demonstrated that choosing the correct model compression setting can accelerate inference time and lower the computation resource
 requirements. The right decision depends on the constraints on resources, time and precision. We now summarize what have learned from our
 experiments and the potential future research directions.
 
@@ -13,8 +13,8 @@ beneficial on traditional CPUs and GPUs, but could be useful on FGPAs or special
 load/store units. We believe studying when and how to apply \dquantization to a specific domain or a neural network architecture would be
 an interesting research direction.
 
-We show that \pruning allows us to precisely control in the prediction precision. This is useful for applications like security and
-surveillance where we need a degree of confidences on the predictive outcome. Compared to \dquantization, \pruning is less effective in
+We empirically show that \pruning allows us to precisely control in the prediction precision. This is useful for applications like security
+and surveillance where we need a degree of confidences on the predictive outcome. Compared to \dquantization, \pruning is less effective in
 reducing the model storage size, and thus may require larger storage and memory space. We also find that \pruning is particularly effective
 for \RNNs, perhaps due to the recurrent structures of an \RNN. This finding suggests \pruning can be an important method for accelerating
 \RNN on embedded systems.
