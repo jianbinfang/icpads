@@ -1,3 +1,11 @@
+
+\begin{figure*}[!t]
+\centering
+\includegraphics[width=0.7\textwidth]{figure/break11models.pdf}
+\caption{ Breakdown of execution time by operation type for every listed models in Table~\ref{tab:workload}.}
+ \label{fig:breakdown11}
+\end{figure*}
+
 \begin{figure*}[!t]
 \centering
 \subfloat[][Model size]{\includegraphics[width=0.33\textwidth]{figure/quan_size.pdf}}
@@ -20,15 +28,15 @@ The compression technique to use depends on the optimization target.}
 
 \begin{figure*}[!t]
 \centering
-\subfloat[][Vgg\_16]{\includegraphics[width=0.3\textwidth]{figure/prun_vgg.pdf}}
+\subfloat[][VGG\_16]{\includegraphics[width=0.3\textwidth]{figure/prun_vgg.pdf}}
 \hfill
-\subfloat[][Resnet\_50]{\includegraphics[width=0.3\textwidth]{figure/prun_resnet.pdf}}
+\subfloat[][ResNet\_50]{\includegraphics[width=0.3\textwidth]{figure/prun_resnet.pdf}}
 \hfill
 \subfloat[][NMT]{\includegraphics[width=0.3\textwidth]{figure/prun_NMT.pdf}}
 \hfill
 \caption{The resulting inference time, accuracy, and power and energy consumption
 for Vgg\_16 (a), Resnet\_50 (b) and \texttt{NMT} (c) when using different pruning thresholds.
-The x-axis shows the percentage of loss in prediction accuracy to be tolerated. }
+The x-axis shows the percentage of pruning in model size. }
 \label{fig:threshold}
 \end{figure*}
 
@@ -67,9 +75,23 @@ Our experiments try to answer the following questions:
 \item Will it beneficial to combine multiple compression techniques (Section~\ref{sec:combin})?
 \end{itemize}
 
+\subsection{Operation type profiling}
+The general intuition about a handful of operation types dominating the overall computational time is true. While it is
+an exaggeration to say that a workload can be reduced to a single operation, the distribution is quite skewed, as shown in
+Figure~\ref{fig:breakdown11}. Each point on each curve represents the cumulative
+contribution to execution time from a single operation type.
+It is clear that a handful of heavy operation types (usually
+5 to 15) are collectively responsible for upwards of 90% of
+the programs’ duration. It is important to note, however, that
+these types are not the same for every model.
+Unsurprisingly, convolutional neural networks are indeed
+dominated by convolution, and fully-connected networks depend
+heavily on matrix multiplication.
+
+
 \subsection{Impact on the Model Storage Size\label{sec:ms}}
 Reducing the model storage size is crucial for embedded and IoT systems which often have a limited storage space. A smaller model size also
-translates to smaller runtime memory footprint of less RAM space usage. Figures~\ref{fig:analy_quan},\ref{fig:threshold} and \ref{fig:threshold} illustrate
+translates to smaller runtime memory footprint of less RAM space usage. Figures~\ref{fig:analy_quan},\ref{fig:threshold} and \ref{fig:analy_prun} illustrate
 how the different compression techniques and parameters affect the resulting model size.
 
 As can be seen from Figure~\ref{fig:analy_quan}a, data quantization can significantly reduce the model storage size, leading to an average
@@ -83,10 +105,10 @@ model size by 27.2\% (49.26 MB). An interesting observation is that, \pruning is
 an \RNN due to the natural of the network architecture. As we will discuss later, \pruning only causes a minor degradation in the
 prediction accuracy for \texttt{NMT}. This suggests that \pruning can be an effective compression technique for \RNNs.
 
-In Figure~\ref{fig:threshold}, we compare the resulting performance after using different pruning thresholds from 5\% to 75\% on three \CNN
-models. Increasing the accepted percentage of errors does gives \pruning more opportunity to remove more neurons to improve the inference
-time and other metrics. The improvement reaches a plateau at 15\% of errors for \CNNs, but for \texttt{NMT}, a \RNN model, the reduction of
-inference time increases as we give more room for errors. This diagram reinforces our findings that \pruning is more effective on \RNNs
+In Figure~\ref{fig:threshold}, we compare the resulting performance after using different pruning thresholds from 5\% to 75\% on two \CNN and a \RNN
+models. Increasing the pruning percentage of model size does gives \pruning more opportunity to remove more neurons to improve the inference
+time and other metrics. The improvement reaches a plateau at 15\% of reduction for \CNNs, but for \texttt{NMT}, a \RNN model, the reduction of
+inference time increases as we remove more neurons. This diagram reinforces our findings that \pruning is more effective on \RNNs
 than \CNNs. For the rest discussions of this paper, we use a 5\% \pruning threshold.
 
  %In this paper, we consider the 5\% reductions in the top-1 accuracy is the pruning threshold, and Figure~\ref{fig:threshold}
@@ -100,7 +122,7 @@ than \CNNs. For the rest discussions of this paper, we use a 5\% \pruning thresh
 \centering
 \subfloat[][\quantization]{\includegraphics[width=0.4\textwidth]{figure/quan_mem.pdf}}
 \hfill
-\subfloat[][\pruning]{\includegraphics[width=0.4\textwidth]{figure/prun_mem.pdf}}
+\subfloat[][\pruning]{\includegraphics[width=0.39\textwidth]{figure/prun_mem.pdf}}
 \hfill
 
 \caption{Memory footprint before and after applying \quantization(a) and \pruning (b).} \label{fig:footprint}
@@ -207,30 +229,26 @@ positive predictions.
 
 
 
-\subsection{Room for Possible Improvements\label{sec:single}}
+%\subsection{Room for Possible Improvements\label{sec:single}}
 
-\begin{figure}[!t]
-\centering
+%\begin{figure}[!t]
+%\centering
 
-\subfloat[][\quantization]{\includegraphics[width=0.2\textwidth]{figure/quan_oracle.pdf}}
-\hfill
-\subfloat[][\pruning]{\includegraphics[width=0.2\textwidth]{figure/prun_oracle.pdf}}
-\hfill
+%\subfloat[][\quantization]{\includegraphics[width=0.2\textwidth]{figure/quan_oracle.pdf}}
+%\hfill
+%\subfloat[][\pruning]{\includegraphics[width=0.2\textwidth]{figure/prun_oracle.pdf}}
+%\hfill
 
-\caption{Compare to \FIXME{xx} for \quantization (a) and \pruning (b).} \label{fig:oracle}
-\end{figure}
-
-\FIXME{ZW: I have no idea of what's talking about here. Why a 8-bit data quantization setting is the oracle??? Please also use a spell
-checker. }
-
-In Figure~\ref{fig:oracle}, we compare our compressed models to ideal compressed models.
-For \quantization, we use the 8-bit data quantization as the ideal
-quantized weight,
-as it offers an affordable accuracy after quantization.
-We can see that,  the accuracy almost achieves the ideal value, on the
-contary, the inference time and energy consumption perform worst, only account less than 10\%. Both of the inference time and memory usage
-occupy more than 20\%. Figure~\ref{fig:oracle} b presents the how close our pruned models to the theoretically perfect models. As we can
-see from this figure, most of evaluation metrics above 80\%, and the energy consumption also achieves 58\%.
+%\caption{Compare to ideal 8-bit representation for \quantization (a) and \pruning (b).} \label{fig:oracle}
+%\end{figure}
+%For \quantization, we use the 8-bit representation as the ideal compressed model which 
+%offers an affordable accuracy after quantization.
+%Figure~\ref{fig:oracle}  compares our compressed models to the ideal 8-bit data quantization conditions.
+%We can see that,  the accuracy of our 8-bit representation almost achieves the ideal value, on the
+% less than 10\%. 
+%Figure~\ref{fig:oracle} b presents the how close our pruned models to the theoretically perfect models. 
+%As we can
+%see from this figure, our pruned models achieve above 80\% , and the energy consumption also achieves 58\%.
 
 \subsection{Combining Pruning and Quantization\label{sec:combin}}
 
