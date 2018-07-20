@@ -11,7 +11,7 @@ and 96~GB of storage (32~GB eMMC plus 64~GB SD card).
 CUDA (v8.0.64).
 
 
-\cparagraph{Deep Learning Models.} We consider \FIXME{14} pre-trained \CNN models for image recognition from the TensorFlow-Slim
+\cparagraph{Deep Learning Models.} We consider \FIXME{12} pre-trained \CNN models for image recognition from the TensorFlow-Slim
 library~\cite{silberman2013tensorflow} and a recurrent neural network (\RNN) model for machine translation. \FIXME{Table~\ref{} lists the
 models considered in this work.}
 
@@ -21,7 +21,7 @@ models considered in this work.}
 \subsection{Evaluation Methodology \label{sec:method}}
 
 
-\cparagraph{Evaluation Metrics} We consider the following metrics:
+\cparagraph{Performance Metrics} We consider the following metrics:
 
 %\vspace{-2mm}
 \begin{itemize}
@@ -31,23 +31,23 @@ models considered in this work.}
 \item \emph{\textbf{Energy consumption} (lower is better)}. The energy used by a model for inference.  We deduct the static power used by
     the hardware when the system is idle.
 
-\item \emph{\textbf{Accuracy} (higher is better)}. The ratio of correctly labeled images to the total number of testing images.
+\item \emph{\textbf{Accuracy} (higher is better)}. The ratio of correctly labeled images to the total number of testing instances.
 
-\item \emph{\textbf{Precision} (higher is better)}. The ratio of a correctly predicted images to the total number of images that are
-    predicted to have a specific object. This metric answers e.g., ``\emph{Of all the images that are labeled to have a cat, how many
+\item \emph{\textbf{Precision} (higher is better)}. The ratio of a correctly predicted instances to the total number of instances that
+    are predicted to have a specific label. This metric answers e.g., ``\emph{Of all the images that are labeled to have a cat, how many
     actually have a cat?}".
 
-\item \emph{\textbf{Recall} (higher is better)}. The ratio of correctly predicted images to the total number of test images that belong
-    to an object class. This metric answers e.g., ``\emph{Of all the test images that have a cat, how many are actually labeled to have a
-    cat?}".
+\item \emph{\textbf{Recall} (higher is better)}. The ratio of correctly predicted instances to the total number of test instances that
+    belong to an object class. This metric answers e.g., ``\emph{Of all the test images that have a cat, how many are actually labeled to
+    have a cat?}".
 
 \item \emph{\textbf{F1 score} (higher is better)}.  The weighted average of Precision and Recall, calculated as $2\times\frac{Recall
-    \times Precision} {Recall + Precision}$. It is useful when the test datasets have an uneven distribution of object classes.
+    \times Precision} {Recall + Precision}$. It is useful when the test dataset has an uneven distribution of classes.
 
-\item \emph{\textbf{BLEU} (higher is better)}. The bilingual evaluation understudy (BLEU) is an algorithm for evaluating the quality of
-    text which has been machine-translated from one natural language to another. Quality is considered to be the correspondence between a
-    machine's output and that of a human: ``\emph{the closer a machine translation is to a professional human translation, the better it
-    is}". We report the BLUE performance on \texttt{NMT}, a machine translation model.
+\item \emph{\textbf{BLEU} (higher is better)}. The bilingual evaluation understudy (BLEU) evaluates the quality of machine translation.
+    The quality is considered to be the correspondence between a machine's output and that of a human: ``\emph{the closer a machine
+    translation is to a professional human translation, the better it is}". We report the BLUE value on \texttt{NMT}, a machine
+    translation model.
 
 
 \end{itemize}
