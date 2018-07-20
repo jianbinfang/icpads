@@ -6,14 +6,14 @@
 \hfill
 \subfloat[][Accuracy]{\includegraphics[width=0.32\textwidth]{figure/quan_acc3.pdf}}
 \hfill
-\subfloat[][Power consumption]{\includegraphics[width=0.33\textwidth]{figure/quan_power2.pdf}}
+\subfloat[][Power]{\includegraphics[width=0.33\textwidth]{figure/quan_power2.pdf}}
 \hfill
 \subfloat[][Energy consumption]{\includegraphics[width=0.34\textwidth]{figure/quan_energy2.pdf}}
 \hfill
-\subfloat[][precision, recall and F1 score]{\includegraphics[width=0.33\textwidth]{figure/quan_prf2.pdf}}
+\subfloat[][Precision, recall and F1-score]{\includegraphics[width=0.33\textwidth]{figure/quan_prf2.pdf}}
 \hfill
 \caption{The achieved model size (a) inference time (b) accuracy (c) power consumption (d)
-energy consumption (e) and precision, recall and F1 score (e) before and after the compression by \quantization.
+energy consumption (e) and precision, recall and F1-score (e) before and after the compression by \quantization.
 The compression technique to use depends on the optimization target.}
 \label{fig:analy_quan}
 \end{figure*}
@@ -87,22 +87,43 @@ In Figure~\ref{fig:threshold}, we compare the resulting performance after using 
 models. Increasing the accepted percentage of errors does gives \pruning more opportunity to remove more neurons to improve the inference
 time and other metrics. The improvement reaches a plateau at 15\% of errors for \CNNs, but for \texttt{NMT}, a \RNN model, the reduction of
 inference time increases as we give more room for errors. This diagram reinforces our findings that \pruning is more effective on \RNNs
-than \CNNs.
+than \CNNs. For the rest discussions of this paper, we use a 5\% \pruning threshold.
 
  %In this paper, we consider the 5\% reductions in the top-1 accuracy is the pruning threshold, and Figure~\ref{fig:threshold}
 %present the results when the accuracy around the thresholds.
 
 
 
+\subsection{Memory footprint}
+
+\begin{figure}[!t]
+\centering
+\subfloat[][\quantization]{\includegraphics[width=0.4\textwidth]{figure/quan_mem.pdf}}
+\hfill
+\subfloat[][\pruning]{\includegraphics[width=0.4\textwidth]{figure/prun_mem.pdf}}
+\hfill
+
+\caption{Memory footprint before and after applying \quantization(a) and \pruning (b).} \label{fig:footprint}
+\end{figure}
+
+Figure~\ref{fig:footprint} compares the runtime memory footprint consumed by a compressed model. Quantization reduces the model memory
+footprint by 17.2\% on average. For example, an 8-bit representation gives a memory footprint saving from 20.02\% to 15.97\% across
+networks, with an averaged reduction of 20.63\% (up to 40\%). In general, the smaller the model storage size is, the less memory footprint
+the compressed model will be. As an example, a 6-bit representation uses \FIXME{xx, and xx} less memory compared to an 8-bit and a 16-bit
+counterparts, respectively.
+
+Figure~\ref{fig:footprint} suggests that  \pruning offers little help in reducing the model memory footprint. On average, it gives a 6.4\%
+reduction of runtime memory footprint. This is because that the network weights still domain the memory resource consumption, and \pruning
+is less effective compared to \dquantization for reducing the overhead of network weights.
 
 
 
 \subsection{Impact on Inference Time\label{sec:time}}
  Figure~\ref{fig:analy_quan}b compares the inference time when using different bit
 widths to represent a 32-bit floating number for neural network weights. Intuitively, a smaller model should run faster. However, data
-quantization does not reduce the inference time but instead it prolongs it. The reasons are described as follows. Data quantization can
-speedup the computation (i.e., matrix multiplications) performed on some of the input data by avoiding expensive floating point arithmetics
-and enabling SIMD vectorization by using a compact data representation. However, we found that the overhead of the de-quantization process
+quantization does not shorten the inference time but prolongs it. The reasons are described as follows. Data quantization can speedup the
+computation (i.e., matrix multiplications) performed on some of the input data by avoiding expensive floating point arithmetics and
+enabling SIMD vectorization by using a compact data representation. However, we found that the overhead of the de-quantization process
 during inference can outweigh its benefit. Besides the general inference operation, a data quantization and de-quantization function has to
 be added into the compressed model. Inference performed on a quantized model accounts for 50.9\% of its running time, the de-quantization
 functions converts input values back to a 32-bit representation on some of the layers (primarily the output layer) in order to recover the
@@ -140,21 +161,22 @@ benefit from this technique, with an reduction of 38\%. Overall, the average inf
 \pruning is less effective in reducing the model size (see Section~\ref{sec:ms}), it is useful in achieving a faster inference time.
 
 \subsection{Impact on the Power and Energy Consumption}
-Power and energy consumption are two limiting factors on battery-powered mobile and IoT devices. As we can see from
-Figure~\ref{fig:analy_prun}d, \quantization decreases the peak power for inferencing with an average of 4.3\%, 10.4\% and 11.6\%,
-respectively when using a 6-bit, an 8-bit and a 16-bit representations. While \quantization reduces the peak power used, the increase
-inference time leads to more energy consumption by at least 34.1\% and up to 51.1\% (see Figure~\ref{fig:analy_prun}e). This means that
-although \quantization allows one to reduces voltage supply to the computing devices, it can lead to a short battery life.
+Power and energy consumption are two limiting factors on battery-powered devices. As we can see from Figure~\ref{fig:analy_prun}d,
+\quantization decreases the peak power usage for inferencing with an average value of 4.3\%, 10.4\% and 11.6\%, respectively when using a
+6-bit, an 8-bit and a 16-bit representations. While \quantization reduces the peak power the device draws, the increased inference time
+leads to more energy consumption (which is a product of inference time $\times$ instantaneous power) by at least 34.1\% and up to 51.1\%
+(see Figure~\ref{fig:analy_prun}e). This means that although \quantization allows one to reduces supplied power and voltage, it can lead to
+a short battery life.
 
-Figure~\ref{fig:analy_prun}e shows the reduced energy consumption by applying \pruning. Note that it saves over 40\%, 15\% and 50\% energy
-consumption for \texttt{Vgg\_16}, \texttt{Resne\_50} and \texttt{NMT} respectively. Despite that the peak power is reduced by only 9.16\%,
-a smaller decrease compared to \quantization, the resulted faster inference time allows \pruning to significantly reduce the power
-consumption. The results suggest \pruning is useful for reducing the overall energy consumption of the system, but \quantization can be
-employed to support a low power system.
+Figure~\ref{fig:analy_prun}e quantifies the reduced energy consumption by applying \pruning. Note that it saves over 40\%, 15\% and 50\%
+energy consumption for \texttt{Vgg\_16}, \texttt{Resne\_50} and \texttt{NMT} respectively. Despite that only minor decreased in the peak
+power compared to \quantization (9.16\% vs 34.1\% to 51.1\%), the resulting faster inference time allows \pruning to significantly reduce
+the energy consumption. The results suggest \pruning is useful for reducing the overall energy consumption of the system, but \quantization
+can be employed to support a low power system.
 
 \subsection{Impact on The Prediction Accuracy}
-The accuracy is crucially important for any predictive model. A small and faster model is not very useful if it gives wrong predictions all
-the time.
+The accuracy is crucially important for any predictive model. A small and faster model is not useful if it gives wrong predictions all the
+time.
 
 
 Results in Figure~\ref{fig:analy_quan}c compare how the prediction accuracy is affected by model compression. We see that the sweat spot of
@@ -168,7 +190,7 @@ with a smaller number of layers and neurons. Our findings suggest the need for h
 \dquantization parameter for given constraints.
 
 
-For \pruning, the Figure~\ref{fig:analy_prun}c compares the reduction in the top-1 and the top-5 scores for \texttt{Vgg\_16} and
+For \pruning, Figure~\ref{fig:analy_prun}c compares the reduction in the top-1 and the top-5 scores for \texttt{Vgg\_16} and
 \texttt{Resnet\_50}. We also show the BLEU value for \texttt{NMT}. Overall, \pruning reduces the accuracy of the two \CNN models with by
 5.7\% and 1.7\% respectively for the top-1 and the top-5 scores. It has little negative impact on \texttt{NMT} where we only observe an
 averaged loss of 0.8\% for BLEU. When taking into consideration that \pruning can significantly reduce the model size for \texttt{NMT}
@@ -176,46 +198,16 @@ averaged loss of 0.8\% for BLEU. When taking into consideration that \pruning ca
 
 \subsection{Precision, Recall and F1-Score}
 
-Figures~\ref{fig:analy_quan}f and \ref{fig:analy_prun}f show other three evaluation metrics of the considered deep learning models after
+Figures~\ref{fig:analy_quan}f and \ref{fig:analy_prun}f show other three performance metrics of a \emph{classification} model after
 applying \quantization and \pruning. We can see that, the decrease in performance after compression is  less than 3\% for precision, recall
-and F1-Score. For \quantization, the 16-bit representation outperforms the other two bits width representations. Specifically, 16-bit gives
-the highest overall precision, which in turns leads to the best F1 score. High precision can reduce false positive, which is important for
-certain domains like video surveillance because it can reduce the human involvement for inspecting false positive predictions.
+and the F1-score. For \quantization, the 16-bit representation outperforms the other two bits width representations. Specifically,  a
+16-bit representation gives the highest overall precision, which in turns leads to the best F1-score. High precision can reduce false
+positive, which is important for certain domains like video surveillance because it can reduce the human involvement for inspecting false
+positive predictions.
 
 
 
-
-
-
-
-
-
-
-\subsection{Memory footprint}
-
-\begin{figure}[!t]
-\centering
-\subfloat[][\quantization]{\includegraphics[width=0.4\textwidth]{figure/quan_mem.pdf}}
-\hfill
-\subfloat[][\pruning]{\includegraphics[width=0.4\textwidth]{figure/prun_mem.pdf}}
-\hfill
-
-\caption{Memory footprint before and after the compression by \quantization(a) and \pruning (b).}
-\label{fig:footprint}
-\end{figure}
-
-Figure~\ref{fig:footprint} compares the resulting memory footprint by applying \quantization and \pruning. Quantization reduces the runtime
-memory footprint with an averaged reduction of 17.2\% by generating a more compact model. For example, an 8-bit representation reduces the
-memory footprint from 20.02\% to 15.97\% across networks, with an averaged reduction of 20.63\% (up to 40\%). In general, the smaller the
-model storage size is, the less memory footprint the compressed model will be. As an example, a 6-bit representation uses \FIXME{xx, and
-xx} less memory compared to a 8-bit and a 16-bit representations, respectively.
-
-In contrast to \dquantization, Figure~\ref{fig:footprint} shows that  \pruning offers little help in reducing the model memory footprint.
-On average, it leads to a 6.4\% reduction of memory footprint. This is because that the network weights still domain the memory resource
-consumption, and \pruning is less effective compared to \dquantization for reducing the overhead of network weights.
-
-
-\subsection{Compare to a Single Compression Setting\label{sec:single}}
+\subsection{Room for Possible Improvements\label{sec:single}}
 
 \begin{figure}[!t]
 \centering
@@ -263,10 +255,10 @@ techniques?". Figure~\ref{fig:combine} shows the results by first applying a 8-b
 
 
 As can be seen from Figure~\ref{fig:combine}a, combining both compression techniques can significantly reduce the model storage size -- the
-resulting models are 76\% smaller than the original model. There is little degradation in the top-1 prediction accuracy
+resulting models are 76\% smaller than the original ones; and there is little degradation in the top-1 prediction accuracy
 (Figure~\ref{fig:combine}d) -- less than 7\%. From Figure~\ref{fig:combine}b, we see that the combination has positive impact on the
 inference time for \texttt{VGG\_16} as the runtime overhead of \dquantization (see Section~\ref{sec:time}) can be amortized by \pruning.
-The combination, however, leads to longer inference time for \texttt{Resnet50} due to the expensive \dquantization overhead. Because of the
-difference in inference time, there is less benefit in the energy reduction for \texttt{Resnet50} compared to what is obtained for
+The combination, however, leads to longer inference time for \texttt{Resnet50} due to the expensive de-quantization overhead as we have
+explained. Because of the difference in inference time, there is less benefit in energy consumpation for \texttt{Resnet50} over
 \texttt{VGG\_16} (Figure~\ref{fig:combine}c). This experiment shows that combining \pruning and \quantization can be beneficial, but it
 depends on the neural network architecture and what to optimize for.

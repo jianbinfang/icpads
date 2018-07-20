@@ -19,15 +19,15 @@ local, on-device inference which in turn reduces the latency and is less privacy
 attractive on resource-constrained IoT devices where computation offloading is infeasible.
 
 
-However, model compression is not a free lunch as it comes at the cost of loss in prediction accuracy~\cite{Cheng2017A}. This
-means that one must carefully choose the model compression technique and its parameters to effectively trade precision for computation and
-resource requirements or less energy consumption. Furthermore, as we will show in this paper, the reduction in the model size does not
-necessarily translate into faster inference time. Because there is no guarantee for a compression technique to be beneficial, we need to
-understand when and how to apply a model compression technique.
+However, model compression is not a free lunch as it comes at the cost of loss in prediction accuracy~\cite{Cheng2017A}. This means that
+one must carefully choose the model compression technique and its parameters to effectively trade precision for time, energy, as well as
+computation and resource requirements. Furthermore, as we will show in this paper, the reduction in the model size does not necessarily
+translate into faster inference time. Because there is no guarantee for a compression technique to be beneficial, we need to understand
+when and how to apply it.
 
 Our work aims to characterize deep learning model compression techniques for embedded inference. Knowing this not only informs the better
-deployment of computation-intensive models, but also enables destining more efficient architectures for models and hardware for mobile and
-IoT devices.
+deployment of computation-intensive models, but also enables designing more efficient architectures for deep learning models and embedded
+hardware.
 
 To that end, we develop a quantitative approach  to characterize two mainstream model compression techniques, pruning~\cite{Cheng2017A} and
 data quantization~\cite{Gong2014Compressing}. We apply the techniques to the image classification and the natural language processing (NLP)
@@ -39,9 +39,9 @@ thousands text samples~\cite{acl2016} for NLP.
 
 We show that while there is significant gain for choosing the right compression technique and parameters, mistakes can seriously hurt the
 performance. We then quantify how different model compression techniques and parameters affect the inference time, energy consumption,
-model storage requirement and the prediction accuracy. As a result, our work provides insights on when and how to apply deep learning model
-compression techniques on embedded devices, as well as guidelines on how to design schemes to adapt deep learning model optimisations for
-various constraints.
+model storage requirement and prediction accuracy. As a result, our work provides insights on when and how to apply deep learning model
+compression techniques on embedded devices, as well as guidelines on designing schemes to adapt deep learning model optimisations for
+various application constraints.
 
 \begin{figure*}[!t]
 \centering
@@ -64,9 +64,9 @@ The main contributions of this paper are two folds:
 
 \begin{itemize}
 \item We present an extensive study to characterize and understand how two popular model compression techniques perform on a
-    representative embedded deep learning platform;
+    representative embedded deep learning platform and a wide range of deep neural network architectures;
 \item Our work offers insights on when and how to apply compression techniques for embedded deep inference.
 \end{itemize}
 
-We believe there is an opportunity to enable efficient deep inference locally on the device. Therefore, we hope the empirical evidences
-provided in this paper can provide the stepping stones and encourage more research on this promising direction.
+We believe there is an opportunity to enable for performing efficient deep inference locally on the device. We thus hope the empirical
+evidences in the paper can provide the stepping stones and encourage research on this promising direction.
