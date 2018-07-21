@@ -138,9 +138,10 @@ The x-axis shows the percentage of pruning in model size. }
 
 \begin{figure}[!t]
 \centering
-\subfloat[][\quantization]{\includegraphics[width=0.24\textwidth]{figure/quan_mem.pdf}}
+\subfloat[][\quantization]{\includegraphics[width=0.25\textwidth]{figure/quan_mem.pdf}}
 \hfill
-\subfloat[][\pruning]{\includegraphics[width=0.22\textwidth]{figure/prun_mem.pdf}}
+\hspace{-2mm}
+\subfloat[][\pruning]{\includegraphics[width=0.23\textwidth]{figure/prun_mem.pdf}}
 \hfill
 
 \caption{Memory footprint before and after applying \quantization(a) and \pruning (b).} \label{fig:footprint}
@@ -177,10 +178,11 @@ to end inference time.
 
 \begin{figure}
 \begin{center}
-\includegraphics[width=0.38\textwidth]{figure/breakdown4.pdf}
+\includegraphics[width=0.35\textwidth]{figure/breakdown0.pdf}
 \end{center}
+\vspace{-2mm}
 \caption{Breakdown of the average execution time per operation type, averaging across the quantized models.}
-\vspace{-4mm}
+\vspace{-6mm}
 \label{fig:breakdown}
 \end{figure}
 
