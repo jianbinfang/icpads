@@ -186,6 +186,21 @@ to end inference time.
 \label{fig:breakdown}
 \end{figure}
 
+\begin{figure*}[!t]
+\centering
+\subfloat[][Model size]{\includegraphics[width=0.24\textwidth]{figure/q_p_size.pdf}}
+\hfill
+\subfloat[][Inference time]{\includegraphics[width=0.24\textwidth]{figure/q_p_time.pdf}}
+\hfill
+\subfloat[][Energy consumption]{\includegraphics[width=0.24\textwidth]{figure/q_p_energy.pdf}}
+\hfill
+\subfloat[][Accuracy]{\includegraphics[width=0.24\textwidth]{figure/q_p_acc.pdf}}
+\hfill
+\caption{The achieved model size (a) inference time (b) energy consumption (c) and accuracy (d) before and after applying \quantization and \pruning.
+}
+\vspace{-5mm}
+\label{fig:combine}
+\end{figure*}
 
 Using fewer bits for representation can reduce the overhead of de-quantization. For example, using a 6-bit representation is 1.05x and
 1.03x faster than using a 16-bit and a 8-bit representations, respectively. However, as we will demonstrate later when discussing
@@ -250,6 +265,7 @@ positive predictions.
 
 
 
+
 %\subsection{Room for Possible Improvements\label{sec:single}}
 
 %\begin{figure}[!t]
@@ -273,17 +289,31 @@ positive predictions.
 
 \subsection{Combining Pruning and Quantization\label{sec:combin}}
 
-\begin{figure*}[!t]
+
+\begin{figure}[!t]
 \centering
-\subfloat[][Model size]{\includegraphics[width=0.24\textwidth]{figure/q_p_size.pdf}}
+\subfloat[][Inference time]{\includegraphics[width=0.24\textwidth]{figure/quan_after_time.pdf}}
 \hfill
-\subfloat[][Inference time]{\includegraphics[width=0.24\textwidth]{figure/q_p_time.pdf}}
+\subfloat[][Energy]{\includegraphics[width=0.24\textwidth]{figure/quan_after_energy.pdf}}
 \hfill
-\subfloat[][Energy consumption]{\includegraphics[width=0.24\textwidth]{figure/q_p_energy.pdf}}
+
+\caption{ \quantization 
+}
+\vspace{-5mm}
+\label{fig:combine}
+\end{figure}
+
+
+\begin{figure*}[t!]
+\centering
+\subfloat[][Inference time]{\includegraphics[width=0.25\textwidth]{figure/prun_after_time.pdf}}
 \hfill
-\subfloat[][Accuracy]{\includegraphics[width=0.24\textwidth]{figure/q_p_acc.pdf}}
+\subfloat[][Energy]{\includegraphics[width=0.25\textwidth]{figure/prun_after_energy.pdf}}
 \hfill
-\caption{The achieved model size (a) inference time (b) energy consumption (c) and accuracy (d) before and after applying \quantization and \pruning.
+\subfloat[][Model size]{\includegraphics[width=0.25\textwidth]{figure/prun_after_size.pdf}}
+\hfill
+
+\caption{ \pruning.
 }
 \vspace{-5mm}
 \label{fig:combine}
@@ -301,3 +331,7 @@ The combination, however, leads to longer inference time for \texttt{ResNet50} d
 explained. Because of the difference in inference time, there is less benefit in energy consumpation for \texttt{ResNet50} over
 \texttt{VGG\_16} (Figure~\ref{fig:combine}c). This experiment shows that combining \pruning and \quantization can be beneficial, but it
 depends on the neural network architecture and what to optimize for.
+
+
+
+
