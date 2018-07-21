@@ -12,7 +12,7 @@
 \toprule
 \textbf{Model}&\textbf{Type}& \textbf{Top-1 (\%)} & \textbf{Top-5 (\%)}& \textbf{\#param.s}& \textbf{Depth} \\
 \midrule
-\rowcolor{Gray} \textbf{Mobilenet} & \CNN & 70.7 & 89.56 &	4.2M	&28 \\
+\rowcolor{Gray} \textbf{MobileNet} & \CNN & 70.7 & 89.56 &	4.2M	&28 \\
 \textbf{Inception\_v1}     &\CNN & 69.8  & 89.6	&7M&	22  \\
 \rowcolor{Gray} \textbf{Inception\_v2}     &\CNN &73.9	&91.4 & 11.3M& 	32 \\
 \textbf{Inception\_v3}     &\CNN  & 78	&94 &	27.1M	&42 \\
@@ -20,8 +20,8 @@
 \textbf{ResNet\_50}        &\CNN & 75.2&	90.2&	25.5M &	50\\
 \rowcolor{Gray} \textbf{ResNet\_101} &\CNN &76.4	&92.9&	51M&	101  \\
 \textbf{ResNet\_152} &\CNN & 76.8	&93.2&	76.5M	&152\\
-\rowcolor{Gray} \textbf{VGG\_16} &\CNN, Fully connect. & 71.5&	89.8	&138M	&16 \\
-\textbf{VGG\_19} &\CNN, Fully connect & 71.1	&89.8	&138M	&19  \\
+\rowcolor{Gray} \textbf{VGG\_16} &\CNN, fully conn. & 71.5&	89.8	&138M	&16 \\
+\textbf{VGG\_19} &\CNN, fully conn. & 71.1	&89.8	&138M	&19  \\
 \rowcolor{Gray} \textbf{NMT} & \texttt{RNN}  & 27.4 (BLEU)	& -	&211M	&4 \\
 
 \bottomrule
@@ -80,6 +80,8 @@ the models considered in this work. The chosen models have different parameter s
 
 
 \end{itemize}
+
+
 
 \cparagraph{Performance Report.}   For image recognition, the accuracy of a model is evaluated using the top-1 score by default; and we
 also consider the top-5 score. We use the definitions given by the ImageNet Challenge. Specifically, for the top-1 score, we check if the
