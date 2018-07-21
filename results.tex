@@ -1,19 +1,4 @@
 
-%\begin{figure*}[!t]
-%\centering
-
-
-%\subfloat[][]{\includegraphics[width=0.64\textwidth]{figure/break11models.pdf}}
-%\hfill
-%\hspace{-10mm}
-%\subfloat[][]{\includegraphics[width=0.15\textwidth]{figure/break11label.pdf}}
-%\hfill
-
-%\caption{Breakdown of execution time per operation type the models listed in Table~\ref{tab:workload}.}
- %\label{fig:breakdown11}
-%\end{figure*}
-
-
 \begin{figure*}
 \centering
 \begin{minipage}[c]{0.6\textwidth}
@@ -24,30 +9,32 @@
 \centering
 \includegraphics[width=0.9\textwidth]{figure/break11label1.pdf}
 \end{minipage}
-\caption{Breakdown of execution time per operation type the models listed in Table~\ref{tab:workload}.}
+\caption{Breakdown of execution time per operation type per deep learning model.}
  \label{fig:breakdown11}
 \end{figure*}
-
-
 
 
 \section{Experimental Results}
 
 
 \subsection{Roadmap}
-Our experiments try to answer the following questions:
+Our experiments are designed to answer the following questions:
 
 \begin{itemize}
 \item How does each compression technique performs across neural network architectures and optimization constraints?
 \item Is there a ``one-fits-for-all" compression technique? If not, what each compression technique is good at?
-\item Will it beneficial to combine multiple compression techniques?
+\item Will it be beneficial to combine multiple compression techniques?
 \end{itemize}
 
+In this section, we first quantify the computational characteristics of deep learning models. Next, we investigate how \quantization and
+\pruning affect the model storage size and memory footprint. We then look at whether the reduction in the model size can translate into
+faster inference time and lower power usage and energy consumption, as well as the implications of compression settings to the precision
+metrics. Finally, we evaluate whether it is beneficial for combining both compress techniques.
 \subsection{Model Computational Characteristics}
 The first task of our experiments is to understand the computational characteristics for the deep learning models considered in this work.
 Figure~\ref{fig:breakdown11} quantifies how different type of neural network operations contribute to the inference time across models. The
 numbers are averaged across the test samples for each model -- 50K for image classifiers and 10K for \texttt{NMT}. To aid clarity, we group
-the operations into seven classes, listed from A to G in the table on the right-hand side. Each cell of the color table represents the
+the operations into seven classes, listed from A to G in the table on the right-hand side. Each cell of the heatmap represents the
 percentage that a specific type of operation contributes to the model inference time. As can be seen from the figure, a handful of
 operations are collectively responsible for over 90\% of the model execution time. However, the types of operations that dominate the
 inference time vary across networks. Unsurprisingly, \CNNs are indeed dominated by convolution, while fully-connected networks and \RNNs
@@ -181,7 +168,7 @@ to end inference time.
 \includegraphics[width=0.35\textwidth]{figure/breakdown0.pdf}
 \end{center}
 \vspace{-2mm}
-\caption{Breakdown of the average execution time per operation type, averaging across the quantized models.}
+\caption{Breakdown of the averaged execution time per operation type, averaging across the quantized models.}
 \vspace{-6mm}
 \label{fig:breakdown}
 \end{figure}
@@ -227,10 +214,10 @@ leads to more energy consumption (which is a product of inference time $\times$ 
 a short battery life.
 
 Figure~\ref{fig:analy_prun}e quantifies the reduced energy consumption by applying \pruning. Note that it saves over 40\%, 15\% and 50\%
-energy consumption for \texttt{VGG\_16}, \texttt{ResNet\_50} and \texttt{NMT} respectively. Despite that only minor decreases in the peak
-power compared to \quantization (9.16\% vs 34.1\% to 51.1\%), its faster inference time allows \pruning to reduce the energy consumption.
-The results indicate \pruning is useful for reducing the overall energy consumption of the system, but \quantization can be employed to
-support a low power system.
+energy consumption for \texttt{VGG\_16}, \texttt{ResNet\_50} and \texttt{NMT} respectively. Despite that achieving only minor decreases in
+the peak power usage compared to \quantization (9.16\% vs 34.1\% to 51.1\%), the faster inference time of \pruning allows it to reduce the
+energy consumption. The results indicate \pruning is useful for reducing the overall energy consumption of the system, but \quantization
+can be employed to support a low power system.
 
 \subsection{Impact on The Prediction Accuracy}
 Accuracy is obviously important for any predictive model because a small and faster model is not useful if it gives wrong predictions all
