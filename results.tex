@@ -199,10 +199,10 @@ leads to more energy consumption (which is a product of inference time $\times$ 
 a short battery life.
 
 Figure~\ref{fig:analy_prun}e quantifies the reduced energy consumption by applying \pruning. Note that it saves over 40\%, 15\% and 50\%
-energy consumption for \texttt{VGG\_16}, \texttt{ResNet\_50} and \texttt{NMT} respectively. Despite that only minor decreases in the peak
-power compared to \quantization (9.16\% vs 34.1\% to 51.1\%), its faster inference time allows \pruning to reduce the energy consumption.
-The results indicate \pruning is useful for reducing the overall energy consumption of the system, but \quantization can be employed to
-support a low power system.
+energy consumption for \texttt{VGG\_16}, \texttt{ResNet\_50} and \texttt{NMT} respectively. Despite that achieving only minor decreases in
+the peak power usage compared to \quantization (9.16\% vs 34.1\% to 51.1\%), the faster inference time of \pruning allows it to reduce the
+energy consumption. The results indicate \pruning is useful for reducing the overall energy consumption of the system, but \quantization
+can be employed to support a low power system.
 
 \subsection{Impact on The Prediction Accuracy}
 Accuracy is obviously important for any predictive model because a small and faster model is not useful if it gives wrong predictions all
