@@ -25,7 +25,7 @@ contains 50k images. We use the GPU for inferencing.
 
 \cparagraph{Motivation Results.} Figure~\ref{fig:motivation} compares the model size, inference time, energy consumption and accuracy after
 applying compression. By removing some of the nerons of the network, \pruning is able to reduces the inference time and energy consumption
-by 28\% and 22.5\%, respectively. However, it offers little saving in storage size because network weights still deaminate the model size.
+by 28\% and 22.5\%, respectively. However, it offers little saving in storage size because network weights still dominate the model size.
 By contrast, by using a few number of bits to represent the weights, \quantization significantly reduces the model storage size by 75\%.
 However, the reduction in the model size does not translate to faster inference time and fewer energy consumption; on the contrary, the
 inference time and energy increase by 1.41x and 1.19x respectively. This is because the sparsity in network weights brought by
