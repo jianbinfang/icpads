@@ -1,7 +1,7 @@
 
 \begin{figure*}
 \centering
-\begin{minipage}[c]{0.6\textwidth}
+\begin{minipage}[c]{0.7\textwidth}
 \centering
 \includegraphics[width=1\textwidth]{figure/break11models.pdf}
 \end{minipage}%
@@ -58,7 +58,7 @@ depend heavily on matrix multiplications.
 energy consumption (e) and precision, recall and F1-score (e) before and after the compression by \quantization.
 }
 \label{fig:analy_quan}
-\vspace{-5mm}
+%\vspace{-5mm}
 \end{figure*}
 
 
@@ -118,7 +118,7 @@ The x-axis shows the percentage of pruning in model size. }
 \subfloat[][precision, recall and F1 score]{\includegraphics[width=0.3\textwidth]{figure/prun_prf.pdf}}
 \hfill
 \caption{The change of the model size (a), inference time (b), accuracy/BLEU (c), power (d), energy consumption (e), and accuracy (e)before and after applying \pruning.} \label{fig:analy_prun}
-\vspace{-4mm}
+%\vspace{-4mm}
 \end{figure*}
 
 \subsection{Memory Footprint}
@@ -132,7 +132,7 @@ The x-axis shows the percentage of pruning in model size. }
 \hfill
 
 \caption{Memory footprint before and after applying \quantization(a) and \pruning (b).} \label{fig:footprint}
-\vspace{-6mm}
+%\vspace{-6mm}
 \end{figure}
 
 Figure~\ref{fig:footprint} compares the runtime memory footprint consumed by a compressed model. Quantization reduces the model memory
@@ -163,31 +163,8 @@ to end inference time.
 %weights back to a 32-bit representation on the output layer to recover the loss in precision. As can be seen from %Figure~\ref{fig:breakdown},
 %this process could be expensive, contributing to 30\% to 50\% of the end to end inference time.
 
-\begin{figure}
-\begin{center}
-\includegraphics[width=0.35\textwidth]{figure/breakdown0.pdf}
-\end{center}
-\vspace{-2mm}
-\caption{Breakdown of the averaged execution time per operation type, averaging across the quantized models.}
-\vspace{-6mm}
-\label{fig:breakdown}
-\end{figure}
 
-\begin{figure*}[!t]
-\centering
-\subfloat[][Model size]{\includegraphics[width=0.24\textwidth]{figure/q_p_size.pdf}}
-\hfill
-\subfloat[][Inference time]{\includegraphics[width=0.24\textwidth]{figure/q_p_time.pdf}}
-\hfill
-\subfloat[][Energy consumption]{\includegraphics[width=0.24\textwidth]{figure/q_p_energy.pdf}}
-\hfill
-\subfloat[][Accuracy]{\includegraphics[width=0.24\textwidth]{figure/q_p_acc.pdf}}
-\hfill
-\caption{The achieved model size (a) inference time (b) energy consumption (c) and accuracy (d) before and after applying \quantization and \pruning.
-}
-\vspace{-5mm}
-\label{fig:combine}
-\end{figure*}
+
 
 Using fewer bits for representation can reduce the overhead of de-quantization. For example, using a 6-bit representation is 1.05x and
 1.03x faster than using a 16-bit and a 8-bit representations, respectively. However, as we will demonstrate later when discussing
@@ -250,7 +227,48 @@ and the F1-score. For \quantization, the 16-bit representation outperforms the o
 positive, which is important for certain domains like video surveillance because it can reduce the human involvement for inspecting false
 positive predictions.
 
+\begin{figure}
+\begin{center}
+\includegraphics[width=0.45\textwidth]{figure/breakdown0.pdf}
+\end{center}
+\vspace{-2mm}
+\caption{Breakdown of the averaged execution time per operation type, averaging across the quantized models.}
+%\vspace{-6mm}
+\label{fig:breakdown}
+\end{figure}
 
+\begin{figure*}[!t]
+\centering
+\subfloat[][Inference time vs accuracy]{\includegraphics[width=0.45\textwidth]{figure/quan_after_time.pdf}}
+\hfill
+\subfloat[][Energy vs accuracy]{\includegraphics[width=0.45\textwidth]{figure/quan_after_energy.pdf}}
+\hfill
+
+\caption{The \quantization effects on different sized models. The larger a bubble is, the more parameters the corresponding model has (see
+Table~\ref{tab:workload}).} \label{fig:bubblequantization}
+\end{figure*}
+
+
+\begin{figure*}[t!]
+\centering
+\subfloat[][Inference time vs accuracy]{\includegraphics[width=0.33\textwidth]{figure/prun_after_time.pdf}}
+\hfill
+\subfloat[][Energy vs accuracy]{\includegraphics[width=0.33\textwidth]{figure/prun_after_energy.pdf}}
+\hfill
+\subfloat[][Compressed model size vs accuracy]{\includegraphics[width=0.33\textwidth]{figure/prun_after_size.pdf}}
+\hfill
+
+\caption{ The \pruning effects on different sized models. The larger a bubble is, the more parameters the corresponding model has (see
+Table~\ref{tab:workload}). } \label{fig:bubblepruning}
+\end{figure*}
+
+\subsection{Impact of Model Parameter Sizes}
+The bubble charts in Figures~\ref{fig:bubblequantization} and \ref{fig:bubblepruning} quantify the impact by applying \quantization and
+\pruning to the deep learning models of different sizes. Here, each bubble corresponds to a model. The size of the bubble is proportional
+to the number of network parameters (see Table~\ref{tab:workload}). As can be seen from the diagrams, there is a non-trivial correlation
+between the original model size, compression techniques, and the optimization constraints of accuracy, time, energy, and compressed model
+storage size. The optimal compression parameters thus depend on the model and application constraints, and there is a need for adaptive
+schemes like parameter search to effectively explore the design space of multiple optimization objectives.
 
 
 %\subsection{Room for Possible Improvements\label{sec:single}}
@@ -277,34 +295,22 @@ positive predictions.
 \subsection{Combining Pruning and Quantization\label{sec:combin}}
 
 
-\begin{figure}[!t]
+\begin{figure*}[!t]
 \centering
-\subfloat[][Inference time]{\includegraphics[width=0.24\textwidth]{figure/quan_after_time.pdf}}
+\subfloat[][Model size]{\includegraphics[width=0.24\textwidth]{figure/q_p_size.pdf}}
 \hfill
-\subfloat[][Energy]{\includegraphics[width=0.24\textwidth]{figure/quan_after_energy.pdf}}
+\subfloat[][Inference time]{\includegraphics[width=0.24\textwidth]{figure/q_p_time.pdf}}
 \hfill
-
-\caption{ \quantization 
+\subfloat[][Energy consumption]{\includegraphics[width=0.24\textwidth]{figure/q_p_energy.pdf}}
+\hfill
+\subfloat[][Accuracy]{\includegraphics[width=0.24\textwidth]{figure/q_p_acc.pdf}}
+\hfill
+\caption{The achieved model size (a) inference time (b) energy consumption (c) and accuracy (d) before and after applying \quantization and \pruning.
 }
-\vspace{-5mm}
-\label{fig:combine}
-\end{figure}
-
-
-\begin{figure*}[t!]
-\centering
-\subfloat[][Inference time]{\includegraphics[width=0.25\textwidth]{figure/prun_after_time.pdf}}
-\hfill
-\subfloat[][Energy]{\includegraphics[width=0.25\textwidth]{figure/prun_after_energy.pdf}}
-\hfill
-\subfloat[][Model size]{\includegraphics[width=0.25\textwidth]{figure/prun_after_size.pdf}}
-\hfill
-
-\caption{ \pruning.
-}
-\vspace{-5mm}
+\vspace{-3mm}
 \label{fig:combine}
 \end{figure*}
+
 
 So far we have evaluated \pruning and \quantization in isolation. An natural question to ask is: ``Is it worthwhile to combine both
 techniques?". Figure~\ref{fig:combine} shows the results by first applying a 8-bit \dquantization and then \pruning to \texttt{VGG\_16} and \texttt{ResNet50}.
@@ -318,7 +324,3 @@ The combination, however, leads to longer inference time for \texttt{ResNet50} d
 explained. Because of the difference in inference time, there is less benefit in energy consumpation for \texttt{ResNet50} over
 \texttt{VGG\_16} (Figure~\ref{fig:combine}c). This experiment shows that combining \pruning and \quantization can be beneficial, but it
 depends on the neural network architecture and what to optimize for.
-
-
-
-
