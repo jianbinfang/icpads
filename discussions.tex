@@ -1,0 +1,29 @@
+\section{Discussions}
+We have demonstrated that choosing the correct model compression setting can accelerate inference time and lower the computation resource
+requirements. The right decision depends on the constraints on resources, time and precision. We now summarize what have learned from our
+experiments and the potential future research directions.
+
+Our evaluation reveals that \dquantization is particularly effective in reducing the model storage size and runtime memory footprint. As
+such, it is attractive for devices with limited memory resources, particularly for small-formed IoT devices. However, \quantization leads
+to longer inference time due to the overhead of the de-quantization process. Therefore, future research is needed to look at how to reduce
+the overhead of de-quantization or eliminating de-quantization by finding alternative ways for precision recovery. We also observe that an
+8-bit integer quantization seems to be a good trade-off between the model storage size and the precision. This strategy also enables SIMD
+vectorization on CPUs and GPUs as multiple 8-bit scalar values can be packed into one vector register. Using less than 8 bits is less
+beneficial on traditional CPUs and GPUs, but could be useful on FGPAs or specialized hardware with purpose-built registers and memory
+load/store units. We believe studying when and how to apply \dquantization to a specific domain or a neural network architecture would be
+an interesting research direction.
+
+We empirically show that \pruning allows us to precisely control in the prediction precision. This is useful for applications like security
+and surveillance where we need a degree of confidences on the predictive outcome. Compared to \dquantization, \pruning is less effective in
+reducing the model storage size, and thus may require larger storage and memory space. We also find that \pruning is particularly effective
+for \RNNs, perhaps due to the recurrent structures of an \RNN. This finding suggests \pruning can be an important method for accelerating
+\RNN on embedded systems.
+
+Combining \dquantization and \pruning is an interesting approach, as it can bring together the best part of both techniques (see
+Section~\ref{sec:combin}). However, one must  make sure the overhead of \dquantization does not eclipse the reduction in inference time by
+applying \pruning. One interesting research question could be: ``Can we find other data representations to better quantize a model?". For
+examples, instead of using just integers, one can use a mixture of floating point numbers and integers with different bit widths – by
+giving wider widths for more important weights. Furthermore, given that it is non-trivial to choose the right compression settings, it will
+be very useful to have a tool to automatically search over the Pareto design space to find a good configuration to meet the conflict
+requirements of the model size, inference time and prediction accuracy.  As a final remark of our discussion, we hope our work can
+encourage a new line of research on auto-tuning of deep learning model compression.

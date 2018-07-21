@@ -1,64 +1,41 @@
-\begin{figure*}[!t]
-\centering
-\subfloat[][Model size]{\includegraphics[width=0.23\textwidth]{figure/motivation_size.pdf}}
-\hfill
-\subfloat[][Inference time]{\includegraphics[width=0.23\textwidth]{figure/motivation_time.pdf}}
-\hfill
-\subfloat[][Energy consunption]{\includegraphics[width=0.23\textwidth]{figure/motivation_energy.pdf}}
-\hfill
-\subfloat[][Accuracy]{\includegraphics[width=0.23\textwidth]{figure/motivation_accuracy.pdf}}
-\hfill
-\caption{The achieved model size (a) inference time (b) energy consumption (c) and accuracy (d) before and after the compression by \quantization and \pruning.
-The compression technique to use depends on the optimization target.}
-\label{fig:motivation}
-\end{figure*}
 
 \section{Background and Motivation}
 \subsection{Background}
 In this work, we consider two commonly used model compression techniques, described as follows.
 
-\cparagraph{Pruning.} This technique removes less important parameters from a trained network. Pruning ranks the neurons in the network
-according how much the neuron contribute, it then removes the low ranking neurons to reduce the model size. Care must be taken to not
-remove too many neurons to significantly damage the accuracy of the network.
+\cparagraph{Pruning.} This technique removes less important parameters and pathways from a trained network. Pruning ranks the neurons in
+the network according how much the neuron contribute, it then removes the low ranking neurons to reduce the model size. Care must be taken
+to not remove too many neurons to significantly damage the accuracy of the network.
 
-\cparagraph{Data quantization.} This technique reduces the number of bits used to store the weights of a network, e.g., using 8-bit to
+\cparagraph{Data quantization.} This technique reduces the number of bits used to store the weights of a network, e.g., using 8 bits to
 represent a 32-bit floating point number. In this work, we apply data quantization to convert a pre-trained floating point model into a
-fixed point model without re-training. We choose to use an 8-bit representation as it is the most common fixed point data quantization
-approach~\FIXME{\cite{}}.
+fixed point model without re-training. We use 6-bit, 8-bit and 16-bit to represent a 32-bit floating point numbers, as these are the most
+common fixed-pointed data quantization configurations~\cite{pacq}.
 
 
 
 \subsection{Motivation}
-Choosing the right compression technique is non-trivial. As a motivation example, consider applying two widely used model compression
-techniques, \pruning~\cite{manessi2017automated} and \dquantization~\cite{han2015deep}, to two influential \CNN models, \texttt{VGG\_16} 	and
-\texttt{Resnet\_50}. Our evaluation platform is a NVIDIA Jetson TX2 embedded deep learning platform (see Section~\ref{sec:platform}).
+Choosing the right compression technique is non-trivial. As a motivation example, consider applying \pruning and \dquantization, to two
+representative convolutional neural networks (\CNN), \texttt{VGG\_16} 	and \texttt{Resnet\_50}, for image classification. Our evaluation
+platform is a NVIDIA Jetson TX2 embedded platform (see Section~\ref{sec:platform}).
 
-\cparagraph{Setup.} We apply the compression technique to the pre-trained model (which has been trained on the ImageNet ILSVRC 2012
-training dataset~\cite{imagenet2012}). We then test the original and the compressed models on ILVRSC 2012 validation set which contains 50k images.
-We use pruning and quantization to compress two typical models \texttt{VGG\_16} and \texttt{Resnet 50},
-and the loss of accuracy for pruning and quantization are less than 5\%,and 3\% respectively.
-We use the GPU for
-inferencing.
+\cparagraph{Setup.} We apply each of the compression techniques to the pre-trained model (which has been trained on the ImageNet ILSVRC
+2012 training dataset~\cite{imagenet2012}). We then test the original and the compressed models on ILVRSC 2012 validation set which
+contains 50k images. We use the GPU for inferencing.
 
-\cparagraph{Motivation Results.} Figure~\ref{fig:motivation} compares the model size, inference time and accuracy after applying model
-compression. By removing some of the pathways of the network, \pruning is able to reduces the inference time and
-energy consumption by 28\% and 22.5\%, respectively. However, it offers
-little saving in storage size because network weights still deaminate the model size. By contrast, by using a few number of bits to
-represent the weights, \quantization significantly reduces the model storage size by 75\%. However, the reduction in the model size does
-not translate to faster inference time and fewer energy consumption; 
-on the contrary, the inference time and energy increase by 1.41x and 1.19x respectively. 
-%This is because the quantized graph adds a subgraph which containing the conversion function, 
-%and converts 8 bits to 32 bits as the input of the output layer to ensure the accuracy of the output layer.
-%Although the instantaneous power is reduced, the more energy is caused by the increased inference time.
-This is because the sparsity in network
-weights brought by \quantization leads to irregular computation which causes poor GPU performance~\cite{}. 
-Applying both compression
-techniques has modest impact on the prediction accuracy, on average, less than 5\%. This suggests that both techniques can be profitable.
+\cparagraph{Motivation Results.} Figure~\ref{fig:motivation} compares the model size, inference time, energy consumption and accuracy after
+applying compression. By removing some of the nerons of the network, \pruning is able to reduces the inference time and energy consumption
+by 28\% and 22.5\%, respectively. However, it offers little saving in storage size because network weights still dominate the model size.
+By contrast, by using a few number of bits to represent the weights, \quantization significantly reduces the model storage size by 75\%.
+However, the reduction in the model size does not translate to faster inference time and fewer energy consumption; on the contrary, the
+inference time and energy increase by 1.41x and 1.19x respectively. This is because the sparsity in network weights brought by
+\quantization leads to irregular computation which causes poor GPU performance~\cite{DBLP:journals/corr/abs-1802-10280} and the cost of
+de-quantization (details in Section~\ref{sec:time}) . Applying both compression techniques has modest impact on the prediction accuracy, on
+average, less than 5\%. This suggests that both techniques can be profitable.
 
 \cparagraph{Lessons Learned.} This example shows that the compression technique to use depends on what to be optimized for. If storage
-space (e.g., RAM and disk) is a limiting factor, \quantization could be used, but a more powerful processor unit is required to achieve
-quick on-device inference. If faster on-device turnaround time is a priority, \pruning can be employed but it would require sufficient
-memory resources to store the model parameters.  Since offloading the computation into the cloud is often infeasible due to privacy
-concerns, high latency, or the lack of connectivity, there is a need to understand the pros and cons of model compression techniques for
-embedded deep learning. This work provides an extensive study to characterize the benefit and cost of commonly used deep learning
-compression techniques on embedded systems.
+space (e.g., RAM and disk) is a limiting factor, \quantization provides more gains over \pruning, but a more powerful processor unit is
+required to achieve quick on-device inference. If faster on-device turnaround time is a priority, \pruning can be employed but it would
+require sufficient memory resources to store the model parameters.  Since offloading the computation into the cloud is often infeasible,
+there is a need to understand the pros and cons of model compression techniques for embedded inference. This work thus provides an
+extensive study to characterize commonly used model compression techniques.

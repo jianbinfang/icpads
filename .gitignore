@@ -18,10 +18,10 @@
 # these rules might exclude image files for figures etc.
 # *.ps
 # *.eps
-# *.pdf
+# 
 
 ## Generated if empty string is given at "Please type another file name for output:"
-.pdf
+
 
 ## Bibliography auxiliary files (bibtex/biblatex/biber):
 *.bbl
@@ -242,5 +242,18 @@ paper.pdf
 *.docx
 *.opj
 *.opj
+<<<<<<< HEAD
 *.opj
 *.opj
+=======
+*.xlsx
+*.opj
+*.opj
+ref/lctes18 (1).pdf
+figure/accuracy_pruning1.opj
+figure/accuracy_quantization1.opj
+figure/accuracy_pruning1.opj
+*.tmp
+ICPADS2018_paper_262.pdf
+figure/break11modelstmp.pdf
+>>>>>>> 0d04144469f7e9d344a40e92a21c8199a7d1c343
