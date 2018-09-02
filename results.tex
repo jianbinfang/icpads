@@ -117,7 +117,7 @@ The x-axis shows the percentage of pruning in model size. }
 \hfill
 \subfloat[][precision, recall and F1 score]{\includegraphics[width=0.3\textwidth]{figure/prun_prf.pdf}}
 \hfill
-\caption{The change of the model size (a), inference time (b), accuracy/BLEU (c), power (d), energy consumption (e), and accuracy (e)before and after applying \pruning.} \label{fig:analy_prun}
+\caption{The change of the model size (a), inference time (b), accuracy/BLEU (c), power (d), energy consumption (e), and accuracy (f) before and after applying \pruning.} \label{fig:analy_prun}
 %\vspace{-4mm}
 \end{figure*}
 
@@ -183,11 +183,11 @@ benefit from this technique, with an reduction of 38\%. Overall, the average inf
 \pruning is less effective in reducing the model size (see Section~\ref{sec:ms}), it is useful in achieving a faster inference time.
 
 \subsection{Impact on the Power and Energy Consumption}
-Power and energy consumption are two limiting factors on battery-powered devices. As we can see from Figure~\ref{fig:analy_prun}d,
+Power and energy consumption are two limiting factors on battery-powered devices. As we can see from Figure~\ref{fig:analy_quan}d,
 \quantization decreases the peak power usage for inferencing with an average value of 4.3\%, 10.4\% and 11.6\%, respectively when using a
 6-bit, an 8-bit and a 16-bit representations. While \quantization reduces the peak power the device draws, the increased inference time
 leads to more energy consumption (which is a product of inference time $\times$ instantaneous power) by at least 34.1\% and up to 51.1\%
-(see Figure~\ref{fig:analy_prun}e). This means that although \quantization allows one to reduces supplied power and voltage, it can lead to
+(see Figure~\ref{fig:analy_quan}e). This means that although \quantization allows one to reduces supplied power and voltage, it can lead to
 a short battery life.
 
 Figure~\ref{fig:analy_prun}e quantifies the reduced energy consumption by applying \pruning. Note that it saves over 40\%, 15\% and 50\%
@@ -243,7 +243,7 @@ positive predictions.
 \hfill
 \subfloat[][Energy vs accuracy]{\includegraphics[width=0.33\textwidth]{figure/quan_after_energy.pdf}}
 \hfill
-\subfloat[][Compressed model size vs accuracy]{\includegraphics[width=0.33\textwidth]{figure/quan_after_size.pdf}}
+\subfloat[][Compressed model size vs accuracy]{\includegraphics[width=0.32\textwidth]{figure/quan_after_size.pdf}}
 \caption{The \quantization effects on different sized models. The larger a bubble is, the more parameters the corresponding model has (see
 Table~\ref{tab:workload}).} \label{fig:bubblequantization}
 \end{figure*}
@@ -251,11 +251,11 @@ Table~\ref{tab:workload}).} \label{fig:bubblequantization}
 
 \begin{figure*}[t!]
 \centering
-\subfloat[][Inference time vs accuracy]{\includegraphics[width=0.32\textwidth]{figure/prun_after_time.pdf}}
+\subfloat[][Inference time vs accuracy]{\includegraphics[width=0.3\textwidth]{figure/prun_after_time.pdf}}
 \hfill
-\subfloat[][Energy vs accuracy]{\includegraphics[width=0.33\textwidth]{figure/prun_after_energy.pdf}}
+\subfloat[][Energy vs accuracy]{\includegraphics[width=0.3\textwidth]{figure/prun_after_energy.pdf}}
 \hfill
-\subfloat[][Compressed model size vs accuracy]{\includegraphics[width=0.33\textwidth]{figure/prun_after_size.pdf}}
+\subfloat[][Compressed model size vs accuracy]{\includegraphics[width=0.3\textwidth]{figure/prun_after_size.pdf}}
 \hfill
 
 \caption{ The \pruning effects on different sized models. The larger a bubble is, the more parameters the corresponding model has (see
