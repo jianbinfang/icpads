@@ -42,16 +42,13 @@ and 96~GB of storage (32~GB eMMC plus 64~GB SD card).
 CUDA (v8.0.64).
 
 
-\cparagraph{Deep Learning Models.} We consider 10 pre-trained \CNN models for image recognition from the TensorFlow-Slim library~\cite{silberman2013tensorflow} and a recurrent neural network (\RNN) model for machine translation. Table~\ref{tab:workload} lists
+\cparagraph{Deep Learning Models.} We consider 10 pre-trained \CNN models for image recognition from the TensorFlow-Slim
+library~\cite{silberman2013tensorflow} and a recurrent neural network (\RNN) model for machine translation. Table~\ref{tab:workload} lists
 the models considered in this work. The chosen models have different parameter sizes and network depths, and thus cover a wide range of
-\CNN and \RNN model architectures.
-\FIXME{
-In this paper, we only apply the quantization technique on 10 \CNN models,
-as Tensorflow does not support to quantize the \RNN models yet. 
-Further more, the compressed models need to retrain to gain the accuracy, which takes
-much time, especially for pruning technique, 
-and this paper present 3 typical models for pruning technique.
-}
+\CNN and \RNN model architectures. We apply \dquantization to \CNN models because the current Tensorflow implementation does not support
+quantization of \RNNs. As \pruning requires model updates through retraining, we consider three typical models for \pruning to keep the
+experiment manageable.
+
 
 
 

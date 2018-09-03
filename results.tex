@@ -9,7 +9,7 @@
 \centering
 \includegraphics[width=0.9\textwidth]{figure/break11label1.pdf}
 \end{minipage}
-\caption{Breakdown of execution time per operation type per deep learning model.}
+\caption{Breakdown of execution time per operation type per deep learning model. Only operations that contribute to a least 1\% of the inference time are shown.}
  \label{fig:breakdown11}
 \vspace{-5mm}
 \end{figure*}
@@ -22,7 +22,7 @@
 Our experiments are designed to answer the following questions:
 
 \begin{itemize}
-\item How does each compression technique performs across neural network architectures and optimization constraints?
+\item How does each compression technique performs across neural architectures and optimization constraints?
 \item Is there a ``one-fits-for-all" compression technique? If not, what each compression technique is good at?
 \item Will it be beneficial to combine multiple compression techniques?
 \end{itemize}
@@ -35,8 +35,10 @@ metrics. Finally, we evaluate whether it is beneficial for combining both compre
 The first task of our experiments is to understand the computational characteristics for the deep learning models considered in this work.
 Figure~\ref{fig:breakdown11} quantifies how different type of neural network operations contribute to the inference time across models. The
 numbers are averaged across the test samples for each model -- 50K for image classifiers and 10K for \texttt{NMT}. To aid clarity, we group
-the operations into seven classes, listed from A to G in the table on the right-hand side.
-\FIXME{We only list important operation which contributes more than 1\% of execution time}. Each cell of the heatmap represents the
+the operations into seven classes, listed from A to G in the table on the right-hand side. Note that we only list operations that
+contribute to at least 1\% of execution time.
+
+ Each cell of the heatmap represents the
 percentage that a specific type of operation contributes to the model inference time. As can be seen from the figure, a handful of
 operations are collectively responsible for over 90\% of the model execution time. However, the types of operations that dominate the
 inference time vary across networks. Unsurprisingly, \CNNs are indeed dominated by convolution, while fully-connected networks and \RNNs
@@ -66,9 +68,9 @@ energy consumption (e) and precision, recall and F1-score (e) before and after t
 
 
 \subsection{Impact on the Model Storage Size\label{sec:ms}}
-Reducing the model storage size is crucial for embedded and IoT systems which often have a limited storage space. A smaller model size also
-translates to smaller runtime memory footprint of less RAM space usage. Figures~\ref{fig:analy_quan},\ref{fig:threshold} and \ref{fig:analy_prun} illustrate
-how the different compression techniques and parameters affect the resulting model size.
+Reducing the model storage size is crucial for storage-constrained devices. A smaller model size also translates to smaller runtime memory
+footprint of less RAM space usage. Figures~\ref{fig:analy_quan},\ref{fig:threshold} and \ref{fig:analy_prun} illustrate how the different
+compression techniques and parameters affect the resulting model size.
 
 As can be seen from Figure~\ref{fig:analy_quan}a, data quantization can significantly reduce the model storage size, leading to an average
 reduction of 50.2\% when using a 16-bit representation and up to 80.7\% when using a 6-bit representation. The reduction in the storage
@@ -81,11 +83,29 @@ model size by 27.2\% (49.26 MB). An interesting observation is that, \pruning is
 an \RNN due to the natural of the network architecture. As we will discuss later, \pruning only causes a minor degradation in the
 prediction accuracy for \texttt{NMT}. This suggests that \pruning can be an effective compression technique for \RNNs.
 
-In Figure~\ref{fig:threshold}, we compare the resulting performance after using different pruning thresholds from 5\% to 75\% on two \CNN and a \RNN
-models. Increasing the pruning percentage of model size does gives \pruning more opportunity to remove more neurons to improve the inference
-time and other metrics. The improvement reaches a plateau at 15\% of reduction for \CNNs, but for \texttt{NMT}, a \RNN model, the reduction of
-inference time increases as we remove more neurons. This diagram reinforces our findings that \pruning is more effective on \RNNs
-than \CNNs. For the rest discussions of this paper, we use a 5\% \pruning threshold.
+In Figure~\ref{fig:threshold}, we compare the resulting performance after using different pruning thresholds from 5\% to 75\% on two \CNN
+and a \RNN models. Increasing the pruning percentage of model size provides  more opportunities for \pruning to remove more neurons to
+improve the inference time and other metrics. The improvement reaches a plateau at 15\% of reduction for \CNNs, but for \texttt{NMT}, a
+\RNN, the reduction of inference time increases as we remove more neurons. This diagram reinforces our findings that \pruning is more
+effective on \RNNs than \CNNs. For the rest discussions of this paper, we use a 5\% \pruning threshold.
+
+\begin{figure*}[!t]
+\centering
+\subfloat[][Model size]{\includegraphics[width=0.33\textwidth]{figure/prun_size.pdf}}
+\hfill
+\subfloat[][Inference time]{\includegraphics[width=0.3\textwidth]{figure/prun_time.pdf}}
+\hfill
+\subfloat[][Accuracy]{\includegraphics[width=0.3\textwidth]{figure/top1_5_prun.pdf}}
+\hfill
+\subfloat[][Power consumption]{\includegraphics[width=0.3\textwidth]{figure/prun_power.pdf}}
+\hfill
+\subfloat[][Energy consumption]{\includegraphics[width=0.3\textwidth]{figure/prun_energy.pdf}}
+\hfill
+\subfloat[][precision, recall and F1 score]{\includegraphics[width=0.3\textwidth]{figure/prun_prf.pdf}}
+\hfill
+\caption{The change of the model size (a), inference time (b), accuracy/BLEU (c), power (d), energy consumption (e), and accuracy (f) before and after applying \pruning.} \label{fig:analy_prun}
+\vspace{-4mm}
+\end{figure*}
 
 
  %In this paper, we consider the 5\% reductions in the top-1 accuracy is the pruning threshold, and Figure~\ref{fig:threshold}
@@ -106,23 +126,7 @@ The x-axis shows the percentage of pruning in model size. }
 \vspace{-6mm}
 \end{figure*}
 
-\begin{figure*}[!t]
-\centering
-\subfloat[][Model size]{\includegraphics[width=0.33\textwidth]{figure/prun_size.pdf}}
-\hfill
-\subfloat[][Inference time]{\includegraphics[width=0.3\textwidth]{figure/prun_time.pdf}}
-\hfill
-\subfloat[][Accuracy]{\includegraphics[width=0.3\textwidth]{figure/top1_5_prun.pdf}}
-\hfill
-\subfloat[][Power consumption]{\includegraphics[width=0.3\textwidth]{figure/prun_power.pdf}}
-\hfill
-\subfloat[][Energy consumption]{\includegraphics[width=0.3\textwidth]{figure/prun_energy.pdf}}
-\hfill
-\subfloat[][precision, recall and F1 score]{\includegraphics[width=0.3\textwidth]{figure/prun_prf.pdf}}
-\hfill
-\caption{The change of the model size (a), inference time (b), accuracy/BLEU (c), power (d), energy consumption (e), and accuracy (f) before and after applying \pruning.} \label{fig:analy_prun}
-\vspace{-4mm}
-\end{figure*}
+
 
 \subsection{Memory Footprint}
 
@@ -157,10 +161,10 @@ quantization does not shorten the inference time but prolongs it. The reasons ar
 computation (i.e., matrix multiplications) performed on some of the input data by avoiding expensive floating point arithmetics and
 enabling SIMD vectorization by using a compact data representation. However, we found that the overhead of the de-quantization process
 during inference can outweigh its benefit. Besides the general inference operation, a data quantization and de-quantization function has to
-be added into the compressed model. Inference performed on a quantized model accounts for 59.9\% of its running time, the de-quantization
+be added into the compressed model. Inference performed on a quantized model accounts for 59.9\% of its running time. The de-quantization
 functions converts input values back to a 32-bit representation on some of the layers (primarily the output layer) in order to recover the
-loss in precision. As can be seen from Figure~\ref{fig:breakdown}, this process could be expensive, contributing to 30\% to 50\% of the end
-to end inference time.
+loss in precision. As can be seen from Figure~\ref{fig:breakdown}, this process could be expensive, contributing to 30\% to 50\% of the
+inference time.
 %this process could be expensive, contributing to 30\% to 50\% of the end to end inference time.
 %After data quantization, a de-quantization function has to be added into the compressed model. This  function converts %the quantized
 %weights back to a 32-bit representation on the output layer to recover the loss in precision. As can be seen from %Figure~\ref{fig:breakdown},
@@ -271,9 +275,8 @@ Table~\ref{tab:workload}). } \label{fig:bubblepruning}
 The bubble charts in Figures~\ref{fig:bubblequantization} and \ref{fig:bubblepruning} quantify the impact by applying \quantization and
 \pruning to the deep learning models of different sizes. Here, each bubble corresponds to a model. The size of the bubble is proportional
 to the number of network parameters (see Table~\ref{tab:workload}). As can be seen from the diagrams, there is a non-trivial correlation
-between the original model size, compression techniques, and the optimization constraints of accuracy, time, energy, and compressed model
-storage size. The optimal compression parameters thus depend on the model and application constraints, and there is a need for adaptive
-schemes like parameter search to effectively explore the design space of multiple optimization objectives.
+between the original model size, compression techniques, and the optimization constraints. This diagram suggests that there is a need for
+adaptive schemes like parameter search to effectively explore the design space of multiple optimization objectives.
 
 
 %\subsection{Room for Possible Improvements\label{sec:single}}

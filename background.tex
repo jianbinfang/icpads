@@ -34,8 +34,7 @@ de-quantization (details in Section~\ref{sec:time}) . Applying both compression 
 average, less than 5\%. This suggests that both techniques can be profitable.
 
 \cparagraph{Lessons Learned.} This example shows that the compression technique to use depends on what to be optimized for. If storage
-space (e.g., RAM and disk) is a limiting factor, \quantization provides more gains over \pruning, but a more powerful processor unit is
-required to achieve quick on-device inference. If faster on-device turnaround time is a priority, \pruning can be employed but it would
-require sufficient memory resources to store the model parameters.  Since offloading the computation into the cloud is often infeasible,
-there is a need to understand the pros and cons of model compression techniques for embedded inference. This work thus provides an
-extensive study to characterize commonly used model compression techniques.
+space is a limiting factor, \quantization provides more gains over \pruning, but a more powerful processor unit is required to achieve
+quick on-device inference. If faster on-device turnaround time is a priority, \pruning can be employed but it would require sufficient
+memory resources to store the model parameters.  As a result, the profitability of the compression technique depends on the optimization
+constraints. This work provides an extensive study to characterize the benefits and cost of the two model compression techniques.
