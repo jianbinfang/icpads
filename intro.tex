@@ -1,6 +1,6 @@
 \section{Introduction}
 In recent years, deep learning has emerged as a powerful tool for solving complex problems that were considered to be difficult in the
-past. It has brought a step change in the machine's ability to solve tasks like object recognition~\cite{donahue14,he2016deep}, facial
+past. It has brought a step change in the machine's ability to perform tasks like object recognition~\cite{donahue14,he2016deep}, facial
 recognition~\cite{parkhi2015deep,sun2014deep}, speech processing~\cite{pmlrv48amodei16}, and machine translation~\cite{bahdanau2014neural}.
 While many of these tasks are also important on mobiles and the Internet of Things (IoT), existing solutions are often
 computation-intensive and require a large amount of resources for the model to operate. As a result, performing deep
@@ -16,7 +16,7 @@ as well as computational requirements~\cite{Han:2016:EEI:3001136.3001163}, and o
 server~\cite{Kang2017neurosurgeon,teerapittayanon2017distributed}. Compared to specialized hardware, model compression techniques have the
 advantage of being readily deployable on commercial-off-the-self hardware; and compared to computation offloading, compression enables
 local, on-device inference which in turn reduces the response latency and has fewer privacy concerns. Such advantages make model
-compressions attractive on resource-constrained IoT devices where computation offloading is infeasible.
+compressions attractive on resource-constrained embedded devices where computation offloading is infeasible.
 
 
 However, model compression is not a free lunch as it comes at the cost of loss in prediction accuracy~\cite{Cheng2017A}. This means that
@@ -31,9 +31,9 @@ deployment of computation-intensive models, but also informs good design choices
 To that end, we develop a quantitative approach  to characterize two mainstream model compression techniques, pruning~\cite{Cheng2017A} and
 data quantization~\cite{Gong2014Compressing}. We apply the techniques to the image classification and the natural language processing (NLP)
 domains, two areas where deep learning has made great breakthroughs and a rich set of pre-trained models are available. We evaluate the
-compression results on the NVIDIA Jetson TX2 embedded deep learning platform and consider a wide range of influential deep learning models.
-We use the 50K images from the ImageNet ILSVRC 2012 validation dataset~\cite{imagenet2012} for image classification and a corpus of ten
-thousands text samples~\cite{acl2016} for NLP.
+compression results on the NVIDIA Jetson TX2 embedded deep learning platform and consider a wide range of influential deep learning models
+including convolutional and recurrent neural networks. %We use the 50K images from the ImageNet ILSVRC 2012 validation
+%dataset~\cite{imagenet2012} for image classification and a corpus of ten thousands text samples~\cite{acl2016} for NLP.
 
 
 We show that while there is significant gain for choosing the right compression technique and parameters, mistakes can seriously hurt the
@@ -62,10 +62,10 @@ The compression technique to use depends on the optimization target.}
 The main contributions of this paper are two folds:
 
 \begin{itemize}
-\item We present the first comprehensive study for characterizing how model compression techniques perform on embedded systems, using a
-    wide range of deep neural network architectures;
+\item We present the first comprehensive workload characterization study for deep learning model compression techniques on embedded
+    systems;
 \item Our work offers new insights on when and how to apply compression techniques for embedded deep inference.
 \end{itemize}
 
-We believe there are great opportunities to make efficient, on-device deep inference a reality in the near future. We thus hope the
-empirical evidences provided in this paper can be the stepping stones and encourage more research on this promising direction.
+We believe there are great opportunities to make on-device deep inference a reality. We thus hope the empirical evidences provided in this
+paper can be the stepping stones and encourage more research on this promising direction.
