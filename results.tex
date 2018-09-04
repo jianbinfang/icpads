@@ -1,10 +1,10 @@
 \begin{figure*}
 \centering
-\begin{minipage}[c]{0.8\textwidth}
+\begin{minipage}[c]{0.7\textwidth}
 \centering
 \includegraphics[width=1\textwidth]{figure/break11models.pdf}
 \end{minipage}%
-\begin{minipage}[c]{0.16\textwidth}
+\begin{minipage}[c]{0.13\textwidth}
 \centering
 \includegraphics[width=0.9\textwidth]{figure/break11label1.pdf}
 \end{minipage}
@@ -45,30 +45,61 @@ depend heavily on matrix multiplications.
 
 \begin{figure*}[!t]
 \centering
-\subfloat[][Model size]{\includegraphics[width=0.33\textwidth]{figure/quan_size.pdf}}
+\subfloat[][Model size]{\includegraphics[width=0.3\textwidth]{figure/quan_size.pdf}}
 \hfill
-\subfloat[][Inference time]{\includegraphics[width=0.34\textwidth]{figure/quan_time2.pdf}}
+\subfloat[][Inference time]{\includegraphics[width=0.31\textwidth]{figure/quan_time2.pdf}}
 \hfill
-\subfloat[][Accuracy]{\includegraphics[width=0.32\textwidth]{figure/quan_acc3.pdf}}
+\subfloat[][Accuracy]{\includegraphics[width=0.29\textwidth]{figure/quan_acc3.pdf}}
 \hfill
-\subfloat[][Power]{\includegraphics[width=0.33\textwidth]{figure/quan_power2.pdf}}
+\subfloat[][Power]{\includegraphics[width=0.3\textwidth]{figure/quan_power2.pdf}}
 \hfill
-\subfloat[][Energy consumption]{\includegraphics[width=0.34\textwidth]{figure/quan_energy2.pdf}}
+\subfloat[][Energy consumption]{\includegraphics[width=0.31\textwidth]{figure/quan_energy2.pdf}}
 \hfill
-\subfloat[][Precision, recall and F1-score]{\includegraphics[width=0.33\textwidth]{figure/quan_prf2.pdf}}
+\subfloat[][Precision, recall and F1-score]{\includegraphics[width=0.3\textwidth]{figure/quan_prf2.pdf}}
 \hfill
 \caption{The achieved model size (a) inference time (b) accuracy (c) power consumption (d)
 energy consumption (e) and precision, recall and F1-score (e) before and after the compression by \quantization.
 }
 \label{fig:analy_quan}
-\vspace{-5mm}
+\vspace{-7mm}
 \end{figure*}
 
+\begin{figure*}[!t]
+\centering
+\subfloat[][Model size]{\includegraphics[width=0.3\textwidth]{figure/prun_size.pdf}}
+\hfill
+\subfloat[][Inference time]{\includegraphics[width=0.27\textwidth]{figure/prun_time.pdf}}
+\hfill
+\subfloat[][Accuracy]{\includegraphics[width=0.27\textwidth]{figure/top1_5_prun.pdf}}
+\hfill
+\subfloat[][Power consumption]{\includegraphics[width=0.27\textwidth]{figure/prun_power.pdf}}
+\hfill
+\subfloat[][Energy consumption]{\includegraphics[width=0.27\textwidth]{figure/prun_energy.pdf}}
+\hfill
+\subfloat[][precision, recall and F1 score]{\includegraphics[width=0.27\textwidth]{figure/prun_prf.pdf}}
+\hfill
+\caption{The change of the model size (a), inference time (b), accuracy/BLEU (c), power (d), energy consumption (e), and accuracy (f) before and after applying \pruning.} \label{fig:analy_prun}
+\vspace{-7mm}
+\end{figure*}
 
+\begin{figure*}[!t]
+\centering
+\subfloat[][VGG\_16]{\includegraphics[width=0.28\textwidth]{figure/prun_vgg.pdf}}
+\hfill
+\subfloat[][ResNet\_50]{\includegraphics[width=0.28\textwidth]{figure/prun_resnet.pdf}}
+\hfill
+\subfloat[][NMT]{\includegraphics[width=0.28\textwidth]{figure/prun_NMT.pdf}}
+\hfill
+\caption{The resulting inference time, accuracy, and power and energy consumption
+for VGG\_16 (a), ResNet\_50 (b) and \texttt{NMT} (c) when using different pruning thresholds.
+The x-axis shows the percentage of pruning in model size. }
+\label{fig:threshold}
+\vspace{-7mm}
+\end{figure*}
 
 \subsection{Impact on the Model Storage Size\label{sec:ms}}
 Reducing the model storage size is crucial for storage-constrained devices. A smaller model size also translates to smaller runtime memory
-footprint of less RAM space usage. Figures~\ref{fig:analy_quan},\ref{fig:threshold} and \ref{fig:analy_prun} illustrate how the different
+footprint of less RAM space usage. Figures~\ref{fig:analy_quan}, \ref{fig:analy_prun} and \ref{fig:threshold} illustrate how the different
 compression techniques and parameters affect the resulting model size.
 
 As can be seen from Figure~\ref{fig:analy_quan}a, data quantization can significantly reduce the model storage size, leading to an average
@@ -88,42 +119,11 @@ improve the inference time and other metrics. The improvement reaches a plateau 
 \RNN, the reduction of inference time increases as we remove more neurons. This diagram reinforces our findings that \pruning is more
 effective on \RNNs than \CNNs. For the rest discussions of this paper, we use a 5\% \pruning threshold.
 
-\begin{figure*}[!t]
-\centering
-\subfloat[][Model size]{\includegraphics[width=0.33\textwidth]{figure/prun_size.pdf}}
-\hfill
-\subfloat[][Inference time]{\includegraphics[width=0.3\textwidth]{figure/prun_time.pdf}}
-\hfill
-\subfloat[][Accuracy]{\includegraphics[width=0.3\textwidth]{figure/top1_5_prun.pdf}}
-\hfill
-\subfloat[][Power consumption]{\includegraphics[width=0.3\textwidth]{figure/prun_power.pdf}}
-\hfill
-\subfloat[][Energy consumption]{\includegraphics[width=0.3\textwidth]{figure/prun_energy.pdf}}
-\hfill
-\subfloat[][precision, recall and F1 score]{\includegraphics[width=0.3\textwidth]{figure/prun_prf.pdf}}
-\hfill
-\caption{The change of the model size (a), inference time (b), accuracy/BLEU (c), power (d), energy consumption (e), and accuracy (f) before and after applying \pruning.} \label{fig:analy_prun}
-\vspace{-4mm}
-\end{figure*}
-
 
  %In this paper, we consider the 5\% reductions in the top-1 accuracy is the pruning threshold, and Figure~\ref{fig:threshold}
 %present the results when the accuracy around the thresholds.
 
-\begin{figure*}[!t]
-\centering
-\subfloat[][VGG\_16]{\includegraphics[width=0.3\textwidth]{figure/prun_vgg.pdf}}
-\hfill
-\subfloat[][ResNet\_50]{\includegraphics[width=0.3\textwidth]{figure/prun_resnet.pdf}}
-\hfill
-\subfloat[][NMT]{\includegraphics[width=0.3\textwidth]{figure/prun_NMT.pdf}}
-\hfill
-\caption{The resulting inference time, accuracy, and power and energy consumption
-for VGG\_16 (a), ResNet\_50 (b) and \texttt{NMT} (c) when using different pruning thresholds.
-The x-axis shows the percentage of pruning in model size. }
-\label{fig:threshold}
-\vspace{-6mm}
-\end{figure*}
+
 
 
 
@@ -235,7 +235,7 @@ positive predictions.
 
 \begin{figure}
 \begin{center}
-\includegraphics[width=0.4\textwidth]{figure/breakdown0.pdf}
+\includegraphics[width=0.33\textwidth]{figure/breakdown.pdf}
 \end{center}
 \vspace{-2mm}
 \caption{Breakdown of the averaged execution time per operation type, averaging across the quantized models.}
@@ -245,15 +245,15 @@ positive predictions.
 
 \begin{figure*}[!t]
 \centering
-\subfloat[][Inference time vs accuracy]{\includegraphics[width=0.33\textwidth]{figure/quan_after_time.pdf}}
+\subfloat[][Inference time vs accuracy]{\includegraphics[width=0.3\textwidth]{figure/quan_after_time.pdf}}
 \hfill
-\subfloat[][Energy vs accuracy]{\includegraphics[width=0.33\textwidth]{figure/quan_after_energy.pdf}}
+\subfloat[][Energy vs accuracy]{\includegraphics[width=0.3\textwidth]{figure/quan_after_energy.pdf}}
 \hfill
-\subfloat[][Compressed model size vs accuracy]{\includegraphics[width=0.32\textwidth]{figure/quan_after_size.pdf}}
+\subfloat[][Compressed model size vs accuracy]{\includegraphics[width=0.3\textwidth]{figure/quan_after_size.pdf}}
 \caption{The \quantization effects on different sized models. The larger a bubble is, the more parameters the corresponding model has (see
 Table~\ref{tab:workload}).}
 \label{fig:bubblequantization}
-\vspace{-5mm}
+\vspace{-7mm}
 \end{figure*}
 
 
@@ -267,7 +267,23 @@ Table~\ref{tab:workload}).}
 \hfill
 \caption{ The \pruning effects on different sized models. The larger a bubble is, the more parameters the corresponding model has (see
 Table~\ref{tab:workload}). } \label{fig:bubblepruning}
-\vspace{-5mm}
+\vspace{-8mm}
+\end{figure*}
+
+\begin{figure*}[!t]
+\centering
+\subfloat[][Model size]{\includegraphics[width=0.24\textwidth]{figure/q_p_size.pdf}}
+\hfill
+\subfloat[][Inference time]{\includegraphics[width=0.24\textwidth]{figure/q_p_time.pdf}}
+\hfill
+\subfloat[][Energy consumption]{\includegraphics[width=0.24\textwidth]{figure/q_p_energy.pdf}}
+\hfill
+\subfloat[][Accuracy]{\includegraphics[width=0.243\textwidth]{figure/q_p_acc.pdf}}
+\hfill
+\caption{The achieved model size (a) inference time (b) energy consumption (c) and accuracy (d) before and after applying \quantization and \pruning.
+}
+\vspace{-8mm}
+\label{fig:combine}
 \end{figure*}
 
 \subsection{Impact of Model Parameter Sizes}
@@ -302,21 +318,7 @@ adaptive schemes like parameter search to effectively explore the design space o
 \subsection{Combining Pruning and Quantization\label{sec:combin}}
 
 
-\begin{figure*}[!t]
-\centering
-\subfloat[][Model size]{\includegraphics[width=0.24\textwidth]{figure/q_p_size.pdf}}
-\hfill
-\subfloat[][Inference time]{\includegraphics[width=0.24\textwidth]{figure/q_p_time.pdf}}
-\hfill
-\subfloat[][Energy consumption]{\includegraphics[width=0.24\textwidth]{figure/q_p_energy.pdf}}
-\hfill
-\subfloat[][Accuracy]{\includegraphics[width=0.243\textwidth]{figure/q_p_acc.pdf}}
-\hfill
-\caption{The achieved model size (a) inference time (b) energy consumption (c) and accuracy (d) before and after applying \quantization and \pruning.
-}
-\vspace{-3mm}
-\label{fig:combine}
-\end{figure*}
+
 
 
 So far we have evaluated \pruning and \quantization in isolation. An natural question to ask is: ``Is it worthwhile to combine both
