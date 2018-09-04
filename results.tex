@@ -18,13 +18,13 @@
 
 
 \subsection{Roadmap}
-Our experiments are designed to answer the following questions:
-
-\begin{itemize}
-\item How does each compression technique performs across neural architectures and optimization constraints?
-\item Is there a ``one-fits-for-all" compression technique? If not, what each compression technique is good at?
-\item Will it be beneficial to combine multiple compression techniques?
-\end{itemize}
+%Our experiments are designed to answer the following questions:
+%
+%\begin{itemize}
+%\item How does each compression technique performs across neural architectures and optimization constraints?
+%\item Is there a ``one-fits-for-all" compression technique? If not, what each compression technique is good at?
+%\item Will it be beneficial to combine multiple compression techniques?
+%\end{itemize}
 
 In this section, we first quantify the computational characteristics of deep learning models. Next, we investigate how \quantization and
 \pruning affect the model storage size and memory footprint. We then look at whether the reduction in the model size can translate into
@@ -61,7 +61,7 @@ depend heavily on matrix multiplications.
 energy consumption (e) and precision, recall and F1-score (e) before and after the compression by \quantization.
 }
 \label{fig:analy_quan}
-\vspace{-7mm}
+\vspace{-5mm}
 \end{figure*}
 
 \begin{figure*}[!t]
@@ -79,7 +79,7 @@ energy consumption (e) and precision, recall and F1-score (e) before and after t
 \subfloat[][precision, recall and F1 score]{\includegraphics[width=0.27\textwidth]{figure/prun_prf.pdf}}
 \hfill
 \caption{The change of the model size (a), inference time (b), accuracy/BLEU (c), power (d), energy consumption (e), and accuracy (f) before and after applying \pruning.} \label{fig:analy_prun}
-\vspace{-7mm}
+\vspace{-5mm}
 \end{figure*}
 
 \begin{figure*}[!t]
@@ -235,7 +235,7 @@ positive predictions.
 
 \begin{figure}
 \begin{center}
-\includegraphics[width=0.33\textwidth]{figure/breakdown.pdf}
+\includegraphics[width=0.35\textwidth]{figure/breakdown.pdf}
 \end{center}
 \vspace{-2mm}
 \caption{Breakdown of the averaged execution time per operation type, averaging across the quantized models.}
@@ -280,9 +280,9 @@ Table~\ref{tab:workload}). } \label{fig:bubblepruning}
 \hfill
 \subfloat[][Accuracy]{\includegraphics[width=0.243\textwidth]{figure/q_p_acc.pdf}}
 \hfill
-\caption{The achieved model size (a) inference time (b) energy consumption (c) and accuracy (d) before and after applying \quantization and \pruning.
+\caption{The model size (a) inference time (b) energy consumption (c) and accuracy (d) before and after model compression.
 }
-\vspace{-8mm}
+\vspace{-5mm}
 \label{fig:combine}
 \end{figure*}
 
