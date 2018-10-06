@@ -1,8 +1,8 @@
 \section{Related Work}
-Deep learning models have shown astounding successes in various tasks that previously seemed difficult~\cite{cho2014learning}. Despite the
-fact that many embedded devices require precise sensing capabilities, adoption of \DNN models on such systems has notably slow progress.
-This mainly due to \DNN-based inference being typically a computation intensive task, which inherently runs slowly on embedded devices due
-to limited resources.
+%Deep learning models have shown astounding successes in various tasks that previously seemed difficult~\cite{cho2014learning}. Despite the
+%fact that many embedded devices require precise sensing capabilities, adoption of \DNN models on such systems has notably slow progress.
+%This mainly due to \DNN-based inference being typically a computation intensive task, which inherently runs slowly on embedded devices due
+%to limited resources.
 
 %
 %There has been a significant amount of work on reducing the storage and computation requirement by model compression. For parameter
@@ -37,14 +37,13 @@ selection~\cite{Taylor:2018:ADL:3211332.3211336}. Our work aims to understand ho
 right model compression technique. Thus, these approaches are orthogonal to our work.
 
 
-As an alternative to on-device inferencing, off-loading computation to the cloud can accelerate \DNN model inference
-\cite{teerapittayanon2017distributed}. Neurosurgeon \cite{Kang2017neurosurgeon} identifies when it is beneficial (\eg in terms of energy
-consumption and end-to-end latency) to offload a \DNN layer to be computed on the cloud. The Pervasive \CNN~\cite{song2017towards}
-generates multiple computation kernels for each layer of a \CNN, which are then dynamically selected according to the inputs and user
-constraints. A similar approach presented in \cite{servia2017personal} trains a model twice, once on shared data and again on personal
-data, in an attempt to prevent personal data being sent outside the personal domain. Computation off-loading is not always applicable due
-to privacy, latency or connectivity issues. Our work is complementary to previous work on computation off-loading by offering insights to
-best optimize \emph{local} inference.
+Off-loading computation to the cloud can accelerate \DNN model inference \cite{teerapittayanon2017distributed}. Neurosurgeon
+\cite{Kang2017neurosurgeon} identifies when it is beneficial (\eg in terms of energy consumption and end-to-end latency) to offload a \DNN
+layer to be computed on the cloud. The Pervasive \CNN~\cite{song2017towards} generates multiple computation kernels for each layer of a
+\CNN, which are then dynamically selected according to the inputs and user constraints. A similar approach presented in
+\cite{servia2017personal} trains a model twice, once on shared data and again on personal data, in an attempt to prevent personal data
+being sent outside the personal domain. Computation off-loading is not always applicable due to privacy, latency or connectivity issues.
+Our work is complementary to previous work on computation off-loading by offering insights to best optimize \emph{local} inference.
 
 
 
